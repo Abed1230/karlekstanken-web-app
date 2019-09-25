@@ -4,6 +4,19 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui/dist/semantic.min.css';
+import * as firebase from 'firebase';
+
+var firebaseConfig = {
+    apiKey: "AIzaSyCw1p-gKunLS72hMazyJj5wnLv7FhwOc0M",
+    authDomain: "karlekstanken-3c89c.firebaseapp.com",
+    databaseURL: "https://karlekstanken-3c89c.firebaseio.com",
+    projectId: "karlekstanken-3c89c",
+    storageBucket: "",
+    messagingSenderId: "75337626405",
+    appId: "1:75337626405:web:dc8f168b1263fa184e20cc"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
