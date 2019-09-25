@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'semantic-ui-react';
+import { Link } from '@reach/router';
 
 
 export class Login extends Component {
@@ -53,6 +54,7 @@ export class Login extends Component {
                     </form>
                 </div>
                 <p> <Button>Logga in</Button></p>
+                <Link to='signup'>Inget konto? Registrera dig här</Link>
             </div>
         )
     }

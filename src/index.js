@@ -1,9 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui/dist/semantic.min.css';
+import Login from './Login.js';
+import Register from './Register.js';
+import { Router } from '@reach/router'
+
+function App() {
+    return (
+        <div className="App">
+            <Router>
+                <Login path='/' />
+                <Register path='/signup' />
+            </Router>
+        </div>
+    );
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
