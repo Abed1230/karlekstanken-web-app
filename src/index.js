@@ -2,25 +2,51 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui/dist/semantic.min.css';
-import * as firebase from 'firebase';
-import FirebaseData from './FirebaseData.js';
+import fire from './FirebaseData.js';
+import { Router, navigate } from '@reach/router'
 
 import Login from './Login.js';
 import Register from './Register.js';
-import { Router } from '@reach/router'
+import Home from './Home.js';
 
-function App() {
-    return (
-        <div className="App">
-            <Router>
-                <Login path='/' />
-                <Register path='/signup' />
-            </Router>
-        </div>
-    );
-}   
-  // Initialize Firebase
-  firebase.initializeApp(FirebaseData.firebaseConfig);
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {}
+        }
+    }
+    componentDidMount() {
+        this.authListener();
+    }
+
+    authListener() {
+        fire.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user });
+                navigate ('home');
+            }
+            else {
+                this.setState({ user: null });
+                navigate ('/');
+            }
+        });
+    }
+    render() {
+        return (
+            <div className="App">
+                <Router>
+                    <Login path='/' />
+                    <Register path='/signup' />
+                    <Home path='/home'  />
+                </Router>
+            </div>
+        );
+    }
+
+}
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -28,3 +54,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+

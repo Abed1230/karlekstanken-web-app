@@ -1,37 +1,35 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { Link } from '@reach/router';
+import fire from './FirebaseData';
 
 
 export class Login extends Component {
     constructor(props) {
         super(props)
+
+        this.login = this.login.bind(this);
+        this.handleInputchange = this.handleInputchange.bind(this);
         this.state = {
-            email: null,
-            password: null,
+            email: '',
+            password: '',
         }
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault()
-    }
 
     handleInputchange = (event) => {
-        event.preventDefault()
-        //console.log(event)
-        //console.log(event.target.name)
-        //console.log(event.target.value)
-
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
-    /* componentDidMount(){
-         this.setState({
-             fullName: "Erke"
-         })
-     }*/
+    login(e) {
+        e.preventDefault();
+        fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     render() {
         const { email } = this.state
@@ -53,7 +51,7 @@ export class Login extends Component {
                         <p> <input type='text' placeholder='your name' name='password' onChange={this.handleInputchange} /></p>
                     </form>
                 </div>
-                <p> <Button>Logga in</Button></p>
+                <p> <Button onClick={this.login}>Logga in</Button></p>
                 <Link to='signup'>Inget konto? Registrera dig här</Link>
             </div>
         )
