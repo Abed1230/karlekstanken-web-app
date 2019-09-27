@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { Link } from '@reach/router';
-import fire from './FirebaseData';
+import {fire} from './FirebaseData';
 
 
 export class Login extends Component {
@@ -41,14 +41,14 @@ export class Login extends Component {
                 <div>
                     <p>Email: {email}</p>
                     <form onSubmit={this.handleSubmit}>
-                        <p> <input type='text' placeholder='your name' name='email' onChange={this.handleInputchange} /></p>
+                        <p> <input type='text' placeholder='Din email' name='email' onChange={this.handleInputchange} /></p>
                     </form>
                 </div>
 
                 <div>
                     <p>Lösenord: {password}</p>
                     <form onSubmit={this.handleSubmit}>
-                        <p> <input type='text' placeholder='your name' name='password' onChange={this.handleInputchange} /></p>
+                        <p> <input type='text' placeholder='Ditt lösenord' name='password' onChange={this.handleInputchange} /></p>
                     </form>
                 </div>
                 <p> <Button onClick={this.login}>Logga in</Button></p>

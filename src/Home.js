@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import fire from './FirebaseData';
+import {fire} from './FirebaseData';
 import { Button, Form } from 'semantic-ui-react';   
      
 
