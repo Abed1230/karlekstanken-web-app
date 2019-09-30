@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import {fire} from './FirebaseData';
-
+import {Button} from 'react-bootstrap';
 
 export class Login extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ export class Login extends Component {
                         <p> <input type='text' placeholder='Ditt lösenord' name='password' onChange={this.handleInputchange} /></p>
                     </form>
                 </div>
-                <p> <button type="button" onClick={this.login}>Logga in</button></p>
+                <p> <Button onClick={this.login}>Logga in</Button></p>
                 <Link to='signup'>Inget konto? Registrera dig här</Link>
             </div>
         )
