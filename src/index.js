@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import 'semantic-ui/dist/semantic.min.css';
 import {fire} from './FirebaseData.js';
 import { Router, navigate } from '@reach/router'
 

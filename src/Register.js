@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'semantic-ui-react';
 import {fire,db} from './FirebaseData.js'; 
 
 
@@ -86,7 +85,7 @@ export class Register extends Component {
                     </form>
                 </div>
 
-                <p> <Button onClick={this.signup}>Registrera</Button></p>
+                <p> <button type="button" onClick={this.signup}>Registrera</button></p>
             </div>
         )
     }

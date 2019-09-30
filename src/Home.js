@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import {fire} from './FirebaseData';
-import { Button, Form } from 'semantic-ui-react';   
-     
+import {fire} from './FirebaseData';   
 
 export class Home extends Component {
 
@@ -18,7 +16,7 @@ export class Home extends Component {
         return (
             <div>
                 <h1>You are home</h1>
-                <Button onClick={this.logout}>Logga ut </Button>
+                <button type="button" onClick={this.logout}>Logga ut </button>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'semantic-ui-react';
 import { Link } from '@reach/router';
 import {fire} from './FirebaseData';
 
@@ -51,7 +50,7 @@ export class Login extends Component {
                         <p> <input type='text' placeholder='Ditt lösenord' name='password' onChange={this.handleInputchange} /></p>
                     </form>
                 </div>
-                <p> <Button onClick={this.login}>Logga in</Button></p>
+                <p> <button type="button" onClick={this.login}>Logga in</button></p>
                 <Link to='signup'>Inget konto? Registrera dig här</Link>
             </div>
         )
