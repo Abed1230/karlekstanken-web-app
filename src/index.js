@@ -7,7 +7,7 @@ import { Router, navigate } from '@reach/router'
 
 import Login from './Login.js';
 import Register from './Register.js';
-import Home from './Home.js';
+import HomePage from './components/HomePage.js';
 
 
 class App extends React.Component {
@@ -39,7 +39,7 @@ class App extends React.Component {
                 <Router>
                     <Login path='/' />
                     <Register path='/signup' />
-                    <Home path='/home'  />
+                    <HomePage path='/home'  />
                 </Router>
             </div>
         );
