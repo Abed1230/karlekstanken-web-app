@@ -26,7 +26,7 @@ class Home extends React.Component {
             chap.id = doc.id;
             return chap;
         });
-        
+
         this.setState({
             chapters: chaps
         });
@@ -47,9 +47,10 @@ class Home extends React.Component {
                                 /* TODO: navigate to chapter page */
                                 <Col key={item.id} className="mb-2" xs="12" md="6">
                                     <ListCard
-                                        subhead={item.subhead}
+                                        subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
+                                        handleClick={() => console.log(item.title + " clicked!")}
                                         handleCheck={() => console.log(item.title + " checked!")} />
                                 </Col>
                             );
