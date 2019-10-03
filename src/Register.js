@@ -31,15 +31,15 @@ export class Register extends Component {
     signup(e) {
         e.preventDefault();
         fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
-            this.addUserToDocument();
+            this.addUserToDocument(u.user.uid);
         }).catch((error) => {
             console.log(error);
         });
     }
 
-    addUserToDocument() {
+    addUserToDocument(uid) {
         // Add a new document in collection "users"
-        db.collection("users").doc().set({
+        db.collection("users").doc(uid).set({
             email: this.state.email,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
