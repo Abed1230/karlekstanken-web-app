@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { db } from '../FirebaseData';
+import {navigate} from '@reach/router';
 
 /* var chapters = [{ id: "0", subhead: "Avsnitt 1", title: "Kommunikationens ädla konst", complete: false },
 { id: "1", subhead: "Avsnitt 2", title: "The Witcher", complete: true },
@@ -18,6 +19,7 @@ class Home extends React.Component {
     }
 
     async getData() {
+        console.log("get data called");
         /* TODO: get paid chapters if user is paid */
         const query = await db.collection("free_chapters").orderBy("position").get();
         const docs = query.docs;
@@ -27,13 +29,20 @@ class Home extends React.Component {
             return chap;
         });
 
-        this.setState({
-            chapters: chaps
-        });
+        if (this.mounted) {
+            this.setState({
+                chapters: chaps
+            });
+        }
     }
 
     componentDidMount() {
+        this.mounted = true;
         this.getData();
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {
@@ -50,7 +59,7 @@ class Home extends React.Component {
                                         subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
-                                        handleClick={() => console.log(item.title + " clicked!")}
+                                        handleClick={() => navigate("hello")}
                                         handleCheck={() => console.log(item.title + " checked!")} />
                                 </Col>
                             );
