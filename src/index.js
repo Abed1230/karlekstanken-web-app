@@ -34,9 +34,20 @@ class App extends React.Component {
                 localStorage.setItem(KEY_AUTH_USER, JSON.stringify(authUser));
                 this.setState({ authUser: authUser });
 
-                this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot((snap) => {
+                this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot(async (snap) => {
                     const user = snap.data();
+
                     user.uid = authUser.uid;
+
+                    /* only read once at start */
+                    if (!this.state.user) {
+                        /* TODO: check expiry here  */
+                        const premiumSnap = await db.collection("users_premium_status").doc(authUser.uid).get();
+                        const premium = premiumSnap.data();
+
+                        user.premium = premium;
+                    }
+
                     this.setState({
                         user: user
                     });
