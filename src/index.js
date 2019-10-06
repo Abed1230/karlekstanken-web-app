@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { db, auth } from './FirebaseData.js';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 
 import Login from './Login.js';
 import Register from './Register.js';
 import HomePage from './components/HomePage.js';
+import NotFound from './components/NotFound';
 
 export const AuthUserContext = React.createContext();
 export const UserContext = React.createContext();
@@ -63,6 +64,7 @@ class App extends React.Component {
                                 <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                 <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                 <PrivateRoute component={HomePage} path="/" exact />
+                                <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>
                     </UserContext.Provider>
