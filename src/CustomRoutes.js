@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthUserContext } from './index';
+import { AuthUserConsumer } from './AuthUserContext';
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         // Show the component only when the user is logged in
         // Otherwise, redirect the user to /signin page
-        <AuthUserContext.Consumer>
+        <AuthUserConsumer>
             {authUser =>
                 <Route {...rest} render={props => (
                     authUser ?
@@ -14,7 +14,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
                         : <Redirect to="/signin" />
                 )} />
             }
-        </AuthUserContext.Consumer>
+        </AuthUserConsumer>
     );
 };
 
@@ -22,7 +22,7 @@ export const PublicRoute = ({ component: Component, restricted, ...rest }) => {
     return (
         // restricted = false meaning public route
         // restricted = true meaning restricted route
-        <AuthUserContext.Consumer>
+        <AuthUserConsumer>
             {authUser =>
                 <Route {...rest} render={props => (
                     authUser && restricted ?
@@ -30,6 +30,6 @@ export const PublicRoute = ({ component: Component, restricted, ...rest }) => {
                         <Component {...props} />
                 )} />
             }
-        </AuthUserContext.Consumer>
+        </AuthUserConsumer>
     );
 };

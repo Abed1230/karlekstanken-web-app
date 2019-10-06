@@ -6,13 +6,12 @@ import { db, auth } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
+import { AuthUserProvider } from './AuthUserContext';
 
 import Login from './Login.js';
 import Register from './Register.js';
 import HomePage from './components/HomePage.js';
 import NotFound from './components/NotFound';
-
-export const AuthUserContext = React.createContext();
 
 const KEY_AUTH_USER = "authUser";
 
@@ -57,7 +56,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <AuthUserContext.Provider value={this.state.authUser}>
+                <AuthUserProvider value={this.state.authUser}>
                     <UserProvider value={this.state.user}>
                         <BrowserRouter>
                             <Switch>
@@ -68,7 +67,7 @@ class App extends React.Component {
                             </Switch>
                         </BrowserRouter>
                     </UserProvider>
-                </AuthUserContext.Provider>
+                </AuthUserProvider>
             </div >
         );
     }
