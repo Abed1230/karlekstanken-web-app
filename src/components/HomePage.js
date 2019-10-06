@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { db } from '../FirebaseData';
-import {navigate} from '@reach/router';
 
 /* var chapters = [{ id: "0", subhead: "Avsnitt 1", title: "Kommunikationens ädla konst", complete: false },
 { id: "1", subhead: "Avsnitt 2", title: "The Witcher", complete: true },
@@ -59,7 +58,7 @@ class Home extends React.Component {
                                         subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
-                                        handleClick={() => navigate("hello")}
+                                        handleClick={() => this.props.history.push("/hello")}
                                         handleCheck={() => console.log(item.title + " checked!")} />
                                 </Col>
                             );

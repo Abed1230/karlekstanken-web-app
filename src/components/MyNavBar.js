@@ -37,7 +37,7 @@ function MyNavBar(props) {
                 {/* <UserView user={{ name: "Rachel", partner: { name: "John Doe", loveLanguage: "B" }, loveLanguage: "A", premium: true }} /> */}
                 
                 <UserContext.Consumer>
-                    {(user) => <p>{user ? user.firstName : ""}</p>}
+                    {(user) => <p>{user ? user.firstName + " " + user.uid : ""}</p>}
                 </UserContext.Consumer>
                 
                 <Dropdown.Divider className="mt-4 mb-4" />
