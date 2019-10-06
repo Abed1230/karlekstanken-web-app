@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { db, auth } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
+import { UserProvider } from './UserContext';
 
 import Login from './Login.js';
 import Register from './Register.js';
@@ -12,7 +13,6 @@ import HomePage from './components/HomePage.js';
 import NotFound from './components/NotFound';
 
 export const AuthUserContext = React.createContext();
-export const UserContext = React.createContext();
 
 const KEY_AUTH_USER = "authUser";
 
@@ -58,7 +58,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <AuthUserContext.Provider value={this.state.authUser}>
-                    <UserContext.Provider value={this.state.user}>
+                    <UserProvider value={this.state.user}>
                         <BrowserRouter>
                             <Switch>
                                 <PublicRoute restricted={true} component={Login} path="/signin" exact />
@@ -67,7 +67,7 @@ class App extends React.Component {
                                 <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>
-                    </UserContext.Provider>
+                    </UserProvider>
                 </AuthUserContext.Provider>
             </div >
         );

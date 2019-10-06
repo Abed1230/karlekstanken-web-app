@@ -4,10 +4,6 @@ import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { db } from '../FirebaseData';
 
-/* var chapters = [{ id: "0", subhead: "Avsnitt 1", title: "Kommunikationens ädla konst", complete: false },
-{ id: "1", subhead: "Avsnitt 2", title: "The Witcher", complete: true },
-{ id: "3", subhead: "Avsnitt 3", title: "Minions", complete: true },];
- */
 class Home extends React.Component {
 
     constructor(props) {
