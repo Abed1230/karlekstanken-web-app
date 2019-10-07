@@ -1,7 +1,7 @@
 import QuestionsData from './QuestionsData.json';
 import { fire, db } from './FirebaseData';
 
-export var sum = 30;
+export var sum = 3;
 
 var counterA = 0;
 var counterB = 0;
@@ -45,7 +45,9 @@ export function calculateResults(alt1Values, alt2Values) {
     if (complete == true) {
         SetLeadingCounter();
         printResults();
+        return true;
     }
+    return false;
 }
 function writeLetterToDatabase(letter) {
     db.collection("users").doc(fire.auth().currentUser.uid).update({
