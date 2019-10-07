@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
+import { Link } from 'react-router-dom';
 
 const LoveLangCard = ({ name, lang, handleClick }) => {
     return (
@@ -62,14 +63,13 @@ class UserView extends React.Component {
                                     </Col>
                                 }
 
-                                {/* TODO: navigate to test page */}
                                 {!user.loveLanguage && user.premium &&
                                     <Col className="mb-2" xs="12" md="6">
                                         <Card className="mt-2 h-100">
                                             <Card.Body>
                                                 <small className="text-muted">Ditt kärleksspråk</small>
                                                 <p>Du har ännu inte gjort språktestet</p>
-                                                <Button variant="info">Gör testet nu</Button>
+                                                <Button variant="info" as={Link} to="/languagetest">Gör testet nu</Button>
                                             </Card.Body>
                                         </Card>
                                     </Col>
