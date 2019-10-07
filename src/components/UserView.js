@@ -1,4 +1,5 @@
 import React from 'react';
+import LoveLanguages from '../LoveLanguages.json';
 import { Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { Link } from 'react-router-dom';
@@ -13,12 +14,6 @@ const LoveLangCard = ({ name, lang, handleClick }) => {
             </Card.Body>
         </Card>
     );
-}
-
-/* TODO: move to a json document */
-const loveLanguges = {
-    "A": { name: "Presenter", description: "Ea ullamco non ea magna culpa pariatur et ipsum ex aliquip cillum quis ad. Veniam magna proident reprehenderit elit irure pariatur nostrud et minim amet reprehenderit minim anim officia. Exercitation amet enim anim eu. Aliquip nisi quis ea consectetur minim minim anim consequat adipisicing laborum quis." },
-    "B": { name: "Paprika", description: "Elit veniam Lorem quis duis consequat est. Mollit culpa cupidatat culpa in laboris adipisicing minim. Culpa aute ullamco aute nulla eiusmod qui id tempor dolor fugiat. Velit minim elit est ex deserunt nulla laboris ipsum occaecat minim enim. Excepteur et sit id dolor anim qui. Aute magna fugiat pariatur ex officia consequat et ut laborum do minim amet velit. Cillum proident officia Lorem id." },
 }
 
 class UserView extends React.Component {
@@ -53,13 +48,13 @@ class UserView extends React.Component {
                             <Row>
                                 {partnerLoveLang &&
                                     <Col className="mb-2" xs="12" md="6">
-                                        <LoveLangCard name={user.partner.name} lang={loveLanguges[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: loveLanguges[partnerLoveLang].name, modalText: loveLanguges[partnerLoveLang].description })} />
+                                        <LoveLangCard name={user.partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
                                     </Col>
                                 }
 
                                 {userLoveLang &&
                                     <Col className="mb-2" xs="12" md="6">
-                                        <LoveLangCard lang={loveLanguges[userLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: loveLanguges[userLoveLang].name, modalText: loveLanguges[userLoveLang].description })} />
+                                        <LoveLangCard lang={LoveLanguages[userLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[userLoveLang].name, modalText: LoveLanguages[userLoveLang].description })} />
                                     </Col>
                                 }
 
