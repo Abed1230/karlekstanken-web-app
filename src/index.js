@@ -13,6 +13,7 @@ import Register from './Register.js';
 import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
+import ChapterPage from './components/ChapterPage';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -75,6 +76,7 @@ class App extends React.Component {
                                 <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                 <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                 <PrivateRoute component={HomePage} path="/" exact />
+                                <PrivateRoute component={ChapterPage} path="/chapter" exact />
                                 <PrivateRoute component={LoveTest} path="/languagetest" exact />
                                 <Route component={NotFound} />
                             </Switch>
