@@ -2,51 +2,90 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {fire} from './FirebaseData.js';
-import { Router, navigate } from '@reach/router'
+import { db, auth } from './FirebaseData.js';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { PrivateRoute, PublicRoute } from './CustomRoutes';
+import { UserProvider } from './UserContext';
+import { AuthUserProvider } from './AuthUserContext';
 
 import Login from './Login.js';
 import Register from './Register.js';
-import Home from './Home.js';
+import HomePage from './components/HomePage.js';
+import LoveTest from './LoveTest';
+import NotFound from './components/NotFound';
 
+const KEY_AUTH_USER = "authUser";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {}
+            user: null,
+            authUser: JSON.parse(localStorage.getItem(KEY_AUTH_USER)),
         }
     }
-    componentDidMount() {
-        this.authListener();
-    }
 
-    authListener() {
-        fire.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ user });
-                navigate ('home');
-            }
-            else {
-                this.setState({ user: null });
-                navigate ('/');
+    componentDidMount() {
+        this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
+            console.log("authUser: " + authUser);
+            // makes sure we only have one subscription
+            this.unsubUserData && this.unsubUserData();
+
+            if (authUser) {
+                localStorage.setItem(KEY_AUTH_USER, JSON.stringify(authUser));
+                this.setState({ authUser: authUser });
+
+                this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot(async (snap) => {
+                    const user = snap.data();
+
+                    user.uid = authUser.uid;
+
+                    /* only read once at start */
+                    if (!this.state.user) {
+                        /* TODO: check expiry here  */
+                        const premiumSnap = await db.collection("users_premium_status").doc(authUser.uid).get();
+                        const premium = premiumSnap.data();
+
+                        user.premium = premium;
+                    }
+
+                    this.setState({
+                        user: user
+                    });
+                });
+            } else {
+                localStorage.removeItem(KEY_AUTH_USER);
+                this.setState({ authUser: null });
             }
         });
     }
+
+    componentWillUnmount() {
+        this.unsubAuthUser && this.unsubAuthUser();
+        this.unsubUserData && this.unsubUserData();
+    }
+
     render() {
         return (
             <div className="App">
-                <Router>
-                    <Login path='/' />
-                    <Register path='/signup' />
-                    <Home path='/home'  />
-                </Router>
-            </div>
+                <AuthUserProvider value={this.state.authUser}>
+                    <UserProvider value={this.state.user}>
+                        <BrowserRouter>
+                            <Switch>
+                                <PublicRoute restricted={true} component={Login} path="/signin" exact />
+                                <PublicRoute restricted={true} component={Register} path="/signup" exact />
+                                <PrivateRoute component={HomePage} path="/" exact />
+                                <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                <Route component={NotFound} />
+                            </Switch>
+                        </BrowserRouter>
+                    </UserProvider>
+                </AuthUserProvider>
+            </div >
         );
     }
 
 }
-
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

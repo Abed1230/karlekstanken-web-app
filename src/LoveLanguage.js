@@ -1,7 +1,7 @@
 import QuestionsData from './QuestionsData.json';
 import { fire, db } from './FirebaseData';
 
-export var sum = 5;
+export var sum = 3;
 
 var counterA = 0;
 var counterB = 0;
@@ -43,11 +43,12 @@ export function calculateResults(alt1Values, alt2Values) {
         }
     }
     if (complete == true) {
-        SetLeadingCounter();
-        printResults();
+        //printResults();
+        return SetLeadingCounter();
     }
+    return null;
 }
-function writeLetterToDatabase(letter) {
+async function writeLetterToDatabase(letter) {
     db.collection("users").doc(fire.auth().currentUser.uid).update({
         loveLanguage: letter,
     });
@@ -82,6 +83,8 @@ function SetLeadingCounter() {
         leadingCounter = "E";
     }
     writeLetterToDatabase(leadingCounter);
+    return leadingCounter;
+
 }
 
 function ResetResults() {
