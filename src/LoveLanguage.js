@@ -43,13 +43,12 @@ export function calculateResults(alt1Values, alt2Values) {
         }
     }
     if (complete == true) {
-        SetLeadingCounter();
-        printResults();
-        return true;
+        //printResults();
+        return SetLeadingCounter();
     }
-    return false;
+    return null;
 }
-function writeLetterToDatabase(letter) {
+async function writeLetterToDatabase(letter) {
     db.collection("users").doc(fire.auth().currentUser.uid).update({
         loveLanguage: letter,
     });
@@ -84,6 +83,8 @@ function SetLeadingCounter() {
         leadingCounter = "E";
     }
     writeLetterToDatabase(leadingCounter);
+    return leadingCounter;
+
 }
 
 function ResetResults() {
