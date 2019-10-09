@@ -11,7 +11,7 @@ const YoutubePlayer = ({ url }) => {
     );
 }
 
-class ChapterPage extends React.Component {
+class Chapter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -114,4 +114,4 @@ class ChapterPage extends React.Component {
 
 }
 
-export default ChapterPage;
+export default Chapter;
