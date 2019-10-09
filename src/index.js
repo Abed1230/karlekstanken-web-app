@@ -38,6 +38,10 @@ class App extends React.Component {
 
                 this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot(async (snap) => {
                     const user = snap.data();
+                    
+                    if (!user) {
+                        return;
+                    }
 
                     user.uid = authUser.uid;
 
