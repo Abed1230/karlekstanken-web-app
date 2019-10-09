@@ -15,18 +15,13 @@ class Home extends React.Component {
 
     async getData() {
         console.log("get data called");
-        /* TODO: get paid chapters if user is paid */
-        const query = await db.collection("free_chapters").orderBy("position").get();
-        const docs = query.docs;
-        const chaps = docs.map((doc) => {
-            const chap = doc.data();
-            chap.id = doc.id;
-            return chap;
-        });
+
+        const snap = await db.collection("doc_lists").doc("chapters").get();
+        const doc = snap.data();
 
         if (this.mounted) {
             this.setState({
-                chapters: chaps
+                chapters: doc.list
             });
         }
     }
