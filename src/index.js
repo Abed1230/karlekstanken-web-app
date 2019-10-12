@@ -14,6 +14,7 @@ import Register from './Register.js';
 import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
+import Chapter from './components/Chapter';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -38,6 +39,10 @@ class App extends React.Component {
 
                 this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot(async (snap) => {
                     const user = snap.data();
+                    
+                    if (!user) {
+                        return;
+                    }
 
                     user.uid = authUser.uid;
 
@@ -77,6 +82,7 @@ class App extends React.Component {
                                 <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                 <PrivateRoute component={HomePage} path="/" exact />
                                 <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                <PrivateRoute component={Chapter} path="/chapter" exact />
                                 <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>
