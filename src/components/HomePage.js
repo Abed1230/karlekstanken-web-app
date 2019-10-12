@@ -16,7 +16,7 @@ class Home extends React.Component {
     async getData() {
         console.log("get data called");
 
-        const snap = await db.collection("doc_lists").doc("chapters").get();
+        const snap = await db.collection("chapters").doc("portals").get();
         const doc = snap.data();
 
         if (this.mounted) {
@@ -49,7 +49,7 @@ class Home extends React.Component {
                                         subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
-                                        handleClick={() => this.props.history.push("/hello")}
+                                        handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
                                         handleCheck={() => console.log(item.title + " checked!")} />
                                 </Col>
                             );

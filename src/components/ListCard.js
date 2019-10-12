@@ -7,15 +7,15 @@ const CheckIcon = (props) => (
 
 function ListCard({ subhead, title, complete, handleClick, handleCheck }) {
     return (
-        <Card className="mb-2 h-100" tabIndex="0" style={{ cursor: "pointer" }}>
+        <Card className="mb-2 h-100" tabIndex="0" style={{ cursor: "pointer" }} onClick={handleClick}>
             <Card.Body>
                 <Row>
-                    <Col xs="10" onClick={handleClick}>
+                    <Col xs="10">
                         <small className="text-muted">{subhead}</small>
                         <Card.Title>{title}</Card.Title>
                     </Col>
                     <Col className="d-flex justify-content-center" xs="2">
-                        <div className="align-self-center" onClick={handleCheck}><CheckIcon fill={complete ? "#4CAF50" : "grey"} /></div>
+                        <div className="align-self-center" onClick={(e) => { e.stopPropagation(); handleCheck(); }}><CheckIcon fill={complete ? "#4CAF50" : "grey"} /></div>
                     </Col>
                 </Row>
             </Card.Body>

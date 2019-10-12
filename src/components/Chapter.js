@@ -2,6 +2,8 @@ import React from 'react';
 import MyNavBar from './MyNavBar';
 import { Container, Row, Col, Dropdown } from 'react-bootstrap';
 import ListCard from './ListCard';
+import { Redirect } from 'react-router-dom';
+import { db } from '../FirebaseData';
 
 const YoutubePlayer = ({ url }) => {
     return (
@@ -14,15 +16,18 @@ const YoutubePlayer = ({ url }) => {
 class Chapter extends React.Component {
     constructor(props) {
         super(props);
+        const { location } = props;
+        const chapterMin = location && location.state && location.state.chapter;
         this.state = {
-            a: "a says hello",
-            chapter: {
+            chapterMin: chapterMin,
+            shouldRender: chapterMin ? true : false,
+            /* chapter: {
                 title: "Inspirerande introduktion",
                 subTitle: "Del 1",
                 bodyTitle: "Hello World",
                 bodyText: "Occaecat aute et sint incididunt. Veniam est ea ut non mollit qui aliquip reprehenderit magna commodo. Tempor ea aliquip eu enim. Officia id id ea irure ea id nulla aute eu incididunt est cillum Lorem voluptate. Velit labore eu id esse duis magna nulla est reprehenderit nulla. Laborum eu velit deserunt deserunt est. Irure commodo do aliquip laborum amet consequat eu incididunt amet.",
                 videos: [{ url: "https://www.youtube.com/embed/hVvEISFw9w0" }, { url: "https://player.vimeo.com/video/356935968" }]
-            },
+            }, */
         };
 
         //this.handleCheck = this.handleCheck.bind(this);
@@ -38,35 +43,44 @@ class Chapter extends React.Component {
         });
     }
 
-    getData() {
-        // TODO: fetch tasks from db 
-        setTimeout(() => {
-            console.log('Our data is fetched');
-            let chap = this.state.chapter;
-            chap.tasks = [{ id: "0dasdq", subhead: "Övning 1", title: "Fantastic beasts and where to find them", complete: false },
-            { id: "asdqw", subhead: "Övning 2", title: "MadMax Fury Road", complete: true },
-            { id: "p123", subhead: "Övning 2", title: "MadMax Fury Road ", complete: true },
-            { id: "seqwe", subhead: "Övning 2", title: "Fantastic beasts and where to find them", complete: true }];
+    async getData() {
+        const id = this.state.chapterMin.id;
+        const snap = await db.collection("chapters").doc(id).get();
+        const doc = snap.data();
 
+        if (this.mounted) {
             this.setState({
-                chapter: chap
+                chapter: doc
             });
-        }, 3000)
+        }
     }
 
     componentDidMount() {
-        this.getData();
+        this.mounted = true;
+
+        if (this.state.shouldRender) {
+            this.getData();
+        }
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {
+        if (!this.state.shouldRender) {
+            return <Redirect to="/" />
+        }
+
         const chapter = this.state.chapter;
-        return (
+
+        return chapter ? (
             <>
                 <MyNavBar goBack={true} />
                 <Container className="mt-3">
                     <Row className="mt-3">
                         <Col>
-                            <small>{chapter.subTitle}</small>
+                            <small>{chapter.subHead}</small>
                             <h4>{chapter.title}</h4>
                             <Dropdown.Divider />
                         </Col>
@@ -99,7 +113,7 @@ class Chapter extends React.Component {
                                 /* TODO: navigate to exerciese page */
                                 <Col key={item.id} className="mb-2" xs="12" md="4">
                                     <ListCard
-                                        subhead={item.subhead}
+                                        subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
                                         handleCheck={this.handleCheck.bind(this, item.id, item.complete)} />
@@ -109,7 +123,25 @@ class Chapter extends React.Component {
                     </Row>
                 </Container>
             </>
-        );
+        )
+            :
+            (<>
+                <MyNavBar goBack={true} />
+                <Container className="mt-3">
+                    <Row className="mt-3">
+                        <Col>
+                            <small>{this.state.chapterMin.subHead}</small>
+                            <h4>{this.state.chapterMin.title}</h4>
+                            <Dropdown.Divider />
+                        </Col>
+                    </Row>
+                    <Row className="mt-2">
+                        <Col>
+                            <p>Laddar in...</p>
+                        </Col>
+                    </Row>
+                </Container>
+            </>);
     }
 
 }

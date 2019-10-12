@@ -80,8 +80,8 @@ class App extends React.Component {
                                 <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                 <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                 <PrivateRoute component={HomePage} path="/" exact />
-                                <PrivateRoute component={Chapter} path="/chapter" exact />
                                 <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                <PrivateRoute component={Chapter} path="/chapter" exact />
                                 <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>
