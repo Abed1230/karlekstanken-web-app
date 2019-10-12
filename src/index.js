@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
 import { AuthUserProvider } from './AuthUserContext';
+import TaskPage from './TaskPage';
 
 import Login from './Login.js';
 import Register from './Register.js';
