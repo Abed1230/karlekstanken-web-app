@@ -1,0 +1,11 @@
+/* TODO: style for print */
+
+@media print {
+    @page {
+        size: A4;
+    }
+    .col-print-4 {
+        width: 33%;
+        float: left;
+    }
+}

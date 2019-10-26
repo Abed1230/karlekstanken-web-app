@@ -47,6 +47,7 @@ class Chapter extends React.Component {
         const id = this.state.chapterMin.id;
         const snap = await db.collection("chapters").doc(id).get();
         const doc = snap.data();
+        doc.id = snap.id;
 
         if (this.mounted) {
             this.setState({
@@ -110,12 +111,12 @@ class Chapter extends React.Component {
                     <Row className="mt-2 mb-2">
                         {chapter.tasks && chapter.tasks.map((item, index) => {
                             return (
-                                /* TODO: navigate to exerciese page */
                                 <Col key={item.id} className="mb-2" xs="12" md="4">
                                     <ListCard
                                         subhead={item.subHead}
                                         title={item.title}
                                         complete={item.complete}
+                                        handleClick={() => this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })}
                                         handleCheck={this.handleCheck.bind(this, item.id, item.complete)} />
                                 </Col>
                             );

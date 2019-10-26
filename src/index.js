@@ -7,7 +7,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
 import { AuthUserProvider } from './AuthUserContext';
-import TaskPage from './TaskPage';
 
 import Login from './Login.js';
 import Register from './Register.js';
@@ -15,6 +14,7 @@ import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
+import TaskPage from './TaskPage';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -39,7 +39,7 @@ class App extends React.Component {
 
                 this.unsubUserData = db.collection("users").doc(authUser.uid).onSnapshot(async (snap) => {
                     const user = snap.data();
-                    
+
                     if (!user) {
                         return;
                     }
@@ -83,6 +83,7 @@ class App extends React.Component {
                                 <PrivateRoute component={HomePage} path="/" exact />
                                 <PrivateRoute component={LoveTest} path="/languagetest" exact />
                                 <PrivateRoute component={Chapter} path="/chapter" exact />
+                                <PrivateRoute component={TaskPage} path="/task" exact />
                                 <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>

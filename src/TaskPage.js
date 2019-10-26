@@ -1,61 +1,126 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
-import { db, auth } from './FirebaseData';
+import { Container, Row, Col, Dropdown } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
+import { db } from './FirebaseData';
+import MyNavBar from './components/MyNavBar';
+import logo from './logo.png';
+import logoAlt from './assets/logo_alt.png';
+import time from './assets/time.svg';
+import './TaskPage.css';
 
 export class TaskPage extends Component {
     constructor(props) {
         super(props);
-
+        const { location } = props;
+        const taskMin = location && location.state && location.state.task;
+        const chapterId = location && location.state && location.state.chapterId;
         this.state = {
-            task: null
+            taskMin: taskMin,
+            chapterId: chapterId,
+            shouldRender: taskMin ? true : false
         }
     }
-    componentDidMount() {
-        this.getData();
+
+    async getData() {
+        const chapterId = this.state.chapterId;
+        const id = this.state.taskMin.id;
+        const snap = await db.collection("chapters").doc(chapterId).collection("tasks").doc(id).get();
+        const doc = snap.data();
+
+        if (this.mounted) {
+            this.setState({
+                task: doc
+            });
+        }
     }
+
+    componentDidMount() {
+        this.mounted = true;
+
+        if (this.state.shouldRender) {
+            this.getData();
+        }
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
     render() {
+        if (!this.state.shouldRender) {
+            return <Redirect to="/" />
+        }
+
         const task = this.state.task;
-        if (task) {
-            return (
+
+        return task ? (
+            <>
+                <MyNavBar goBack={true} />
                 <Container>
-                    <Row className="mt-3 justify-content-center">
-                        <Col md="10">
-                            <div>
-                                <h1 className="text-center">{task.title}</h1>
-                                <p>{task.introText}</p>
+                    {/* <Row className="mt-3">
+                        <Col>
+                            <small>{task.subHead}</small>
+                            <h4>{task.title}</h4>
+                            <Dropdown.Divider />
+                        </Col>
+                    </Row> */}
+                    <Row className="mt-4">
+                        <Col className="col-print-4" md="4">
+                            <img
+                                className="d-none d-print-block"
+                                src={logo}
+                                height="25"
+                                alt="Logo"
+                            />
+                        </Col>
+                        <Col className="col-print-4 d-flex justify-content-center" md="4">
+                            <img
+                                className="d-none d-print-block"
+                                src={logoAlt}
+                                height="55"
+                                alt="Logo"
+                            />
+                        </Col>
+                        <Col className="col-print-4 d-flex justify-content-end" md="4">
+                            <div className="text-center">
+                                <img
+                                    src={time}
+                                    height="50"
+                                    alt="Time"
+                                />
                                 <br />
-
-                                <p className="text-center"><strong>{task.bold1} </strong></p>
-
-                                <ol>
-                                    {task.questions.map((question, i) => {
-                                        return <li className="mb-2" key={i}>{question}</li>
-                                    })}
-                                </ol>
-                                <br />
-
-                                <p className="text-center"><strong>{task.bold2} </strong></p>
-                                <ol>
-                                    {task.questions.map((discuss, i) => {
-                                        return <li className="mb-2" key={i}>{discuss}</li>
-                                    })}
-                                </ol>
-                                <br />
-
-                                <p className="text-center"><strong>TIPS!</strong></p>
-                                <p></p>
+                                <span>40 MIN</span>
                             </div>
                         </Col>
                     </Row>
-
+                    <Row className="mt-4 justify-content-center">
+                        <Col md="10">
+                            <div dangerouslySetInnerHTML={{ __html: task.bodyHTML }} />
+                        </Col>
+                    </Row>
                 </Container>
-            )
-        }
-        return <div><h1>Loading</h1></div>
-    }
-    async getData() {
-        const snap = await db.collection("free_chapters").doc("iRP8oCwF0CpjJeI2yejf").collection("tasks").doc("7Ekffm8PytaAIxLjBncN").get();
-        this.setState({ task: snap.data() });
+            </>
+        )
+            :
+            (
+                <>
+                    <MyNavBar goBack={true} />
+                    <Container className="mt-3">
+                        {/* <Row className="mt-3">
+                            <Col>
+                                <small>{this.state.taskMin.subHead}</small>
+                                <h4>{this.state.taskMin.title}</h4>
+                                <Dropdown.Divider />
+                            </Col>
+                        </Row> */}
+                        <Row className="mt-2">
+                            <Col>
+                                <p>Laddar in...</p>
+                            </Col>
+                        </Row>
+                    </Container>
+                </>
+            );
     }
 }
 
