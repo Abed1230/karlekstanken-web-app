@@ -1,6 +1,6 @@
 import React from 'react';
 import LoveLanguages from '../LoveLanguages.json';
-import { Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Form, Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { Link } from 'react-router-dom';
 
@@ -20,11 +20,32 @@ class UserView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            showAddPartnerModal: false,
             showModal: false,
             modalTitle: "",
             modalText: "",
+            validated: false,
+            loading: false,
+            error: null,
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const form = event.currentTarget;
+
+        if (form.checkValidity() === true) {
+            this.setState({ validated: true, loading: true, error: null });
+            // TODO: call send partner request cloud function
+            console.log("Sending request to " + form.elements.email.value + "...")
+            setTimeout(() => { this.setState({ loading: false, error: "det finns ingen användare med den angivna e-postaddressen" }) }, 3000)
+        }
+    }
+
     render() {
         return (
             <UserConsumer>
@@ -41,7 +62,7 @@ class UserView extends React.Component {
 
                                     {/* TODO: navigate to add partner page */}
                                     {!user.partner &&
-                                        <div className="text-center"><Button variant="info">Lägg till partner</Button></div>
+                                        <div className="text-center"><Button variant="info" onClick={() => this.setState({ showAddPartnerModal: true })} >Lägg till partner</Button></div>
                                     }
                                 </Col>
                             </Row>
@@ -77,6 +98,34 @@ class UserView extends React.Component {
                                 </Modal.Header>
                                 <Modal.Body>{this.state.modalText}</Modal.Body>
                             </Modal>
+
+                            <Modal show={this.state.showAddPartnerModal} onHide={() => this.setState({ showAddPartnerModal: false, error: null, validated: false })}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Lägg till partner</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <Form validated={this.state.validated} onSubmit={this.handleSubmit}>
+                                        <Form.Group controlId="partnerEmailForm">
+                                            <Form.Control required type="email" name="email" placeholder="E-postaddress" />
+                                            <Form.Text className="text-muted">
+                                                Ange din partners e-postaddress som hen registrerade sig med
+                                            </Form.Text>
+                                        </Form.Group>
+                                        {this.state.error &&
+                                            <Alert variant="danger">{this.state.error}</Alert>
+                                        }
+                                        {this.state.loading ?
+                                            <span>Skickar...</span>
+                                            :
+                                            <Button variant="info" type="submit">
+                                                Skicka förfrågan
+                                            </Button>
+                                        }
+
+                                    </Form>
+                                </Modal.Body>
+                            </Modal>
+
                         </Container>
                     );
                 }
