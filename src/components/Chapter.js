@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MyNavBar from './MyNavBar';
 import { Container, Row, Col, Dropdown } from 'react-bootstrap';
 import ListCard from './ListCard';
 import { Redirect } from 'react-router-dom';
 import { db } from '../FirebaseData';
+import { CoupleDataConsumer } from '../CoupleDataContext';
+import { UserConsumer } from '../UserContext';
 
 const YoutubePlayer = ({ url }) => {
     return (
@@ -33,13 +35,25 @@ class Chapter extends React.Component {
         //this.handleCheck = this.handleCheck.bind(this);
     }
 
-    handleCheck(id, complete) {
-        // TODO : update task completion in db
-        let chap = this.state.chapter;
-        let i = chap.tasks.map(t => t.id).indexOf(id);
-        chap.tasks[i].complete = !complete;
-        this.setState({
-            chapter: chap
+    handleCheck(user, coupleData, chapter, taskId, complete) {
+        const coupleDataRef = user && user.coupleDataRef;
+        if (!coupleDataRef || !coupleData) return;
+
+        const isTaskCompleted = !complete;
+
+        const taskIds = [];
+        chapter.tasks.forEach((task) => {
+            if (task.id !== taskId) {
+                taskIds.push(task.id);
+            }
+        });
+
+        const isChapterCompleted = isTaskCompleted && this.isAllTasksCompleted(taskIds, chapter.id, coupleData);
+
+        // write to db
+        coupleDataRef.update({
+            [`completionStatus.${chapter.id}.completed`]: isChapterCompleted,
+            [`completionStatus.${chapter.id}.tasks.${taskId}`]: isTaskCompleted
         });
     }
 
@@ -54,6 +68,32 @@ class Chapter extends React.Component {
                 chapter: doc
             });
         }
+    }
+
+    isTaskComplete(coupleData, chapId, taskId) {
+        const completionStatus = coupleData && coupleData.completionStatus;
+
+        if (completionStatus && completionStatus[chapId] && completionStatus[chapId].tasks &&
+            completionStatus[chapId].tasks[taskId]) {
+            return completionStatus[chapId].tasks[taskId];
+        }
+
+        return false;
+    }
+
+    isAllTasksCompleted(taskIds, chapterId, coupleData) {
+        const completionStatus = coupleData.completionStatus;
+        if (completionStatus && completionStatus[chapterId] &&
+            completionStatus[chapterId].tasks) {
+            let count = 0;
+            taskIds.forEach((id) => {
+                if (completionStatus[chapterId].tasks[id])
+                    count++;
+            });
+            return count === taskIds.length;
+        }
+
+        return false;
     }
 
     componentDidMount() {
@@ -112,12 +152,20 @@ class Chapter extends React.Component {
                         {chapter.tasks && chapter.tasks.map((item, index) => {
                             return (
                                 <Col key={item.id} className="mb-2" xs="12" md="4">
-                                    <ListCard
-                                        subhead={item.subHead}
-                                        title={item.title}
-                                        complete={item.complete}
-                                        handleClick={() => this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })}
-                                        handleCheck={this.handleCheck.bind(this, item.id, item.complete)} />
+                                    <UserConsumer>
+                                        {user => (
+                                            <CoupleDataConsumer>
+                                                {coupleData => (
+                                                    <ListCard
+                                                        subhead={item.subHead}
+                                                        title={item.title}
+                                                        complete={this.isTaskComplete(coupleData, chapter.id, item.id)}
+                                                        handleClick={() => this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })}
+                                                        handleCheck={this.handleCheck.bind(this, user, coupleData, chapter, item.id, this.isTaskComplete(coupleData, chapter.id, item.id))} />
+                                                )}
+                                            </CoupleDataConsumer>
+                                        )}
+                                    </UserConsumer>
                                 </Col>
                             );
                         })}
