@@ -3,6 +3,7 @@ import LoveLanguages from '../LoveLanguages.json';
 import { Alert, Form, Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { Link } from 'react-router-dom';
+import {sendPartnerRequest} from '../MyCloudFunctions';
 
 const LoveLangCard = ({ name, lang, handleClick }) => {
     return (
@@ -32,7 +33,7 @@ class UserView extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -41,8 +42,11 @@ class UserView extends React.Component {
         if (form.checkValidity() === true) {
             this.setState({ validated: true, loading: true, error: null });
             // TODO: call send partner request cloud function
-            console.log("Sending request to " + form.elements.email.value + "...")
-            setTimeout(() => { this.setState({ loading: false, error: "det finns ingen användare med den angivna e-postaddressen" }) }, 3000)
+           let error = await sendPartnerRequest(form.elements.email.value);
+           this.setState({loading: false, error: error });
+            //console.log("Sending request to " + form.elements.email.value + "...")
+            //setTimeout(() => { this.setState({ loading: false, error: "det finns ingen användare med den angivna e-postaddressen" }) }, 3000)
+            
         }
     }
 
