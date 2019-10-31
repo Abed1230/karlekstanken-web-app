@@ -159,6 +159,7 @@ class Chapter extends React.Component {
                                                     <ListCard
                                                         subhead={item.subHead}
                                                         title={item.title}
+                                                        enableCheck={coupleData ? true : false}
                                                         complete={this.isTaskComplete(coupleData, chapter.id, item.id)}
                                                         handleClick={() => this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })}
                                                         handleCheck={this.handleCheck.bind(this, user, coupleData, chapter, item.id, this.isTaskComplete(coupleData, chapter.id, item.id))} />
