@@ -4,6 +4,7 @@ import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
+import { UserConsumer } from '../UserContext';
 
 class Home extends React.Component {
 
@@ -25,6 +26,33 @@ class Home extends React.Component {
         }
     }
 
+    handleCheck(user, coupleData, chapter) {
+        const coupleDataRef = user && user.coupleDataRef;
+        if (!coupleDataRef || !coupleData) return;
+
+        const completed = !this.isChapterComplete(coupleData, chapter.id);
+
+        const data = {
+            [`completionStatus.${chapter.id}.completed`]: completed
+        }
+
+        chapter.taskIds.forEach((id) => {
+            data[`completionStatus.${chapter.id}.tasks.${id}`] = completed;
+        });
+
+        coupleDataRef.update(data);
+    }
+
+    isChapterComplete(coupleData, chapId) {
+        const completionStatus = coupleData && coupleData.completionStatus;
+
+        if (completionStatus && completionStatus[chapId] && completionStatus[chapId].completed) {
+            return completionStatus[chapId].completed;
+        }
+
+        return false;
+    }
+
     componentDidMount() {
         this.mounted = true;
         this.getData();
@@ -42,19 +70,23 @@ class Home extends React.Component {
                     <Row>
                         {this.state.chapters.map((item, index) => {
                             return (
-                                <CoupleDataConsumer>
-                                    {coupleData => (
-                                        <Col key={item.id} className="mb-2" xs="12" md="6">
-                                            <ListCard
-                                                subhead={item.subHead}
-                                                title={item.title}
-                                                enableCheck={coupleData ? true : false}
-                                                complete={item.complete}
-                                                handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
-                                                handleCheck={() => console.log(item.title + " checked!")} />
-                                        </Col>
+                                <UserConsumer>
+                                    {user => (
+                                        <CoupleDataConsumer>
+                                            {coupleData => (
+                                                <Col key={item.id} className="mb-2" xs="12" md="6">
+                                                    <ListCard
+                                                        subhead={item.subHead}
+                                                        title={item.title}
+                                                        enableCheck={coupleData ? true : false}
+                                                        complete={this.isChapterComplete(coupleData, item.id)}
+                                                        handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
+                                                        handleCheck={this.handleCheck.bind(this, user, coupleData, item)} />
+                                                </Col>
+                                            )}
+                                        </CoupleDataConsumer>
                                     )}
-                                </CoupleDataConsumer>
+                                </UserConsumer>
                             );
                         })}
                     </Row>
