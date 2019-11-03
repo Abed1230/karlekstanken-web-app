@@ -6,6 +6,24 @@ import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
 
+const HeartProgressBar = ({ value }) => {
+    value = (value < 0) ? 0 : (value > 1) ? 1 : value;
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 24 24">
+            <defs>
+                <linearGradient id="progress" x1="0" y1="1" x2="0" y2="0">
+                    <stop id="stop1" offset={value} stopColor="#e53935" />
+                    <stop id="stop2" offset={value} stopColor="#e53935" stopOpacity="0.6" />
+                </linearGradient>
+            </defs>
+            <g>
+                <path fill="url(#progress)" d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z" />
+                <text x="12" y="12" textAnchor="middle" alignmentBaseline="central" fontWeight="bold" fill="#B71C1C" fontSize="5">{value * 100}%</text>
+            </g>
+        </svg>
+    );
+};
+
 class Home extends React.Component {
 
     constructor(props) {
@@ -66,6 +84,9 @@ class Home extends React.Component {
         return (
             <>
                 <MyNavBar />
+                <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                    <HeartProgressBar value={0.24} />
+                </div>
                 <Container className="mt-3">
                     <Row>
                         {this.state.chapters.map((item, index) => {
@@ -74,7 +95,7 @@ class Home extends React.Component {
                                     {user => (
                                         <CoupleDataConsumer>
                                             {coupleData => (
-                                                <Col key={item.id} className="mb-2" xs="12" md="6">
+                                                <Col key={item.id} className="mb-2" xs="12" md="4">
                                                     <ListCard
                                                         subhead={item.subHead}
                                                         title={item.title}
