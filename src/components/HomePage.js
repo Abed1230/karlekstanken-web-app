@@ -43,20 +43,6 @@ class Home extends React.Component {
                 chapters: doc.list
             });
         }
-
-        /* const chapters = [
-            {
-                id: "3",
-                title: "Hohoho",
-                subHead: "Avsnitt 3",
-                taskIds: ["0", "1", "2", "3"],
-            }
-        ];
-
-        this.setState({
-            chapters: chapters,
-        }); */
-
     }
 
     handleCheck(user, coupleData, chapter) {
@@ -136,15 +122,9 @@ class Home extends React.Component {
                 <CoupleDataConsumer>
                     {coupleData => (
                         <>
-                            {chapters && coupleData ?
-                                <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
-                                    <HeartProgressBar value={this.calculateProgressValue(chapters, coupleData)} />
-                                </div>
-                                :
-                                <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
-                                    <HeartProgressBar value={0} />
-                                </div>
-                            }
+                            <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                                <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
+                            </div>
                             <Container className="mt-3">
                                 <Row>
                                     {chapters && chapters.map((item, index) => {

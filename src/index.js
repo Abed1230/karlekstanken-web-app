@@ -31,7 +31,7 @@ class App extends React.Component {
 
     componentDidMount() {
         this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
-            console.log("authUser: " + authUser);
+            console.log("auth state changed, authUser: " + authUser);
             // makes sure we only have one subscription
             this.unsubUserData && this.unsubUserData();
             this.unsubCoupleData && this.unsubCoupleData();
@@ -73,7 +73,7 @@ class App extends React.Component {
                 });
             } else {
                 localStorage.removeItem(KEY_AUTH_USER);
-                this.setState({ authUser: null });
+                this.setState({ authUser: null, coupleData: null, user: null });
             }
         });
     }
