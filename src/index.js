@@ -16,6 +16,7 @@ import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
 import TaskPage from './TaskPage';
+import Settings from './components/Settings';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -95,6 +96,7 @@ class App extends React.Component {
                                     <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                     <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                     <PrivateRoute component={HomePage} path="/" exact />
+                                    <PrivateRoute component={Settings} path="/settings" exact />
                                     <PrivateRoute component={LoveTest} path="/languagetest" exact />
                                     <PrivateRoute component={Chapter} path="/chapter" exact />
                                     <PrivateRoute component={TaskPage} path="/task" exact />

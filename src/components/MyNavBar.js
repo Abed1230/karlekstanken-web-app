@@ -3,7 +3,7 @@ import logo from '../logo.png';
 import { Navbar, Dropdown, Button } from 'react-bootstrap';
 import UserView from './UserView';
 import { fire } from '../FirebaseData';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { UserConsumer } from '../UserContext';
 
 const GearIcon = (props) => (
@@ -37,7 +37,7 @@ function MyNavBar({ goBack, history }) {
                 </UserConsumer>
                 <Dropdown.Divider className="mt-4 mb-4" />
                 {/* TODO: navigate to settings page */}
-                <Button className="float-left d-flex align-items-center" variant="outline-secondary">
+                <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
                     <span className="mr-1"><GearIcon fill="#6c757d" /></span>
                     Inställningar
                     </Button>
