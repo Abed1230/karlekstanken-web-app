@@ -1,0 +1,85 @@
+import React from 'react';
+import { Spinner, Card, Button } from 'react-bootstrap';
+import {cancelPartnerRequest, acceptPartnerRequest, rejectPartnerRequest} from '../MyCloudFunctions';
+
+class ReceivedPartnerRequest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+        };
+
+        this.handleAccept = this.handleAccept.bind(this);
+        this.handleReject = this.handleReject.bind(this);
+    }
+
+    async handleAccept() {
+        {/* TODO: call acceptPartnerRequest cloud function */ }
+        this.setState({ loading: true })
+        await acceptPartnerRequest();
+        this.setState({loading: false});
+    }
+
+    async handleReject() {
+        {/* TODO: call rejectPartnerRequest cloud function */ }
+        this.setState({ loading: true })
+        await rejectPartnerRequest();
+        this.setState({loading: false});
+    }
+
+    render() {
+        const { name, email } = this.props;
+        return (
+            <Card>
+                <Card.Header>Partner förfrågan</Card.Header>
+                <Card.Body>
+                    <p><span className="font-italic">{name} ({email})</span> vill lägga till dig som partner</p>
+                    {this.state.loading ?
+                        <Spinner animation="border" variant="info" />
+                        :
+                        <div>
+                            <Button variant="info" onClick={this.handleAccept}>Acceptera</Button>
+                            <Button variant="light" className="ml-3" onClick={this.handleReject}>Avböj</Button>
+                        </div>
+                    }
+                </Card.Body>
+            </Card>
+        );
+    }
+}
+
+class SentPartnerRequest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+        };
+        this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    async handleCancel() {
+        /* TODO: call cancelPartnerRequest cloud function */
+        this.setState({ loading: true });
+        await cancelPartnerRequest();
+        this.setState({loading: false});
+    }
+
+    render() {
+        const { name, email } = this.props;
+        return (
+            <Card>
+                <Card.Header>Partner förfrågan</Card.Header>
+                <Card.Body>
+                    <p>Väntar på att <span className="font-italic">{name} ({email})</span> ska acceptera din förfrågan</p>
+                    {this.state.loading ?
+                        <Spinner animation="border" variant="info" />
+                        :
+                        <Button variant="light" className="ml-2" onClick={this.handleCancel}>Avbryt</Button>
+                    }
+                </Card.Body>
+            </Card >
+        );
+    }
+}
+
+export { ReceivedPartnerRequest, SentPartnerRequest };
