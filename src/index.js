@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
 import { AuthUserProvider } from './AuthUserContext';
+import { CoupleDataProvider } from './CoupleDataContext';
 
 import Login from './Login.js';
 import Register from './Register.js';
@@ -23,15 +24,17 @@ class App extends React.Component {
         super(props);
         this.state = {
             user: null,
+            coupleData: null,
             authUser: JSON.parse(localStorage.getItem(KEY_AUTH_USER)),
         }
     }
 
     componentDidMount() {
         this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
-            console.log("authUser: " + authUser);
+            console.log("auth state changed, authUser: " + authUser);
             // makes sure we only have one subscription
             this.unsubUserData && this.unsubUserData();
+            this.unsubCoupleData && this.unsubCoupleData();
 
             if (authUser) {
                 localStorage.setItem(KEY_AUTH_USER, JSON.stringify(authUser));
@@ -45,6 +48,15 @@ class App extends React.Component {
                     }
 
                     user.uid = authUser.uid;
+
+                    const coupleDataRef = user.coupleDataRef;
+                    if (coupleDataRef) {
+                        this.unsubCoupleData = coupleDataRef.onSnapshot((snap) => {
+                            this.setState({
+                                coupleData: snap.data()
+                            });
+                        });
+                    }
 
                     /* only read once at start */
                     if (!this.state.user) {
@@ -61,7 +73,7 @@ class App extends React.Component {
                 });
             } else {
                 localStorage.removeItem(KEY_AUTH_USER);
-                this.setState({ authUser: null });
+                this.setState({ authUser: null, coupleData: null, user: null });
             }
         });
     }
@@ -69,6 +81,7 @@ class App extends React.Component {
     componentWillUnmount() {
         this.unsubAuthUser && this.unsubAuthUser();
         this.unsubUserData && this.unsubUserData();
+        this.unsubCoupleData && this.unsubCoupleData();
     }
 
     render() {
@@ -76,17 +89,19 @@ class App extends React.Component {
             <div className="App">
                 <AuthUserProvider value={this.state.authUser}>
                     <UserProvider value={this.state.user}>
-                        <BrowserRouter>
-                            <Switch>
-                                <PublicRoute restricted={true} component={Login} path="/signin" exact />
-                                <PublicRoute restricted={true} component={Register} path="/signup" exact />
-                                <PrivateRoute component={HomePage} path="/" exact />
-                                <PrivateRoute component={LoveTest} path="/languagetest" exact />
-                                <PrivateRoute component={Chapter} path="/chapter" exact />
-                                <PrivateRoute component={TaskPage} path="/task" exact />
-                                <Route component={NotFound} />
-                            </Switch>
-                        </BrowserRouter>
+                        <CoupleDataProvider value={this.state.coupleData}>
+                            <BrowserRouter>
+                                <Switch>
+                                    <PublicRoute restricted={true} component={Login} path="/signin" exact />
+                                    <PublicRoute restricted={true} component={Register} path="/signup" exact />
+                                    <PrivateRoute component={HomePage} path="/" exact />
+                                    <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                    <PrivateRoute component={Chapter} path="/chapter" exact />
+                                    <PrivateRoute component={TaskPage} path="/task" exact />
+                                    <Route component={NotFound} />
+                                </Switch>
+                            </BrowserRouter>
+                        </CoupleDataProvider>
                     </UserProvider>
                 </AuthUserProvider>
             </div >
