@@ -1,9 +1,10 @@
 import React from 'react';
 import LoveLanguages from '../LoveLanguages.json';
-import { Alert, Form, Button, Card, Modal, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Form, Button, Card, Modal, Container, Row, Col, ButtonToolbar } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { Link } from 'react-router-dom';
 import {sendPartnerRequest} from '../MyCloudFunctions';
+import { ReceivedPartnerRequest, SentPartnerRequest } from './PartnerRequest.js';
 
 const LoveLangCard = ({ name, lang, handleClick }) => {
     return (
@@ -64,12 +65,28 @@ class UserView extends React.Component {
                                 <Col>
                                     <h4 className="mt-4 mb-4 text-center">Du & {user.partner ? user.partner.name : "?"}</h4>
 
-                                    {/* TODO: navigate to add partner page */}
-                                    {!user.partner &&
+                                    {!user.partner && !user.partnerRequestFrom && !user.partnerRequestTo &&
                                         <div className="text-center"><Button variant="info" onClick={() => this.setState({ showAddPartnerModal: true })} >Lägg till partner</Button></div>
                                     }
                                 </Col>
                             </Row>
+
+                            {user.partnerRequestFrom &&
+                                <Row className="justify-content-md-center">
+                                    <Col md="6">
+                                        <ReceivedPartnerRequest name={user.partnerRequestFrom.name} email={user.partnerRequestFrom.email} />
+                                    </Col>
+                                </Row>
+                            }
+
+                            {user.partnerRequestTo &&
+                                <Row className="justify-content-md-center">
+                                    <Col md="6">
+                                        <SentPartnerRequest name={user.partnerRequestTo.name} email={user.partnerRequestTo.email} />
+                                    </Col>
+                                </Row>
+                            }
+
                             <Row>
                                 {partnerLoveLang &&
                                     <Col className="mb-2" xs="12" md="6">

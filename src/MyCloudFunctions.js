@@ -8,6 +8,47 @@ const ERROR_RECEIVER_EMAIL_REQUIRED = 'ERROR_RECEIVER_EMAIL_REQUIRED';
 const ERROR_RECEIVER_EMAIL_IS_SENDERS = 'ERROR_RECEIVER_EMAIL_IS_SENDERS';
 
 
+
+
+export async function rejectPartnerRequest()
+{
+    try {
+        var rejectPartnerRequest = functions.httpsCallable('rejectPartnerRequest');
+        await rejectPartnerRequest();
+        console.log('worked fine');
+    }
+    catch(e)
+    {
+        console.log(e.message); 
+    }
+}
+
+export async function acceptPartnerRequest()
+{
+    try {
+        var acceptPartnerRequest = functions.httpsCallable('acceptPartnerRequest');
+        await acceptPartnerRequest();
+        console.log('worked fine');
+    }
+    catch(e)
+    {
+        console.log(e.message); 
+    }
+}
+
+export async function cancelPartnerRequest()
+{
+    try {
+        var cancelPartnerRequest = functions.httpsCallable('cancelPartnerRequest');
+        await cancelPartnerRequest();
+        console.log('worked fine');
+    }
+    catch(e)
+    {
+        console.log(e.message); 
+    }
+}
+
 export async function sendPartnerRequest(email) {
     try {
         var sendPartnerRequest = functions.httpsCallable('sendPartnerRequest');

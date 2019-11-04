@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {fire} from './FirebaseData';
-import {Button} from 'react-bootstrap';
+import { fire } from './FirebaseData';
+import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
+import loginImg from './assets/login_page.jpg';
 
 export class Login extends Component {
     constructor(props) {
@@ -17,12 +18,15 @@ export class Login extends Component {
 
 
     handleInputchange = (event) => {
+        console.log(event.target.name);
+        console.log(this.state.email);
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
     login(e) {
+        console.log(this.state.email);
         e.preventDefault();
         fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
         }).catch((error) => {
@@ -31,28 +35,49 @@ export class Login extends Component {
     }
 
     render() {
-        const { email } = this.state
-        const { password } = this.state
-
         return (
-            <div>
-                <h1>Logga in</h1>
-                <div>
-                    <p>Email: {email}</p>
-                    <form onSubmit={this.handleSubmit}>
-                        <p> <input type='text' placeholder='Din email' name='email' onChange={this.handleInputchange} /></p>
-                    </form>
-                </div>
+            <div style={{ backgroundImage: `url(${loginImg})`,backgroundSize: ('cover'), backgroundAttachment:('fixed')}}>
+                <Container style={{ marginTop: 20, height: 800 }}>
+                    <Row className="justify-content-center">
+                    <Card style={{ width: 300, marginTop:40, borderRadius: 10, opacity:0.90, padding:40 }}>
+                        <h2 className="text-center">Logga in</h2>
+                        <Row className="justify-content-center">
+                            <Form onChange={this.handleInputchange}>
+                                <Form.Group controlId="emailForm">
+                                    <Form.Control required type="email" name="email" placeholder="Email" />
+                                    <Form.Text className="text-muted">
+                                        Email
+                                </Form.Text>
+                                </Form.Group>
+                            </Form>
+                        </Row>
 
-                <div>
-                    <p>Lösenord: {password}</p>
-                    <form onSubmit={this.handleSubmit}>
-                        <p> <input type='text' placeholder='Ditt lösenord' name='password' onChange={this.handleInputchange} /></p>
-                    </form>
-                </div>
-                <p> <Button onClick={this.login}>Logga in</Button></p>
-                <Link to='signup'>Inget konto? Registrera dig här</Link>
+                        <Row className="justify-content-center">
+                            <Form onChange={this.handleInputchange}>
+                                <Form.Group controlId="passwordForm">
+                                    <Form.Control required type="password" name="password" placeholder="Lösenord" />
+                                    <Form.Text className="text-muted">
+                                        Lösenord
+                                </Form.Text>
+                                </Form.Group>
+                            </Form>
+                        </Row>
+
+                        <Row className="justify-content-center">
+                            <small style={{ marginBottom: 10 }}><Link className="text-center" to='signup'>Inget konto? Registrera dig här</Link></small>
+                        </Row>
+
+                        <Row className="justify-content-center">
+                            <Col className="text-center">
+                                <Button style={{ width: 200 }} onClick={this.login}>Logga in</Button>
+                            </Col>
+                        </Row>
+                    </Card>
+                    </Row>
+                    
+                </Container >
             </div>
+
         )
     }
 }
