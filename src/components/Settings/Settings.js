@@ -4,6 +4,7 @@ import { Spinner, Form, Modal, Row, Col, Container, Card, Dropdown, Button, Aler
 import { UserConsumer } from '../../UserContext';
 import strftime from 'strftime';
 import ChangePasswordModal from './ChangePasswordModal';
+import RemovePartnerModal from './RemovePartnerModal';
 
 class Settings extends React.Component {
     constructor(props) {
@@ -18,16 +19,11 @@ class Settings extends React.Component {
             showDeleteAccountModal: false,
         };
 
-        this.handleRemovePartner = this.handleRemovePartner.bind(this);
         this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
     }
 
     timeStampToDateString(ts) {
         return strftime('%F %T', ts.toDate());
-    }
-
-    handleRemovePartner() {
-        // TODO: call remove partner cloud function
     }
 
     handleDeleteAccount(event) {
@@ -89,7 +85,7 @@ class Settings extends React.Component {
                                             {!user.premium && user.partner &&
                                                 <>
                                                     <Button variant="outline-danger" block onClick={() => this.setState({ showRemovePartnerModal: true })}>Ta bort partner</Button>
-                                                    <small className="mt-2 text-muted" /* style={{ fontSize: "0.95rem" }} */>Observera att det inte går att ta bort sin partner när man har licens</small>
+                                                    <small className="mt-2 text-muted" /* style={{ fontSize: "0.95rem" }} */>Observera att du inte kan ta bort din partner när du har licens</small>
                                                 </>
                                             }
                                             <Dropdown.Divider />
@@ -100,17 +96,8 @@ class Settings extends React.Component {
 
                                     <ChangePasswordModal show={this.state.showChangePasswordModal} handleHide={() => this.setState({ showChangePasswordModal: false })} />
 
-                                    {/* ------ Remove Partner Modal ------ */}
-                                    <Modal show={this.state.showRemovePartnerModal} onHide={() => this.setState({ showRemovePartnerModal: false })}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Är du säker på att du vill ta bort {user.partner && user.partner.name} som partner?</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Footer>
-                                            <Button variant="danger">Ta bort</Button>
-                                            <Button variant="info" onClick={() => this.setState({ showRemovePartnerModal: false })}>Avbryt</Button>
-                                        </Modal.Footer>
-                                    </Modal>
-
+                                    <RemovePartnerModal show={this.state.showRemovePartnerModal} user={user} handleHide={() => this.setState({ showRemovePartnerModal: false })} />
+                                    
                                     {/* ------ Delete Account Modal ------ */}
                                     <Modal show={this.state.showDeleteAccountModal} onHide={() => this.setState({ showDeleteAccountModal: false })}>
                                         <Modal.Header closeButton>
