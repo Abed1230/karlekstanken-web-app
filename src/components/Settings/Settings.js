@@ -72,12 +72,11 @@ class Settings extends React.Component {
                                             {!user.premium && user.partner &&
                                                 <>
                                                     <Button variant="outline-danger" block onClick={() => this.setState({ showRemovePartnerModal: true })}>Ta bort partner</Button>
-                                                    <small className="mt-2 text-muted" /* style={{ fontSize: "0.95rem" }} */>Observera att du inte kan ta bort din partner när du har licens</small>
+                                                    <small className="mt-2 text-muted">Observera att du inte kan ta bort din partner när du har licens</small>
                                                 </>
                                             }
                                             <Dropdown.Divider />
                                             <Button className="mt-3 mb-3" variant="danger" onClick={() => this.setState({ showDeleteAccountModal: true })}>Avsluta konto</Button>
-                                            {/* <p className="mt-2 text-muted" style={{ fontSize: "0.95rem" }}>Observera att om du har partner avslutas/tas bort dennes konto även. Om du har köpt license upphör den att gälla</p> */}
                                         </Col>
                                     </Row>
 
