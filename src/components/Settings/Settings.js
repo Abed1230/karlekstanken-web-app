@@ -1,37 +1,24 @@
 import React from 'react';
 import MyTitleBar from '../MyTitleBar';
-import { Spinner, Form, Modal, Row, Col, Container, Card, Dropdown, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Container, Card, Dropdown, Button } from 'react-bootstrap';
 import { UserConsumer } from '../../UserContext';
 import strftime from 'strftime';
 import ChangePasswordModal from './ChangePasswordModal';
 import RemovePartnerModal from './RemovePartnerModal';
+import DeleteAccountModal from './DeleteAccountModal';
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
-            error: null,
-            success: false,
-            changePasswordFormValidated: false,
             showChangePasswordModal: false,
             showRemovePartnerModal: false,
             showDeleteAccountModal: false,
         };
-
-        this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
     }
 
     timeStampToDateString(ts) {
         return strftime('%F %T', ts.toDate());
-    }
-
-    handleDeleteAccount(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        // TODO: call delete account cloud function
-        this.setState({ loading: true });
     }
 
     render() {
@@ -98,48 +85,7 @@ class Settings extends React.Component {
 
                                     <RemovePartnerModal show={this.state.showRemovePartnerModal} user={user} handleHide={() => this.setState({ showRemovePartnerModal: false })} />
                                     
-                                    {/* ------ Delete Account Modal ------ */}
-                                    <Modal show={this.state.showDeleteAccountModal} onHide={() => this.setState({ showDeleteAccountModal: false })}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>
-                                                {user.partner && user.premium ?
-                                                    "Är du säker på att du vill avsluta/ta bort ditt konto och " + user.partner.name + "'s konto?"
-                                                    :
-                                                    "Är du säker på att du vill avsluta/ta bort ditt konto?"
-                                                }
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        {user.partner && user.premium ?
-                                            <Modal.Body>
-                                                <p className="text-danger">Observera att om du avslutar ditt konto avslutas även din partners konto. Er licens upphör också att gälla. Detta har omedelbar verkan och kan inte ångras!</p>
-                                                <Form onSubmit={this.handleDeleteAccount}>
-                                                    <Form.Check required type="checkbox" label={"Jag bekräftar att jag vill avsluta mitt och " + user.partner.name + "'s konto"} />
-                                                    <hr />
-                                                    <div className="text-right">
-                                                        {this.state.loading ?
-                                                            <Spinner animation="border" variant="info" />
-                                                            :
-                                                            <>
-                                                                <Button className="mr-2" variant="danger" type="submit">Avsluta</Button>
-                                                                <Button variant="info" onClick={() => this.setState({ showDeleteAccountModal: false })}>Avbryt</Button>
-                                                            </>
-                                                        }
-                                                    </div>
-                                                </Form>
-                                            </Modal.Body>
-                                            :
-                                            <Modal.Footer>
-                                                {this.state.loading ?
-                                                    <Spinner animation="border" variant="info" />
-                                                    :
-                                                    <>
-                                                        <Button className="mr-2" variant="danger" onClick={this.handleDeleteAccount}>Avsluta</Button>
-                                                        <Button variant="info" onClick={() => this.setState({ showDeleteAccountModal: false })}>Avbryt</Button>
-                                                    </>
-                                                }
-                                            </Modal.Footer>
-                                        }
-                                    </Modal>
+                                    <DeleteAccountModal show={this.state.showDeleteAccountModal} user={user} handleHide={() => this.setState({showDeleteAccountModal: false})} />
                                 </Container>
                             )
                             :
