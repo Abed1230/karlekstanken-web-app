@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner, Modal, Button, Alert } from 'react-bootstrap';
+import { removePartner } from '../../MyCloudFunctions';
 
 class RemovePartnerModal extends React.Component {
     constructor(props) {
@@ -23,15 +24,19 @@ class RemovePartnerModal extends React.Component {
     }
 
     async handleDelete() {
-        // TODO: call remove partner cloud function
         this.setState({ loading: true, error: null });
-        setTimeout(() => {
+
+        const error = await removePartner();
+
+        if (error) {
             this.setState({
                 loading: false,
-                error: "Kunde inte ta bort din partner. Ett okänt fel inträffade. Försök igen senare",
+                error: error,
             });
-            //this.hideAndReset();
-        }, 3000);
+        } else {
+            this.setState({ loading: false });
+            this.hideAndReset();
+        }
     }
 
     render() {
