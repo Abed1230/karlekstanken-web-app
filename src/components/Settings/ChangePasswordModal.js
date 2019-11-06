@@ -19,11 +19,13 @@ class ChangePasswordModal extends React.Component {
 
     hideAndReset() {
         this.props.handleHide();
-        this.setState({
-            validated: false,
-            error: null,
-            success: false,
-        });
+        setTimeout(() => {
+            this.setState({
+                validated: false,
+                error: null,
+                success: false,
+            });
+        }, 500);
     }
 
     async handleSubmit(event) {

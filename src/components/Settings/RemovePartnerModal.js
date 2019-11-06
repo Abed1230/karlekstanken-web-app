@@ -15,14 +15,16 @@ class RemovePartnerModal extends React.Component {
 
     hideAndReset() {
         this.props.handleHide();
-        this.setState({
-            error: null,
-        });
+        setTimeout(() => {
+            this.setState({
+                error: null,
+            });
+        }, 500);
     }
 
     async handleDelete() {
         // TODO: call remove partner cloud function
-        this.setState({ loading: true });
+        this.setState({ loading: true, error: null });
         setTimeout(() => {
             this.setState({
                 loading: false,
