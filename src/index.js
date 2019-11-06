@@ -16,7 +16,7 @@ import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
 import TaskPage from './TaskPage';
-import Settings from './components/Settings';
+import Settings from './components/Settings/Settings.js';
 
 const KEY_AUTH_USER = "authUser";
 

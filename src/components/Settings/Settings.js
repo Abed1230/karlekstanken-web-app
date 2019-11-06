@@ -1,19 +1,24 @@
 import React from 'react';
-import MyTitleBar from './MyTitleBar';
-import { Spinner, Form, Modal, Row, Col, Container, Card, Dropdown, Button } from 'react-bootstrap';
-import { UserConsumer } from '../UserContext';
+import MyTitleBar from '../MyTitleBar';
+import { Spinner, Form, Modal, Row, Col, Container, Card, Dropdown, Button, Alert } from 'react-bootstrap';
+import { UserConsumer } from '../../UserContext';
 import strftime from 'strftime';
+import ChangePasswordModal from './ChangePasswordModal';
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
+            error: null,
+            success: false,
+            changePasswordFormValidated: false,
             showChangePasswordModal: false,
             showRemovePartnerModal: false,
             showDeleteAccountModal: false,
         };
 
+        this.handleRemovePartner = this.handleRemovePartner.bind(this);
         this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
     }
 
@@ -80,7 +85,7 @@ class Settings extends React.Component {
                                             </Card>
                                         </Col>
                                         <Col className="mt-4" md="6">
-                                            <Button className="mb-4" variant="light" block>Ändra lösenord</Button>
+                                            <Button className="mb-4" variant="light" block onClick={() => this.setState({ showChangePasswordModal: true })}>Ändra lösenord</Button>
                                             {!user.premium && user.partner &&
                                                 <>
                                                     <Button variant="outline-danger" block onClick={() => this.setState({ showRemovePartnerModal: true })}>Ta bort partner</Button>
@@ -93,6 +98,9 @@ class Settings extends React.Component {
                                         </Col>
                                     </Row>
 
+                                    <ChangePasswordModal show={this.state.showChangePasswordModal} handleHide={() => this.setState({ showChangePasswordModal: false })} />
+
+                                    {/* ------ Remove Partner Modal ------ */}
                                     <Modal show={this.state.showRemovePartnerModal} onHide={() => this.setState({ showRemovePartnerModal: false })}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Är du säker på att du vill ta bort {user.partner && user.partner.name} som partner?</Modal.Title>
@@ -103,6 +111,7 @@ class Settings extends React.Component {
                                         </Modal.Footer>
                                     </Modal>
 
+                                    {/* ------ Delete Account Modal ------ */}
                                     <Modal show={this.state.showDeleteAccountModal} onHide={() => this.setState({ showDeleteAccountModal: false })}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>
@@ -115,7 +124,7 @@ class Settings extends React.Component {
                                         </Modal.Header>
                                         {user.partner && user.premium ?
                                             <Modal.Body>
-                                                <p className="text-danger">Observera att om du avslutar ditt konto avslutas även din partners konto. Er licens upphör att gälla. Detta har omedelbar verkan och kan inte ångras!</p>
+                                                <p className="text-danger">Observera att om du avslutar ditt konto avslutas även din partners konto. Er licens upphör också att gälla. Detta har omedelbar verkan och kan inte ångras!</p>
                                                 <Form onSubmit={this.handleDeleteAccount}>
                                                     <Form.Check required type="checkbox" label={"Jag bekräftar att jag vill avsluta mitt och " + user.partner.name + "'s konto"} />
                                                     <hr />
@@ -144,7 +153,6 @@ class Settings extends React.Component {
                                             </Modal.Footer>
                                         }
                                     </Modal>
-
                                 </Container>
                             )
                             :
