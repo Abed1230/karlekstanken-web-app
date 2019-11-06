@@ -47,7 +47,12 @@ class DeleteAccountModal extends React.Component {
             <Modal show={this.props.show} onHide={this.hideAndReset}>
                 {this.state.success ?
                     <Modal.Body>
-                        <Alert variant="light">Era konton är nu avslutade. Ni behöver själva logga ut från era enheter</Alert>
+                        <Alert variant="light">{user.partner && user.premium ?
+                            "Era konton är nu avslutade. Ni behöver själva logga ut från era enheter"
+                            :
+                            "Ditt konto är nu avslutad. Du behöver själv logga ut från dina enheter"
+                        }
+                        </Alert>
                     </Modal.Body>
                     :
                     <>
@@ -75,7 +80,7 @@ class DeleteAccountModal extends React.Component {
                         <Spinner animation="border" variant="info" />
                         :
                         this.state.success ?
-                            <Button variant="info" onClick={() => auth.signOut()}>Logga ut</Button>
+                            <Button variant="info" onClick={() => auth.signOut()}>Logga ut mig från denna enhet</Button>
                             :
                             <>
                                 <Button className="mr-2" variant="danger" onClick={this.handleSubmit}>Avsluta</Button>

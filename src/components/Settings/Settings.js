@@ -76,15 +76,17 @@ class Settings extends React.Component {
                                                 </>
                                             }
                                             <Dropdown.Divider />
-                                            <Button className="mt-3 mb-3" variant="danger" onClick={() => this.setState({ showDeleteAccountModal: true })}>Avsluta konto</Button>
+                                            <div className="mb-5 text-right">
+                                                <Button className="mt-3 mb-3" size="sm" variant="danger" onClick={() => this.setState({ showDeleteAccountModal: true })}>Avsluta konto</Button>
+                                            </div>
                                         </Col>
                                     </Row>
 
                                     <ChangePasswordModal show={this.state.showChangePasswordModal} handleHide={() => this.setState({ showChangePasswordModal: false })} />
 
                                     <RemovePartnerModal show={this.state.showRemovePartnerModal} user={user} handleHide={() => this.setState({ showRemovePartnerModal: false })} />
-                                    
-                                    <DeleteAccountModal show={this.state.showDeleteAccountModal} user={user} handleHide={() => this.setState({showDeleteAccountModal: false})} />
+
+                                    <DeleteAccountModal show={this.state.showDeleteAccountModal} user={user} handleHide={() => this.setState({ showDeleteAccountModal: false })} />
                                 </Container>
                             )
                             :
