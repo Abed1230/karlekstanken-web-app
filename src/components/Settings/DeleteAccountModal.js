@@ -46,8 +46,8 @@ class DeleteAccountModal extends React.Component {
             <Modal show={this.props.show} onHide={this.hideAndReset}>
                 {this.state.success ?
                     <Modal.Body>
-                        <Alert variant="success">{user.partner && user.premium ?
-                            "Ditt konto är nu avslutade. Om " + user.partner.className + " också vill avsluta sitt konto måste hen göra det separat"
+                        <Alert variant="light">{user.partner ?
+                            "Ditt konto är nu avslutade. Om " + user.partner.name + " också vill avsluta sitt konto måste hen göra det separat"
                             :
                             "Ditt konto är nu avslutad"
                         }
