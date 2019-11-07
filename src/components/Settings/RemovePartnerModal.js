@@ -56,7 +56,7 @@ class RemovePartnerModal extends React.Component {
                         <Spinner animation="border" variant="info" />
                         :
                         <>
-                            <Button variant="danger" onClick={this.handleDelete}>Ta bort</Button>
+                            <Button className="mr-3" variant="danger" onClick={this.handleDelete}>Ta bort</Button>
                             <Button variant="info" onClick={this.hideAndReset}>Avbryt</Button>
                         </>
                     }

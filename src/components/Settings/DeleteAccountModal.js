@@ -47,7 +47,7 @@ class DeleteAccountModal extends React.Component {
                 {this.state.success ?
                     <Modal.Body>
                         <Alert variant="light">{user.partner ?
-                            "Ditt konto är nu avslutade. Om " + user.partner.name + " också vill avsluta sitt konto måste hen göra det separat"
+                            "Ditt konto är nu avslutad. Om " + user.partner.name + " också vill avsluta sitt konto måste hen göra det separat"
                             :
                             "Ditt konto är nu avslutad"
                         }
@@ -76,7 +76,7 @@ class DeleteAccountModal extends React.Component {
                             <Button variant="info" onClick={() => auth.signOut()}>Logga ut</Button>
                             :
                             <>
-                                <Button className="mr-2" variant="danger" onClick={this.handleSubmit}>Avsluta</Button>
+                                <Button className="mr-3" variant="danger" onClick={this.handleSubmit}>Avsluta</Button>
                                 <Button variant="info" onClick={this.hideAndReset}>Avbryt</Button>
                             </>
                     }
