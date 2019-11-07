@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spinner, Modal, Button, Alert } from 'react-bootstrap';
 import { auth } from '../../FirebaseData';
+import { deleteAccount } from '../../MyCloudFunctions';
 
 class DeleteAccountModal extends React.Component {
     constructor(props) {
@@ -16,29 +17,27 @@ class DeleteAccountModal extends React.Component {
     }
 
     hideAndReset() {
-        this.props.handleHide();
-        setTimeout(() => {
-            this.setState({
-                validated: false,
-                error: null,
-                success: false,
-            });
-        }, 500);
+        if (!this.state.success) {
+            this.props.handleHide();
+            setTimeout(() => {
+                this.setState({
+                    validated: false,
+                    error: null,
+                    success: false,
+                });
+            }, 500);
+        }
     }
 
     async handleSubmit(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        // TODO: call delete account cloud function
         this.setState({ loading: true, error: null, success: false });
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-                //error: "Ett okänt fel inträffade. Försök igen senare",
-                success: true,
-            });
-        }, 3000);
+
+        const error = await deleteAccount();
+
+        this.setState({ loading: false, error: error, success: !error });
     }
 
     render() {
