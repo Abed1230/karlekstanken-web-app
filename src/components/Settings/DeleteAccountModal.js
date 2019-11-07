@@ -46,27 +46,21 @@ class DeleteAccountModal extends React.Component {
             <Modal show={this.props.show} onHide={this.hideAndReset}>
                 {this.state.success ?
                     <Modal.Body>
-                        <Alert variant="light">{user.partner && user.premium ?
-                            "Era konton är nu avslutade. Ni behöver själva logga ut från era enheter"
+                        <Alert variant="success">{user.partner && user.premium ?
+                            "Ditt konto är nu avslutade. Om " + user.partner.className + " också vill avsluta sitt konto måste hen göra det separat"
                             :
-                            "Ditt konto är nu avslutad. Du behöver själv logga ut från dina enheter"
+                            "Ditt konto är nu avslutad"
                         }
                         </Alert>
                     </Modal.Body>
                     :
                     <>
                         <Modal.Header closeButton>
-                            <Modal.Title>
-                                {user.partner && user.premium ?
-                                    "Är du säker på att du vill avsluta ditt och " + user.partner.name + "'s konto?"
-                                    :
-                                    "Är du säker på att du vill avsluta ditt konto?"
-                                }
-                            </Modal.Title>
+                            <Modal.Title>Är du säker på att du vill avsluta ditt konto?</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {user.partner && user.premium &&
-                                <p className="text-danger">Observera att om du avslutar ditt konto avslutas även din partners konto. Er licens upphör också att gälla. Detta har omedelbar verkan och kan inte ångras!</p>
+                                <p className="text-danger">Observera att er licens kommer sluta gälla för bägge om du avslutar ditt konto</p>
                             }
                             {this.state.error &&
                                 <Alert variant="danger">{this.state.error}</Alert>
@@ -79,7 +73,7 @@ class DeleteAccountModal extends React.Component {
                         <Spinner animation="border" variant="info" />
                         :
                         this.state.success ?
-                            <Button variant="info" onClick={() => auth.signOut()}>Logga ut mig från denna enhet</Button>
+                            <Button variant="info" onClick={() => auth.signOut()}>Logga ut</Button>
                             :
                             <>
                                 <Button className="mr-2" variant="danger" onClick={this.handleSubmit}>Avsluta</Button>
