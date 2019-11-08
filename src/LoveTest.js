@@ -99,19 +99,32 @@ export class LoveTest extends Component {
                                         console.log(q.index + "   " + a1);
                                         console.log(q.index + "   " + a2);
                                         return (
-                                            <Card key={index}>
-                                                <h4>{q.index}</h4>
-                                                <p>{q.alt1}</p>
-                                                <Form.Check type="checkbox" name="check1"
-                                                    checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
-                                                <p>{a1.toString()}</p>
-                                                <br />
-                                                <p>{q.alt2}</p>
-                                                <Form.Check type="checkbox" name="check2"
-                                                    checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
-                                                <p>{a2.toString()}</p>
-                                                <br />
-                                            </Card>
+                                            <div style={{ padding: 10 }}>
+                                                <Card key={index}>
+                                                    <h5 className="text-left" style={{ borderRadius: 3, backgroundColor: ('#008B8B'), padding: 3, color: ('white') }}>{'Fråga ' + (q.index + 1)}</h5>
+
+                                                    <Row>
+                                                        <Col>
+                                                            <p>{q.alt1}</p>
+                                                        </Col>
+                                                        <Col xs='2'>
+                                                            <Form.Check className="text-right" style={{paddingRight:10}} type="checkbox" name="check1"
+                                                                checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
+                                                            {/*<p>{a1.toString()}</p>*/}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col>
+                                                            <p>{q.alt2}</p>
+                                                        </Col>
+                                                        <Col xs='2'>
+                                                            <Form.Check className="text-right" style={{paddingRight:10}} type="checkbox" name="check2"
+                                                                checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
+                                                            {/*<p>{a2.toString()}</p>*/}
+                                                        </Col>
+                                                    </Row>
+                                                </Card>
+                                            </div>
                                         )
                                     })
                                 }
