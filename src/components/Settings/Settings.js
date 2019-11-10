@@ -90,7 +90,15 @@ class Settings extends React.Component {
                                 </Container>
                             )
                             :
-                            null
+                            /* Incase user doc has been delete but not firebase auth user */
+                            <Container>
+                                <Row className="mt-3 mb-3">
+                                    <Col>
+                                        <Button size="sm" variant="danger" onClick={() => this.setState({ showDeleteAccountModal: true })}>Avsluta konto</Button>
+                                    </Col>
+                                </Row>
+                                <DeleteAccountModal show={this.state.showDeleteAccountModal} handleHide={() => this.setState({ showDeleteAccountModal: false })} />
+                            </Container>
                     }
                     }
                 </UserConsumer>
