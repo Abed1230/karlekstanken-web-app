@@ -6,6 +6,7 @@ import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
 import './Home.css';
+import PurchaseDialog from './PurchaseDialog';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -32,6 +33,7 @@ class Home extends React.Component {
         super(props);
         this.state = {
             chapters: null,
+            showPurchaseDialog: false,
         };
     }
 
@@ -150,9 +152,10 @@ class Home extends React.Component {
                             <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
                                 <div className="text-center mx-auto">
                                     <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
-                                    <Button size="sm" variant="outline-info">Till köp</Button>
+                                    <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseDialog: true })}>Till köp</Button>
                                 </div>
                             </div>
+                            <PurchaseDialog show={this.state.showPurchaseDialog} handleHide={() => this.setState({ showPurchaseDialog: false })} />
                         </>
                     )}
                 </CoupleDataConsumer>
