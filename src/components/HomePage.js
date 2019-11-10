@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
+import './Home.css';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -125,7 +126,7 @@ class Home extends React.Component {
                             <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
                                 <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                             </div>
-                            <Container className="mt-3">
+                            <Container id="container" className="mt-3">
                                 <Row>
                                     {chapters && chapters.map((item, index) => {
                                         return (
@@ -146,6 +147,10 @@ class Home extends React.Component {
                                     })}
                                 </Row>
                             </Container>
+                            <div id="unlock-msg" className="fixed-bottom text-center bg-light p-3">
+                                <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                <Button size="sm" variant="outline-info">Till köp</Button>
+                            </div>
                         </>
                     )}
                 </CoupleDataConsumer>
