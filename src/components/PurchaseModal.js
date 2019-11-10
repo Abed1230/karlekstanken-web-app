@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 
-class PurchaseDialog extends React.Component {
+class PurchaseModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,7 +47,7 @@ class PurchaseDialog extends React.Component {
         return (
             <UserConsumer>
                 {user => (
-                    <Modal show={/* this.props.show */ true} onHide={this.props.handleHide}>
+                    <Modal show={this.props.show} onHide={this.props.handleHide}>
                         <Modal.Header closeButton>
                             <Modal.Title>Lås upp kärlekstanken</Modal.Title>
                         </Modal.Header>
@@ -80,4 +80,4 @@ class PurchaseDialog extends React.Component {
     }
 }
 
-export default PurchaseDialog;
+export default PurchaseModal;
