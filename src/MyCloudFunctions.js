@@ -7,7 +7,7 @@ export async function removePartner() {
         return null;
     } catch (e) {
         console.log("removePartner error: " + e);
-        return "Kunde inte ta bort din partner. Ett okänt fel inträffade. Försök igen senare";
+        return "Kunde inte ta bort din partner. Ett okänt fel inträffade. Var god försök igen senare";
     }
 }
 
@@ -19,8 +19,8 @@ export async function deleteAccount() {
     } catch (e) {
         console.log("delete account error: " + e);
         if (e.code.startsWith("auth")) {
-            return "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttagen. Försök igen senare"
+            return "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttagen. Var god försök igen senare för att avsluta ditt konto fullständigt"
         }
-        return "Ett okänt fel inträffade. Försök igen senare";
+        return "Ett okänt fel inträffade. Var god försök igen senare";
     }
 }

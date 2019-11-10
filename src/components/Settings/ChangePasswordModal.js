@@ -2,20 +2,21 @@ import React from 'react';
 import { Spinner, Form, Modal, Button, Alert } from 'react-bootstrap';
 import { auth, EmailAuthProvider } from '../../FirebaseData';
 import { WRONG_PASSWORD } from '../../AuthErrorCodes';
+import MyStrings from '../../MyStrings.json';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 const ChangePasswordSchema = Yup.object().shape({
     currentPassword: Yup.string()
-        .min(6, "Lösenordet kan inte vara mindre än 6 tecken")
-        .required("Nuvarande lösenord krävs"),
+        .min(6, MyStrings.errors.passwordTooShort)
+        .required(MyStrings.errors.fieldRequired),
     newPassword: Yup.string()
-        .min(6, "Lösenordet måste bestå av minst 6 tecken")
-        .required("Lösenord måste fyllas i"),
+        .min(6, MyStrings.errors.passwordTooShort)
+        .required(MyStrings.errors.fieldRequired),
     confirmPassword: Yup.string()
-        .min(6, "Lösenordet måste bestå av minst 6 tecken")
-        .required("Du måste bekräfta nya lösenordet")
-        .oneOf([Yup.ref("newPassword"), null], "Lösenorden stämmer inte överäns"),
+        .min(6, MyStrings.errors.passwordTooShort)
+        .required(MyStrings.errors.fieldRequired)
+        .oneOf([Yup.ref("newPassword"), null], MyStrings.errors.passwordMismatch),
 });
 
 class ChangePasswordModal extends React.Component {
@@ -69,7 +70,7 @@ class ChangePasswordModal extends React.Component {
             } else {
                 this.setState({
                     loading: false,
-                    error: "Ett okänt fel inträffade. Försök igen"
+                    error: MyStrings.errors.unknown
                 });
             }
         }
