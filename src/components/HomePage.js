@@ -147,9 +147,11 @@ class Home extends React.Component {
                                     })}
                                 </Row>
                             </Container>
-                            <div id="unlock-msg" className="fixed-bottom text-center bg-light p-3">
-                                <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
-                                <Button size="sm" variant="outline-info">Till köp</Button>
+                            <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                <div className="text-center mx-auto">
+                                    <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                    <Button size="sm" variant="outline-info">Till köp</Button>
+                                </div>
                             </div>
                         </>
                     )}
