@@ -45,10 +45,10 @@ export class Login extends Component {
                                     validationSchema={LoginSchema}
                                     onSubmit={this.login}
                                 >
-                                    {({ handleSubmit, handleChange, values, errors }) =>
+                                    {({ handleSubmit, handleChange, values, errors, touched }) =>
                                         (<Form noValidate={true} onSubmit={handleSubmit}>
                                             <Form.Group controlId="emailForm">
-                                                <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={!!errors.email} onChange={handleChange} />
+                                                <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={touched.email && !!errors.email} onChange={handleChange} />
                                                 <Form.Text className="text-muted">
                                                     Email
                                                 </Form.Text>
@@ -58,7 +58,7 @@ export class Login extends Component {
                                             </Form.Group>
 
                                             <Form.Group controlId="passwordForm">
-                                                <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={!!errors.password} onChange={handleChange} />
+                                                <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={touched.password && !!errors.password} onChange={handleChange} />
                                                 <Form.Text className="text-muted">
                                                     Lösenord
                                         </Form.Text>

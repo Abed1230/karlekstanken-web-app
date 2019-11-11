@@ -62,7 +62,7 @@ export class Register extends Component {
                                     validationSchema={RegisterSchema}
                                     onSubmit={this.signup}
                                 >
-                                    {({ handleSubmit, handleChange, values, errors }) =>
+                                    {({ handleSubmit, handleChange, values, errors, touched }) =>
                                         (<Form noValidate={true} onSubmit={handleSubmit}>
                                             <Row>
                                                 <Col>
@@ -70,7 +70,7 @@ export class Register extends Component {
                                                         <Form.Label className="text-muted">
                                                             Förnamn
                                                         </Form.Label>
-                                                        <Form.Control type="text" name="firstName" placeholder="Förnamn" value={values.firstName} isInvalid={!!errors.firstName} onChange={handleChange} />
+                                                        <Form.Control type="text" name="firstName" placeholder="Förnamn" value={values.firstName} isInvalid={touched.firstName && !!errors.firstName} onChange={handleChange} />
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.firstName}
                                                         </Form.Control.Feedback>
@@ -82,7 +82,7 @@ export class Register extends Component {
                                                         <Form.Label className="text-muted">
                                                             Efternamn
                                                         </Form.Label>
-                                                        <Form.Control required type="text" name="lastName" placeholder="Efternamn" value={values.lastName} isInvalid={!!errors.lastName} onChange={handleChange} />
+                                                        <Form.Control required type="text" name="lastName" placeholder="Efternamn" value={values.lastName} isInvalid={touched.lastName && !!errors.lastName} onChange={handleChange} />
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.lastName}
                                                         </Form.Control.Feedback>
@@ -96,7 +96,7 @@ export class Register extends Component {
                                                         <Form.Label className="text-muted">
                                                             Email
                                                         </Form.Label>
-                                                        <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={!!errors.email} onChange={handleChange} />
+                                                        <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={touched.email && !!errors.email} onChange={handleChange} />
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.email}
                                                         </Form.Control.Feedback>
@@ -108,7 +108,7 @@ export class Register extends Component {
                                                         <Form.Label className="text-muted">
                                                             Lösenord
                                                         </Form.Label>
-                                                        <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={!!errors.password} onChange={handleChange} />
+                                                        <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={touched.password && !!errors.password} onChange={handleChange} />
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.password}
                                                         </Form.Control.Feedback>
