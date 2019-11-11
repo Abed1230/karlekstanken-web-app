@@ -1,0 +1,1 @@
+export const WRONG_PASSWORD = "auth/wrong-password";
