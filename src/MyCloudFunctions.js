@@ -7,42 +7,36 @@ const ERROR_RECEIVER_HAS_PENDING_REQUEST = 'ERROR_RECEIVER_HAS_PENDING_REQUEST';
 const ERROR_RECEIVER_EMAIL_REQUIRED = 'ERROR_RECEIVER_EMAIL_REQUIRED';
 const ERROR_RECEIVER_EMAIL_IS_SENDERS = 'ERROR_RECEIVER_EMAIL_IS_SENDERS';
 
-export async function rejectPartnerRequest()
-{
+export async function rejectPartnerRequest() {
     try {
         var rejectPartnerRequest = functions.httpsCallable('rejectPartnerRequest');
         await rejectPartnerRequest();
         console.log('worked fine');
     }
-    catch(e)
-    {
-        console.log(e.message); 
+    catch (e) {
+        console.log(e.message);
     }
 }
 
-export async function acceptPartnerRequest()
-{
+export async function acceptPartnerRequest() {
     try {
         var acceptPartnerRequest = functions.httpsCallable('acceptPartnerRequest');
         await acceptPartnerRequest();
         console.log('worked fine');
     }
-    catch(e)
-    {
-        console.log(e.message); 
+    catch (e) {
+        console.log(e.message);
     }
 }
 
-export async function cancelPartnerRequest()
-{
+export async function cancelPartnerRequest() {
     try {
         var cancelPartnerRequest = functions.httpsCallable('cancelPartnerRequest');
         await cancelPartnerRequest();
         console.log('worked fine');
     }
-    catch(e)
-    {
-        console.log(e.message); 
+    catch (e) {
+        console.log(e.message);
     }
 }
 
@@ -113,5 +107,25 @@ export async function deleteAccount() {
             return "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttagen. Var god försök igen senare för att avsluta ditt konto fullständigt"
         }
         return "Ett okänt fel inträffade. Var god försök igen senare";
+    }
+}
+
+export async function createStripeCheckoutSession(uid, name, email, partnerUid) {
+    try {
+        const createStripeCheckoutSession = functions.httpsCallable("createStripeCheckoutSession");
+        const result = await createStripeCheckoutSession(
+            {
+                user: {
+                    uid: uid,
+                    name: name,
+                    email: email,
+                    partnerUid: partnerUid
+                }
+            });
+        console.log(result);
+        const sessionId = result && result.data && result.data.sessionId;
+        return sessionId;
+    } catch (e) {
+        console.log(e);
     }
 }

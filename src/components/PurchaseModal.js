@@ -1,23 +1,25 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Spinner } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
+import { createStripeCheckoutSession } from '../MyCloudFunctions';
+import MyStrings from '../MyStrings.json';
 
 class PurchaseModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             showNoPartnerMsg: false,
-            stripeCheckoutError: null,
+            checkoutError: null,
         };
 
         this.checkout = this.checkout.bind(this);
     }
 
     handleClick(user) {
-        this.checkout();
-        if (user && user.parnter) {
+        if (user && user.partner) {
             // Continue
-            this.checkout();
+            this.checkout(user);
         } else {
             this.setState({
                 showNoPartnerMsg: true
@@ -25,20 +27,36 @@ class PurchaseModal extends React.Component {
         }
     }
 
-    checkout() {
+    async checkout(user) {
+        this.setState({
+            loading: true,
+        });
+
+        const sessionId = await createStripeCheckoutSession(
+            user.uid,
+            user.firstName + " " + user.lastName,
+            user.email,
+            user.partner.uid
+        );
+
+        if (!sessionId) {
+            this.setState({
+                loading: false,
+                checkoutError: MyStrings.errors.unknown
+            });
+            return;
+        }
+
         const stripe = window.Stripe('pk_test_lpxzB5W0JcFfnGfWFQhJubp100LUZVgWh3');
 
         stripe.redirectToCheckout({
-            items: [{ sku: 'sku_G9eu1VDO87OV9b', quantity: 1 }],
-            /* TODO: update urls when publishing */
-            successUrl: 'http://localhost:3000/purchase_success',
-            cancelUrl: 'http://localhost:3000',
+            sessionId: sessionId
         }).then(function (result) {
             if (result.error) {
                 // If `redirectToCheckout` fails due to a browser or network
                 // error, display the localized error message to your customer.
-                console.log(result.error.message);
-                this.setState({ stripeCheckoutError: result.error.message });
+                console.log("stripe error msg: " + result.error.message);
+                this.setState({ checkoutError: result.error.message });
             }
         });
     }
@@ -56,13 +74,17 @@ class PurchaseModal extends React.Component {
                         </Modal.Body>
                         <Modal.Footer>
                             <div className="mx-auto text-center">
-                                <Button disabled={this.state.showNoPartnerMsg} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
-                                    id="checkout-button-sku_G9eu1VDO87OV9b"
-                                    role="link">
-                                    Betala med Stripe
-                                </Button>
-                                {this.state.stripeCheckoutError &&
-                                    <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.stripeCheckoutError}</p>
+                                {this.state.loading ?
+                                    <Spinner animation="border" style={{ color: "#6772E5" }} />
+                                    :
+                                    <Button disabled={this.state.showNoPartnerMsg} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
+                                        id="checkout-button-sku_G9eu1VDO87OV9b"
+                                        role="link">
+                                        Betala med Stripe
+                                    </Button>
+                                }
+                                {this.state.checkoutError &&
+                                    <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
                                 }
                                 {this.state.showNoPartnerMsg &&
                                     <>
