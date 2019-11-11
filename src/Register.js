@@ -122,7 +122,7 @@ export class Register extends Component {
                                                 </Col>
                                             </Row>
                                             <Row className="justify-content-center">
-                                                <small style={{ marginBottom: 10 }}><Link className="text-center" to='signin'>Inget konto? Registrera dig här</Link></small>
+                                                <small style={{ marginBottom: 10 }}><Link className="text-center" to='signin'>Logga in istället? Klicka här</Link></small>
                                             </Row>
                                         </Form>)
                                     }
