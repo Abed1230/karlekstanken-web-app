@@ -3,37 +3,32 @@ import { Link } from 'react-router-dom';
 import { fire, db } from './FirebaseData.js';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import loginImg from './assets/login_page.jpg';
+import { Formik } from 'formik';
+import *as Yup from 'yup';
 
+const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string()
+        .required('Vänligen, skriv in ett förnamn'),
+    lastName: Yup.string()
+        .required('Vänligen, skriv in ett efternamn'),
+    email: Yup.string()
+        .email('Ogiltig Email adress')
+        .required('Vänligen, skriv in ditt Email'),
+    password: Yup.string()
+        .min(6, 'Lösenordet måste bestå av minst 6 tecken')
+        .required('Vänligen, skriv in ditt lösenord'),
+});
 
 export class Register extends Component {
     constructor(props) {
         super(props)
 
-
-        this.handleInputchange = this.handleInputchange.bind(this);
         this.signup = this.signup.bind(this);
-        this.state = {
-            email: '',
-            password: '',
-            firstName: '',
-            lastName: '',
-        }
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault()
-    }
-
-    handleInputchange = (event) => {
-        console.log(event.target.value);
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
-    }
-
-    signup(e) {
-        e.preventDefault();
-        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+    signup(values) {
+        //e.preventDefault();
+        fire.auth().createUserWithEmailAndPassword(values.email, values.password).then((u) => {
             this.addUserToDocument(u.user.uid);
         }).catch((error) => {
             console.log(error);
@@ -50,71 +45,88 @@ export class Register extends Component {
     }
 
     render() {
-        const { email } = this.state
-        const { password } = this.state
-        const { firstName } = this.state
-        const { lastName } = this.state
 
         return (
             <div style={{ backgroundImage: `url(${loginImg})`, backgroundSize: ('cover'), backgroundAttachment: ('fixed') }}>
                 <Container style={{ marginTop: 20, height: 800 }}>
                     <Row className="justify-content-center">
-                        <Card style={{width: 500, marginTop: 40, borderRadius: 10, opacity: 0.90, padding: 40 }}>
-                            <div style={{padding: 5, position:('absolute'),borderRadius:5, margin:-40, opacity:0.90, width: ('100%'), backgroundColor: ('blue')}}>
-                            <h4 style={{color:('white')}} className="text-center">Registrera</h4>
+                        <Card style={{ width: 500, marginTop: 40, borderRadius: 10, opacity: 0.90, padding: 40 }}>
+                            <div style={{ padding: 5, position: ('absolute'), borderRadius: 5, margin: -40, opacity: 0.90, width: ('100%'), backgroundColor: ('blue') }}>
+                                <h4 style={{ color: ('white') }} className="text-center">Registrera</h4>
                             </div>
-                            <div style={{padding:10}}></div>
-                            <Row className="justify-content-center">
-                                <Col>
-                                    <Form onChange={this.handleInputchange}>
-                                        <Form.Group controlId="firstNameForm">
-                                            <Form.Label className="text-muted">
-                                                Förnamn
-                                            </Form.Label>
-                                            <Form.Control required type="text" name="firstName" placeholder="Förnamn" />
-                                        </Form.Group>
-                                    </Form>
-
-                                    <Form onChange={this.handleInputchange}>
-                                        <Form.Group controlId="emailForm">
-                                            <Form.Label className="text-muted">
-                                                Email
-                                            </Form.Label>
-                                            <Form.Control required type="email" name="email" placeholder="Email" />
-                                        </Form.Group>
-                                    </Form>
-                                </Col>
-                                <Col>
-                                    <Form onChange={this.handleInputchange}>
-                                        <Form.Group controlId="lastNameForm">
-                                            <Form.Label className="text-muted">
-                                                Efternamn
-                                            </Form.Label>
-                                            <Form.Control required type="text" name="lastName" placeholder="Efternamn" />
-                                        </Form.Group>
-                                    </Form>
-
-                                    <Row className="justify-content-center">
-                                        <Form onChange={this.handleInputchange}>
-                                            <Form.Group controlId="passwordForm">
-                                                <Form.Label className="text-muted">
-                                                    Lösenord
-                                                </Form.Label>
-                                                <Form.Control required type="password" name="password"/>
-                                            </Form.Group>
-                                        </Form>
-                                    </Row>
-                                </Col>
-                            </Row>
+                            <div style={{ padding: 10 }}></div>
 
                             <Row className="justify-content-center">
-                                <small style={{ marginBottom: 10 }}><Link className="text-center" to='signin'>Logga in? Klicka här</Link></small>
-                            </Row>
+                                <Formik
+                                    initialValues={{ email: '', password: '' }}
+                                    validationSchema={RegisterSchema}
+                                    onSubmit={this.signup}
+                                >
+                                    {({ handleSubmit, handleChange, values, errors }) =>
+                                        (<Form noValidate={true} onSubmit={handleSubmit}>
+                                            <Row>
+                                                <Col>
+                                                    <Form.Group controlId="firstNameForm">
+                                                        <Form.Label className="text-muted">
+                                                            Förnamn
+                                                        </Form.Label>
+                                                        <Form.Control type="text" name="firstName" placeholder="Förnamn" value={values.firstName} isInvalid={!!errors.firstName} onChange={handleChange} />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors.firstName}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </Col>
 
-                            <Row className="justify-content-center">
-                                <Col className="text-center">
-                                    <Button style={{ width: 200 }} onClick={this.signup}>Registrera</Button>
-                                </Col>
+                                                <Col>
+                                                    <Form.Group controlId="lastNameForm">
+                                                        <Form.Label className="text-muted">
+                                                            Efternamn
+                                                        </Form.Label>
+                                                        <Form.Control required type="text" name="lastName" placeholder="Efternamn" value={values.lastName} isInvalid={!!errors.lastName} onChange={handleChange} />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors.lastName}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Row>
+
+                                            <Row>
+                                                <Col>
+                                                    <Form.Group controlId="emailForm">
+                                                        <Form.Label className="text-muted">
+                                                            Email
+                                                        </Form.Label>
+                                                        <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={!!errors.email} onChange={handleChange} />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors.email}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </Col>
+
+                                                <Col>
+                                                    <Form.Group controlId="passwordForm">
+                                                        <Form.Label className="text-muted">
+                                                            Lösenord
+                                                        </Form.Label>
+                                                        <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={!!errors.password} onChange={handleChange} />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors.password}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Row>
+
+                                            <Row className="justify-content-center">
+                                                <Col className="text-center">
+                                                    <Button style={{ width: 200 }} type="submit">Registrera</Button>
+                                                </Col>
+                                            </Row>
+                                            <Row className="justify-content-center">
+                                                <small style={{ marginBottom: 10 }}><Link className="text-center" to='signin'>Inget konto? Registrera dig här</Link></small>
+                                            </Row>
+                                        </Form>)
+                                    }
+                                </Formik>
                             </Row>
                         </Card>
                     </Row>

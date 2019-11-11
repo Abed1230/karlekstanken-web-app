@@ -3,30 +3,27 @@ import { Link } from 'react-router-dom';
 import { fire } from './FirebaseData';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import loginImg from './assets/login_page.jpg';
+import { Formik } from 'formik';
+import *as Yup from 'yup';
+
+const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Ogiltig Email adress')
+        .required('Vänligen, skriv in ditt Email'),
+    password: Yup.string()
+        .min(6, 'Lösenordet måste bestå av minst 6 tecken')
+        .required('Vänligen, skriv in ditt lösenord'),
+});
 
 export class Login extends Component {
     constructor(props) {
         super(props)
 
         this.login = this.login.bind(this);
-        this.handleInputchange = this.handleInputchange.bind(this);
-        this.state = {
-            email: '',
-            password: '',
-        }
     }
 
-
-    handleInputchange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
-
-    login(e) {
-        console.log(this.state.email);
-        e.preventDefault();
-        fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+    login(values) {
+        fire.auth().signInWithEmailAndPassword(values.email, values.password).then((u) => {
         }).catch((error) => {
             console.log(error);
         });
@@ -43,35 +40,44 @@ export class Login extends Component {
                             </div>
                             <div style={{ padding: 20 }}></div>
                             <Row className="justify-content-center">
-                                <Form onChange={this.handleInputchange}>
-                                    <Form.Group controlId="emailForm">
-                                        <Form.Control required type="email" name="email" placeholder="Email" />
-                                        <Form.Text className="text-muted">
-                                            Email
-                                </Form.Text>
-                                    </Form.Group>
-                                </Form>
-                            </Row>
+                                <Formik
+                                    initialValues={{ email: '', password: '' }}
+                                    validationSchema={LoginSchema}
+                                    onSubmit={this.login}
+                                >
+                                    {({ handleSubmit, handleChange, values, errors }) =>
+                                        (<Form noValidate={true} onSubmit={handleSubmit}>
+                                            <Form.Group controlId="emailForm">
+                                                <Form.Control type="email" name="email" placeholder="Email" value={values.email} isInvalid={!!errors.email} onChange={handleChange} />
+                                                <Form.Text className="text-muted">
+                                                    Email
+                                                </Form.Text>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.email}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
 
-                            <Row className="justify-content-center">
-                                <Form onChange={this.handleInputchange}>
-                                    <Form.Group controlId="passwordForm">
-                                        <Form.Control required type="password" name="password" placeholder="Lösenord" />
-                                        <Form.Text className="text-muted">
-                                            Lösenord
-                                </Form.Text>
-                                    </Form.Group>
-                                </Form>
+                                            <Form.Group controlId="passwordForm">
+                                                <Form.Control required type="password" name="password" placeholder="Lösenord" value={values.password} isInvalid={!!errors.password} onChange={handleChange} />
+                                                <Form.Text className="text-muted">
+                                                    Lösenord
+                                        </Form.Text>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.password}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                            <Row className="justify-content-center">
+                                                <Col className="text-center">
+                                                    <Button style={{ width: 200 }} type="submit">Logga in</Button>
+                                                </Col>
+                                            </Row>
+                                        </Form>)
+                                    }
+                                </Formik>
                             </Row>
 
                             <Row className="justify-content-center">
                                 <small style={{ marginBottom: 10 }}><Link className="text-center" to='signup'>Inget konto? Registrera dig här</Link></small>
-                            </Row>
-
-                            <Row className="justify-content-center">
-                                <Col className="text-center">
-                                    <Button style={{ width: 200 }} onClick={this.login}>Logga in</Button>
-                                </Col>
                             </Row>
                         </Card>
                     </Row>
