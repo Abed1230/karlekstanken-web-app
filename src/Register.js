@@ -5,18 +5,19 @@ import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import loginImg from './assets/login_page.jpg';
 import { Formik } from 'formik';
 import *as Yup from 'yup';
+import MyStrings from './MyStrings.json';
 
 const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
-        .required('Vänligen, skriv in ett förnamn'),
+        .required(MyStrings['errors'].fieldRequired),
     lastName: Yup.string()
-        .required('Vänligen, skriv in ett efternamn'),
+        .required(MyStrings['errors'].fieldRequired),
     email: Yup.string()
-        .email('Ogiltig Email adress')
-        .required('Vänligen, skriv in ditt Email'),
+        .email(MyStrings['errors'].emailInvalid)
+        .required(MyStrings['errors'].fieldRequired),
     password: Yup.string()
-        .min(6, 'Lösenordet måste bestå av minst 6 tecken')
-        .required('Vänligen, skriv in ditt lösenord'),
+        .min(6, MyStrings['errors'].passwordTooShort)
+        .required(MyStrings['errors'].fieldRequired),
 });
 
 export class Register extends Component {
@@ -58,7 +59,7 @@ export class Register extends Component {
 
                             <Row className="justify-content-center">
                                 <Formik
-                                    initialValues={{ email: '', password: '' }}
+                                    initialValues={{ email: '', password: '', firstName:'', lastName:'' }}
                                     validationSchema={RegisterSchema}
                                     onSubmit={this.signup}
                                 >

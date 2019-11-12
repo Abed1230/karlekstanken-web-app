@@ -104,42 +104,49 @@ export class LoveTest extends Component {
                                     getQuestions().map((q, index) => {
                                         let a1 = this.answers.alt1Value[q.index];
                                         let a2 = this.answers.alt2Value[q.index];
-                                        console.log(q.index + "   " + a1);
-                                        console.log(q.index + "   " + a2);
+                                        //console.log(q.index + "   " + a1);
+                                        //console.log(q.index + "   " + a2);
                                         return (
-                                            <div style={{ padding: 10 }}>
-                                                <Card key={index}>
-                                                    <h5 className="text-left" style={{ borderRadius: 3, backgroundColor: ('#008B8B'), padding: 3, color: ('white') }}>{'Fråga ' + (q.index + 1)}</h5>
-
-                                                    <Row>
-                                                        <Col>
-                                                            <p>{q.alt1}</p>
-                                                        </Col>
-                                                        <Col xs='2'>
-                                                            <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check1"
-                                                                checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
-                                                            {/*<p>{a1.toString()}</p>*/}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <p>{q.alt2}</p>
-                                                        </Col>
-                                                        <Col xs='2'>
-                                                            <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check2"
-                                                                checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
-                                                            {/*<p>{a2.toString()}</p>*/}
-                                                        </Col>
-                                                    </Row>
-                                                </Card>
-                                            </div>
+                                            <Row>
+                                                <Col className="mx-auto" xs="12" lg="8">
+                                                    <div style={{ padding: 10 }}>
+                                                        <Card key={index}>
+                                                            <h5 className="text-left" style={{ borderRadius: 3, backgroundColor: ('#008B8B'), padding: 3, color: ('white') }}>{'Fråga ' + (q.index + 1)}</h5>
+                                                            <Row>
+                                                                <Col>
+                                                                    <p>{q.alt1}</p>
+                                                                </Col>
+                                                                <Col xs='2'>
+                                                                    <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check1"
+                                                                        checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
+                                                                    {/*<p>{a1.toString()}</p>*/}
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col>
+                                                                    <p>{q.alt2}</p>
+                                                                </Col>
+                                                                <Col xs='2'>
+                                                                    <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check2"
+                                                                        checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
+                                                                    {/*<p>{a2.toString()}</p>*/}
+                                                                </Col>
+                                                            </Row>
+                                                        </Card>
+                                                    </div>
+                                                </Col>
+                                            </Row>
                                         )
                                     })
                                 }
-                                <Button type="button" onClick={this.handleSubmit}>Submit</Button>
-                                {this.state.errorMessage &&
-                                    <p className="mt-3" style={{ color: ('red'), padding: 3 }}>{this.state.errorMessage}</p>
-                                }
+                                <Row className="text-center">
+                                    <Col className="mx-auto" xs="12" lg="8">
+                                        <Button type="button" onClick={this.handleSubmit}>Submit</Button>
+                                        {this.state.errorMessage &&
+                                            <p className="mt-3" style={{ color: ('red'), padding: 3 }}>{this.state.errorMessage}</p>
+                                        }
+                                    </Col>
+                                </Row>
                             </Container>
                         </>
                         :

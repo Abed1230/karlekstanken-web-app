@@ -5,14 +5,15 @@ import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import loginImg from './assets/login_page.jpg';
 import { Formik } from 'formik';
 import *as Yup from 'yup';
+import MyStrings from './MyStrings.json';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
-        .email('Ogiltig Email adress')
-        .required('Vänligen, skriv in ditt Email'),
+        .email(MyStrings['errors'].emailInvalid)
+        .required(MyStrings['errors'].emailRequired),
     password: Yup.string()
-        .min(6, 'Lösenordet måste bestå av minst 6 tecken')
-        .required('Vänligen, skriv in ditt lösenord'),
+        .min(6, MyStrings['errors'].passwordTooShort)
+        .required(MyStrings['errors'].passwordRequired),
 });
 
 export class Login extends Component {
