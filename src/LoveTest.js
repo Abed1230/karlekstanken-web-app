@@ -5,6 +5,7 @@ import { UserConsumer } from './UserContext';
 import { Redirect } from 'react-router-dom';
 import LoveLanguages from './LoveLanguages.json';
 import MyTitleBar from './components/MyTitleBar';
+import MyStrings from './MyStrings.json';
 
 class Answers {
     constructor(props) {
@@ -26,7 +27,8 @@ export class LoveTest extends Component {
         this.answers = new Answers();
 
         this.state = {
-            lang: null
+            lang: null,
+            errorMessage: null,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,7 +64,13 @@ export class LoveTest extends Component {
             this.setState({
                 lang: lang
             });
+
         // TODO: handle error
+        if (!lang) {
+            this.setState({
+                errorMessage: MyStrings['errors'].notComplete,
+            })
+        }
     }
 
     render() {
@@ -108,7 +116,7 @@ export class LoveTest extends Component {
                                                             <p>{q.alt1}</p>
                                                         </Col>
                                                         <Col xs='2'>
-                                                            <Form.Check className="text-right" style={{paddingRight:10}} type="checkbox" name="check1"
+                                                            <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check1"
                                                                 checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
                                                             {/*<p>{a1.toString()}</p>*/}
                                                         </Col>
@@ -118,7 +126,7 @@ export class LoveTest extends Component {
                                                             <p>{q.alt2}</p>
                                                         </Col>
                                                         <Col xs='2'>
-                                                            <Form.Check className="text-right" style={{paddingRight:10}} type="checkbox" name="check2"
+                                                            <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check2"
                                                                 checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
                                                             {/*<p>{a2.toString()}</p>*/}
                                                         </Col>
@@ -129,6 +137,9 @@ export class LoveTest extends Component {
                                     })
                                 }
                                 <Button type="button" onClick={this.handleSubmit}>Submit</Button>
+                                {this.state.errorMessage &&
+                                    <p className="mt-3" style={{ color: ('red'), padding: 3 }}>{this.state.errorMessage}</p>
+                                }
                             </Container>
                         </>
                         :

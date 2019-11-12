@@ -4,6 +4,7 @@
         "fieldRequired": "Fältet kan inte var tom",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",
         "passwordMismatch": "Lösenorden stämmer inte överäns",
-        "unknown": "Ett okänt fel inträffade. Var god försök igen"
+        "unknown": "Ett okänt fel inträffade. Var god försök igen",
+        "notComplete": "Du måste markera ett svar i alla frågor"
     }
 }
