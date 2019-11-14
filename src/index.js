@@ -17,6 +17,7 @@ import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
 import TaskPage from './TaskPage';
 import Settings from './components/Settings/Settings.js';
+import PurchaseSuccess from './components/PurchaseSuccess';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -100,6 +101,7 @@ class App extends React.Component {
                                     <PrivateRoute component={LoveTest} path="/languagetest" exact />
                                     <PrivateRoute component={Chapter} path="/chapter" exact />
                                     <PrivateRoute component={TaskPage} path="/task" exact />
+                                    <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
                                     <Route component={NotFound} />
                                 </Switch>
                             </BrowserRouter>
