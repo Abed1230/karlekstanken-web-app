@@ -122,43 +122,48 @@ class Home extends React.Component {
         return (
             <>
                 <MyNavBar />
-                <CoupleDataConsumer>
-                    {coupleData => (
-                        <>
-                            <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
-                                <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
-                            </div>
-                            <Container id="container" className="mt-3">
-                                <Row>
-                                    {chapters && chapters.map((item, index) => {
-                                        return (
-                                            <UserConsumer>
-                                                {user => (
-                                                    <Col key={item.id} className="mb-2" xs="12" md="4">
-                                                        <ListCard
-                                                            subhead={item.subHead}
-                                                            title={item.title}
-                                                            enableCheck={coupleData ? true : false}
-                                                            complete={this.isChapterComplete(coupleData, item.id)}
-                                                            handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
-                                                            handleCheck={this.handleCheck.bind(this, user, coupleData, item)} />
-                                                    </Col>
-                                                )}
-                                            </UserConsumer>
-                                        );
-                                    })}
-                                </Row>
-                            </Container>
-                            <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
-                                <div className="text-center mx-auto">
-                                    <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
-                                    <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
-                                </div>
-                            </div>
-                            <PurchaseModal show={this.state.showPurchaseModal} handleHide={() => this.setState({ showPurchaseModal: false })} />
-                        </>
+                <UserConsumer>
+                    {user => (
+                        <CoupleDataConsumer>
+                            {coupleData => {
+                                const showUnlockMsg = user && !user.premium;
+                                return (
+                                    <>
+                                        <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                                            <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
+                                        </div>
+                                        <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                            <Row>
+                                                {chapters && chapters.map((item, index) => {
+                                                    return (
+                                                        <Col key={item.id} className="mb-2" xs="12" md="4">
+                                                            <ListCard
+                                                                subhead={item.subHead}
+                                                                title={item.title}
+                                                                enableCheck={coupleData ? true : false}
+                                                                complete={this.isChapterComplete(coupleData, item.id)}
+                                                                handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
+                                                                handleCheck={this.handleCheck.bind(this, user, coupleData, item)} />
+                                                        </Col>
+                                                    );
+                                                })}
+                                            </Row>
+                                        </Container>
+                                        {showUnlockMsg &&
+                                            <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                                <div className="text-center mx-auto">
+                                                    <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                                    <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                </div>
+                                            </div>
+                                        }
+                                        <PurchaseModal show={this.state.showPurchaseModal} handleHide={() => this.setState({ showPurchaseModal: false })} />
+                                    </>
+                                )
+                            }}
+                        </CoupleDataConsumer>
                     )}
-                </CoupleDataConsumer>
+                </UserConsumer>
             </>
         );
     }
