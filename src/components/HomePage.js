@@ -78,12 +78,15 @@ class Home extends React.Component {
 
     calculateProgressValue(chapters, coupleData) {
         // get total number of tasks
+        const taskIds = [];
         let numTasks = 0;
         chapters.forEach((chap) => {
-            if (chap.taskIds)
+            if (chap.taskIds) {
                 numTasks += chap.taskIds.length;
+                taskIds.push.apply(taskIds, chap.taskIds);
+            }
         });
-
+        
         // get number of completed tasks
         let numCompletedTasks = 0;
         const completionStatus = coupleData.completionStatus;
@@ -94,7 +97,8 @@ class Home extends React.Component {
 
                 if (tasks) {
                     for (const [id, completed] of Object.entries(tasks)) {
-                        if (completed) {
+                        // Ignores completed tasks that have been deleted
+                        if (completed && taskIds.includes(id)) {
                             numCompletedTasks++;
                         }
                     }
