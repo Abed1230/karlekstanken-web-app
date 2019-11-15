@@ -129,3 +129,14 @@ export async function createStripeCheckoutSession(uid, name, email, partnerUid) 
         console.log(e);
     }
 }
+
+export async function revokePremium(userUid, partnerUid) {
+    try {
+        const revokePremium = functions.httpsCallable("revokePremium");
+        await revokePremium({ userUid: userUid, partnerUid: partnerUid });
+        return true;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+}
