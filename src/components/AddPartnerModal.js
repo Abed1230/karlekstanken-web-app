@@ -17,6 +17,7 @@ class AddPartnerModal extends React.Component {
         this.state = {
             loading: false,
             error: null,
+            success: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +32,7 @@ class AddPartnerModal extends React.Component {
             this.setState({
                 error: null,
                 loading: false,
+                success: false,
             });
         }, 500);
     }
@@ -42,9 +44,10 @@ class AddPartnerModal extends React.Component {
 
         if (error) {
             setErrors({ email: " " });
+            this.setState({ loading: false, error: error });
+        } else {
+            this.setState({ loading: false, error: null, success: true });
         }
-
-        this.setState({ loading: false, error: error });
     }
 
     render() {
@@ -61,35 +64,43 @@ class AddPartnerModal extends React.Component {
                             <Modal.Title>Lägg till partner</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Form noValidate onSubmit={handleSubmit}>
-                                <Form.Group controlId="emailField">
-                                    <Form.Label>
-                                        Ange din partners e-postadress som hen registrerade sig med på kärlekstanken
+                            {this.state.success ?
+                                <>
+                                    <Alert variant="success">
+                                        Partner förfrågan skickades. Din partner hittar förfågan i menyn uppe i högra hörnet.
+                                    </Alert>
+                                    <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>Stäng</Button>
+                                </>
+                                :
+                                <Form noValidate onSubmit={handleSubmit}>
+                                    <Form.Group controlId="emailField">
+                                        <Form.Label>
+                                            Ange din partners e-postadress som hen registrerade sig med på kärlekstanken
                                     </Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        name="email"
-                                        placeholder="E-postadress"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        isInvalid={touched.email && !!errors.email} />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.email}
-                                    </Form.Control.Feedback>
-                                    <p className="text-muted mt-2" style={{ fontSize: "0.95rem" }}>
-                                        Din e-postadress: {this.props.user.email}
-                                    </p>
-                                </Form.Group>
-                                {this.state.error &&
-                                    <Alert variant="danger">{this.state.error}</Alert>
-                                }
-                                {this.state.loading ?
-                                    <Spinner animation="border" variant="info" />
-                                    :
-                                    <Button variant="info" type="submit">Skicka förfrågan</Button>
-                                }
-
-                            </Form>
+                                        <Form.Control
+                                            type="email"
+                                            name="email"
+                                            placeholder="E-postadress"
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            isInvalid={touched.email && !!errors.email} />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.email}
+                                        </Form.Control.Feedback>
+                                        <p className="text-muted mt-2" style={{ fontSize: "0.95rem" }}>
+                                            Din e-postadress: {this.props.user.email}
+                                        </p>
+                                    </Form.Group>
+                                    {this.state.error &&
+                                        <Alert variant="danger">{this.state.error}</Alert>
+                                    }
+                                    {this.state.loading ?
+                                        <Spinner animation="border" variant="info" />
+                                        :
+                                        <Button variant="info" type="submit">Skicka förfrågan</Button>
+                                    }
+                                </Form>
+                            }
                         </Modal.Body>
                     </Modal>
                 )}
