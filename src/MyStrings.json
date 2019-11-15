@@ -6,6 +6,7 @@
         "passwordMismatch": "Lösenorden stämmer inte överäns",
         "unknown": "Ett okänt fel inträffade. Var god försök igen",
         "notComplete": "Du måste markera ett svar i alla frågor",
-        "emailInvalid": "Ogiltig Email adress"
+        "emailInvalid": "Ogiltig Email adress",
+        "invalidEmail": "Ogiltig e-postadress"
     }
 }
