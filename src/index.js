@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { db, auth } from './FirebaseData.js';
+import { db, auth, ServerTimestamp } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
@@ -17,6 +17,8 @@ import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
 import TaskPage from './TaskPage';
 import Settings from './components/Settings/Settings.js';
+import PurchaseSuccess from './components/PurchaseSuccess';
+import { revokePremium } from './MyCloudFunctions';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -30,6 +32,24 @@ class App extends React.Component {
         }
     }
 
+    async checkPremiumExpiry(premium, userUid, partnerUid) {
+        const expiry = premium.expiry.toDate();
+        const now = ServerTimestamp.now().toDate();
+
+        console.log("expiry: " + expiry.toString());
+        console.log("now: " + now.toString());
+        if (expiry <= now) {
+            console.log("premium expired... revoking now");
+            const success = await revokePremium(userUid, partnerUid);
+            // Call this to update premium status on the user object in state
+            // Important: only call this function on success, otherwise we may end up 
+            // calling cloud function multiple times 
+            if (success)
+                this.getPremiumStatus();
+        }
+    }
+
+    // TODO: clean up this mess
     componentDidMount() {
         this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
             console.log("auth state changed, authUser: " + authUser);
@@ -59,13 +79,9 @@ class App extends React.Component {
                         });
                     }
 
-                    /* only read once at start */
+                    // Only fetch premium status once on component mount 
                     if (!this.state.user) {
-                        /* TODO: check expiry here  */
-                        const premiumSnap = await db.collection("users_premium_status").doc(authUser.uid).get();
-                        const premium = premiumSnap.data();
-
-                        user.premium = premium;
+                        this.getPremiumStatus(user);
                     }
 
                     this.setState({
@@ -77,6 +93,20 @@ class App extends React.Component {
                 this.setState({ authUser: null, coupleData: null, user: null });
             }
         });
+    }
+
+    async getPremiumStatus(pUser) {
+        const user = pUser ? pUser : this.state.user;
+
+        const premiumSnap = await db.collection("users_premium_status").doc(user.uid).get();
+        const premium = premiumSnap.data();
+
+        if (premium)
+            this.checkPremiumExpiry(premium, user.uid, user.partner.uid);
+
+        user.premium = premium;
+
+        this.setState({ user: user });
     }
 
     componentWillUnmount() {
@@ -100,6 +130,7 @@ class App extends React.Component {
                                     <PrivateRoute component={LoveTest} path="/languagetest" exact />
                                     <PrivateRoute component={Chapter} path="/chapter" exact />
                                     <PrivateRoute component={TaskPage} path="/task" exact />
+                                    <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
                                     <Route component={NotFound} />
                                 </Switch>
                             </BrowserRouter>
