@@ -33,6 +33,7 @@ class Home extends React.Component {
         super(props);
         this.state = {
             chapters: null,
+            openMenu: false,
             showPurchaseModal: false,
         };
     }
@@ -79,7 +80,8 @@ class Home extends React.Component {
         // get total number of tasks
         let numTasks = 0;
         chapters.forEach((chap) => {
-            numTasks += chap.taskIds.length;
+            if (chap.taskIds)
+                numTasks += chap.taskIds.length;
         });
 
         // get number of completed tasks
@@ -121,7 +123,7 @@ class Home extends React.Component {
         const chapters = this.state.chapters;
         return (
             <>
-                <MyNavBar />
+                <MyNavBar onRef={ref => (this.myNavBar = ref)} />
                 <UserConsumer>
                     {user => (
                         <CoupleDataConsumer>
@@ -157,7 +159,13 @@ class Home extends React.Component {
                                                 </div>
                                             </div>
                                         }
-                                        <PurchaseModal show={this.state.showPurchaseModal} handleHide={() => this.setState({ showPurchaseModal: false })} />
+                                        <PurchaseModal
+                                            show={this.state.showPurchaseModal}
+                                            handleHide={(shouldOpenAddPartnerModal) => {
+                                                this.setState({ showPurchaseModal: false });
+                                                if (shouldOpenAddPartnerModal)
+                                                    this.myNavBar.openAddPartnerModal();
+                                            }} />
                                     </>
                                 )
                             }}

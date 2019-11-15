@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../logo.png';
 import { Navbar, Dropdown, Button } from 'react-bootstrap';
 import UserView from './UserView';
@@ -14,37 +14,69 @@ const BackIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill={props.fill} width="24" height="24" viewBox="0 0 24 24"><path d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
 );
 
-function MyNavBar({ goBack, history }) {
-    return (
-        <Navbar bg="light" sticky="top" expand="xs">
-            {goBack &&
-                <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
-                    <BackIcon fill="rgba(0, 0, 0, 0.5)" />
-                </Button>
-            }
-            <Navbar.Brand className="mx-auto">
-                <img
-                    src={logo}
-                    height="35"
-                    alt="Logo"
-                />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="navbar-nav" />
-            <Navbar.Collapse id="navbar-nav">
-                <Dropdown.Divider />
-                <UserConsumer>
-                    {user => user ? <UserView /> : null}
-                </UserConsumer>
-                <Dropdown.Divider className="mt-4 mb-4" />
-                {/* TODO: navigate to settings page */}
-                <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
-                    <span className="mr-1"><GearIcon fill="#6c757d" /></span>
-                    Inställningar
+class MyNavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+
+        this.toggler = React.createRef();
+    }
+
+    openAddPartnerModal() {
+        /* if (!this.state.open)
+            this.toggler.click(); */
+
+        const userView = this.userView;
+        if (userView) {
+            userView.openAddPartnerModal();
+        }
+    }
+
+    // We need to set ref this way beacuse this component is using HOC (withRouter)
+    componentDidMount() {
+        const onRef = this.props.onRef;
+        if (onRef)
+            onRef(this);
+    }
+    componentWillUnmount() {
+        const onRef = this.props.onRef;
+        if (onRef)
+            onRef(undefined);
+    }
+
+    render() {
+        const { goBack, history } = this.props;
+        return (
+            <Navbar bg="light" sticky="top" expand="xs">
+                {goBack &&
+                    <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
+                        <BackIcon fill="rgba(0, 0, 0, 0.5)" />
                     </Button>
-                <Button className="float-right" variant="outline-danger" onClick={() => fire.auth().signOut()}>Logga ut</Button>
-            </Navbar.Collapse>
-        </Navbar>
-    );
+                }
+                <Navbar.Brand className="mx-auto">
+                    <img
+                        src={logo}
+                        height="35"
+                        alt="Logo"
+                    />
+                </Navbar.Brand>
+                <Navbar.Toggle ref={el => this.toggler = el} aria-controls="navbar-nav" />
+                <Navbar.Collapse id="navbar-nav">
+                    <Dropdown.Divider />
+                    <UserConsumer>
+                        {user => user ? <UserView ref={el => this.userView = el} /> : null}
+                    </UserConsumer>
+                    <Dropdown.Divider className="mt-4 mb-4" />
+                    {/* TODO: navigate to settings page */}
+                    <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
+                        <span className="mr-1"><GearIcon fill="#6c757d" /></span>
+                        Inställningar
+                            </Button>
+                    <Button className="float-right" variant="outline-danger" onClick={() => fire.auth().signOut()}>Logga ut</Button>
+                </Navbar.Collapse>
+            </Navbar>
+        );
+    }
 }
 
 export default withRouter(MyNavBar);

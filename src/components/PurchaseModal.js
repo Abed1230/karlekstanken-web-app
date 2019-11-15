@@ -13,7 +13,19 @@ class PurchaseModal extends React.Component {
             checkoutError: null,
         };
 
+        this.hideAndReset = this.hideAndReset.bind(this);
         this.checkout = this.checkout.bind(this);
+    }
+
+    hideAndReset(shouldOpenAddPartnerModal) {
+        this.props.handleHide(shouldOpenAddPartnerModal ? true : false);
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                showNoPartnerMsg: false,
+                checkoutError: null
+            });
+        }, 500)
     }
 
     handleClick(user) {
@@ -65,7 +77,7 @@ class PurchaseModal extends React.Component {
         return (
             <UserConsumer>
                 {user => (
-                    <Modal show={this.props.show} onHide={this.props.handleHide}>
+                    <Modal show={this.props.show} onHide={this.hideAndReset}>
                         <Modal.Header closeButton>
                             <Modal.Title>Lås upp kärlekstanken</Modal.Title>
                         </Modal.Header>
@@ -90,7 +102,7 @@ class PurchaseModal extends React.Component {
                                     <>
                                         <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först lägga till din partner</p>
                                         {/* TODO: navigate to add partern dialog */}
-                                        <Button variant="outline-info" size="sm">Lägg till nu</Button>
+                                        <Button variant="outline-info" size="sm" onClick={() => this.hideAndReset(true)}>Lägg till nu</Button>
                                     </>
                                 }
                             </div>

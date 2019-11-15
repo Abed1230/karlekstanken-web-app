@@ -51,6 +51,13 @@ class UserView extends React.Component {
         }
     }
 
+    openAddPartnerModal() {
+        //this.setState({showAddPartnerModal: true});
+        if (this.addPartnerBtn) {
+            this.addPartnerBtn.click();
+        }
+    }
+
     render() {
         return (
             <UserConsumer>
@@ -66,7 +73,7 @@ class UserView extends React.Component {
                                     <h4 className="mt-4 mb-4 text-center">Du & {user.partner ? user.partner.name : "?"}</h4>
 
                                     {!user.partner && !user.partnerRequestFrom && !user.partnerRequestTo &&
-                                        <div className="text-center"><Button variant="info" onClick={() => this.setState({ showAddPartnerModal: true })} >Lägg till partner</Button></div>
+                                        <div className="text-center"><Button variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >Lägg till partner</Button></div>
                                     }
                                 </Col>
                             </Row>
