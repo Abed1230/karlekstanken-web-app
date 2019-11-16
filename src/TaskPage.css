@@ -3,9 +3,17 @@
 @media print {
     @page {
         size: A4;
+        margin-bottom: 8mm;
+    }
+    body {
+        font-size: 16pt;
     }
     .col-print-4 {
         width: 33%;
+        float: left;
+    }
+    .col-print-11 {
+        width: 90.75%;
         float: left;
     }
 }

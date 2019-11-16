@@ -89,12 +89,12 @@ export class TaskPage extends Component {
                                     alt="Time"
                                 />
                                 <br />
-                                <span>40 MIN</span>
+                                <span>{task.time}</span>
                             </div>
                         </Col>
                     </Row>
                     <Row className="mt-4 justify-content-center">
-                        <Col md="10">
+                        <Col className="col-print-11" md="9">
                             <div dangerouslySetInnerHTML={{ __html: task.bodyHTML }} />
                         </Col>
                     </Row>
