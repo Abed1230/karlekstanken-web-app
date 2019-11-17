@@ -62,7 +62,7 @@ class UserView extends React.Component {
 
                                     {user.partnerRequestFrom &&
                                         <Row className="justify-content-md-center">
-                                            <Col md="6">
+                                            <Col md="9" lg="6">
                                                 <ReceivedPartnerRequest name={user.partnerRequestFrom.name} email={user.partnerRequestFrom.email} />
                                             </Col>
                                         </Row>
@@ -70,48 +70,44 @@ class UserView extends React.Component {
 
                                     {user.partnerRequestTo &&
                                         <Row className="justify-content-md-center">
-                                            <Col md="6">
+                                            <Col md="9" lg="6">
                                                 <SentPartnerRequest name={user.partnerRequestTo.name} email={user.partnerRequestTo.email} />
                                             </Col>
                                         </Row>
                                     }
 
-                                    <Row>
-                                        {partnerLoveLang ?
-                                            <Col className="mb-2" xs="12" md="6">
+                                    <Row className="justify-content-center">
+                                        <Col className="mb-2" xs="12" md="6" lg="5">
+                                            {partnerLoveLang ?
                                                 <LoveLangCard name={partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
-                                            </Col>
-                                            :
-                                            partner ?
-                                                <Col className="mb-2" xs="12" md="6">
+                                                :
+                                                partner ?
                                                     <Card className="mt-2 h-100">
                                                         <Card.Body >
                                                             <small className="text-muted">{partner.name + "'s kärleksspråk"}</small>
                                                             <p>{partner.name} har ännu inte gjort språktestet</p>
                                                         </Card.Body>
                                                     </Card>
-                                                </Col>
-                                                :
-                                                null
-                                        }
-
-                                        {userLoveLang &&
-                                            <Col className="mb-2" xs="12" md="6">
+                                                    :
+                                                    null
+                                            }
+                                        </Col>
+                                        <Col className="mb-2" xs="12" md="6" lg="5">
+                                            {userLoveLang ?
                                                 <LoveLangCard lang={LoveLanguages[userLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[userLoveLang].name, modalText: LoveLanguages[userLoveLang].description })} />
-                                            </Col>
-                                        }
-
-                                        {!user.loveLanguage && user.premium &&
-                                            <Col className="mb-2" xs="12" md="6">
-                                                <Card className="mt-2 h-100">
-                                                    <Card.Body>
-                                                        <small className="text-muted">Ditt kärleksspråk</small>
-                                                        <p>Du har ännu inte gjort språktestet</p>
-                                                        <Button variant="info" as={Link} to="/languagetest">Gör testet nu</Button>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        }
+                                                :
+                                                !user.loveLanguage && user.premium ?
+                                                    <Card className="mt-2 h-100">
+                                                        <Card.Body>
+                                                            <small className="text-muted">Ditt kärleksspråk</small>
+                                                            <p>Du har ännu inte gjort språktestet</p>
+                                                            <Button variant="info" as={Link} to="/languagetest">Gör testet nu</Button>
+                                                        </Card.Body>
+                                                    </Card>
+                                                    :
+                                                    null
+                                            }
+                                        </Col>
                                     </Row>
 
                                     <Modal size="lg" show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>

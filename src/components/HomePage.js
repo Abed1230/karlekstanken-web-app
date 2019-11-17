@@ -142,7 +142,7 @@ class Home extends React.Component {
                                             <Row>
                                                 {chapters && chapters.map((item, index) => {
                                                     return (
-                                                        <Col key={item.id} className="mb-2" xs="12" md="4">
+                                                        <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
                                                             <ListCard
                                                                 subhead={item.subHead}
                                                                 title={item.title}
