@@ -20,7 +20,7 @@ class Question {
     }
 }
 
-export function calculateResults(alt1Values, alt2Values) {
+export function calculateResults(alt1Values, alt2Values, user) {
     let complete = true;
     ResetResults();
 
@@ -44,15 +44,20 @@ export function calculateResults(alt1Values, alt2Values) {
     }
     if (complete == true) {
         //printResults();
-        return SetLeadingCounter();
+        return SetLeadingCounter(user);
     }
     return null;
 }
-async function writeLetterToDatabase(letter) {
-    db.collection("users").doc(fire.auth().currentUser.uid).update({
-        loveLanguage: letter,
+async function writeLetterToDatabase(letter, user) {
+    db.runTransaction(async t => {
+        const userRef = db.collection("users").doc(user.uid);
+        const coupleDataRef = user.coupleDataRef;
+
+        t.update(userRef, { loveLanguage: letter });
+        t.update(coupleDataRef, { [`loveLanguages.${user.uid}`]: letter });
     });
 }
+
 function printResults() {
     console.log("A : " + counterA);
     console.log("B : " + counterB);
@@ -62,7 +67,7 @@ function printResults() {
     console.log("Leader : " + leadingCounter)
 }
 
-function SetLeadingCounter() {
+function SetLeadingCounter(user) {
     let holder = counterA;
     leadingCounter = "A";
 
@@ -82,7 +87,7 @@ function SetLeadingCounter() {
         holder = counterE;
         leadingCounter = "E";
     }
-    writeLetterToDatabase(leadingCounter);
+    writeLetterToDatabase(leadingCounter, user);
     return leadingCounter;
 
 }

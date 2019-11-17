@@ -58,8 +58,8 @@ export class LoveTest extends Component {
         this.setState({});
     }
 
-    handleSubmit() {
-        const lang = calculateResults(this.answers.alt1Value, this.answers.alt2Value);
+    handleSubmit(user) {
+        const lang = calculateResults(this.answers.alt1Value, this.answers.alt2Value, user);
         if (lang)
             this.setState({
                 lang: lang
@@ -141,7 +141,7 @@ export class LoveTest extends Component {
                                 }
                                 <Row className="text-center">
                                     <Col className="mx-auto" xs="12" lg="8">
-                                        <Button type="button" onClick={this.handleSubmit}>Submit</Button>
+                                        <Button type="button" onClick={() => this.handleSubmit(user)}>Submit</Button>
                                         {this.state.errorMessage &&
                                             <p className="mt-3" style={{ color: ('red'), padding: 3 }}>{this.state.errorMessage}</p>
                                         }
