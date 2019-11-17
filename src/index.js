@@ -83,6 +83,11 @@ class App extends React.Component {
                     if (!this.state.user) {
                         this.getPremiumStatus(user);
                     }
+                    // We already have premium status
+                    if (this.state.user) {
+                        const premium = this.state.user.premium;
+                        user.premium = premium;
+                    }
 
                     this.setState({
                         user: user
