@@ -83,7 +83,7 @@ export class TaskPage extends Component {
                                 </Col>
                             </Row>
                             <Row className="mb-4 justify-content-center">
-                                <Col md="9">
+                                <Col lg="9">
                                     <div dangerouslySetInnerHTML={{ __html: task.bodyHTML }} />
                                 </Col>
                             </Row>

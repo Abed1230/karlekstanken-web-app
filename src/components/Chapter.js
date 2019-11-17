@@ -130,14 +130,14 @@ class Chapter extends React.Component {
                         {chapter.videos &&
                             chapter.videos.map((item, index) => {
                                 return (
-                                    <Col key={index} className="mt-3 mx-auto" xs="12" md="6">
+                                    <Col key={index} className="mt-3 mx-auto" xs="12" md="9" lg="6">
                                         <YoutubePlayer url={item.url} />
                                     </Col>
                                 );
                             })}
                     </Row>
                     <Row className="mt-5 justify-content-md-center">
-                        <Col md="9">
+                        <Col lg="9">
                             <h5>{chapter.bodyTitle}</h5>
                             <p>{chapter.bodyText}</p>
                         </Col>
@@ -151,7 +151,7 @@ class Chapter extends React.Component {
                     <Row className="mt-2 mb-2">
                         {chapter.tasks && chapter.tasks.map((item, index) => {
                             return (
-                                <Col key={item.id} className="mb-2" xs="12" md="4">
+                                <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
                                     <UserConsumer>
                                         {user => (
                                             <CoupleDataConsumer>
