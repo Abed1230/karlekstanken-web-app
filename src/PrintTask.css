@@ -1,0 +1,27 @@
+.column-left {
+    float: left;
+    width: 33.333%;
+}
+
+.column-right {
+    float: right;
+    width: 33.333%;
+}
+
+.column-center {
+    display: inline-block;
+    width: 33.333%;
+}
+
+.content {
+    clear: both;
+}
+
+@media print {
+    @page {
+        size: A4;
+    }
+    body {
+        font-size: 18pt;
+    }
+}

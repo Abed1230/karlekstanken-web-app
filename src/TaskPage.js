@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Dropdown } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import { db } from './FirebaseData';
 import MyNavBar from './components/MyNavBar';
-import logo from './logo.png';
-import logoAlt from './assets/logo_alt.png';
 import time from './assets/time.svg';
 import './TaskPage.css';
+import PrintTask from './PrintTask';
 
 export class TaskPage extends Component {
     constructor(props) {
@@ -53,74 +52,45 @@ export class TaskPage extends Component {
 
         const task = this.state.task;
 
-        return task ? (
+        return (
             <>
                 <MyNavBar goBack={true} />
-                <Container>
-                    {/* <Row className="mt-3">
-                        <Col>
-                            <small>{task.subHead}</small>
-                            <h4>{task.title}</h4>
-                            <Dropdown.Divider />
-                        </Col>
-                    </Row> */}
-                    <Row className="mt-4">
-                        <Col className="col-print-4" md="4">
-                            <img
-                                className="d-none d-print-block"
-                                src={logo}
-                                height="25"
-                                alt="Logo"
-                            />
-                        </Col>
-                        <Col className="col-print-4 d-flex justify-content-center" md="4">
-                            <img
-                                className="d-none d-print-block"
-                                src={logoAlt}
-                                height="55"
-                                alt="Logo"
-                            />
-                        </Col>
-                        <Col className="col-print-4 d-flex justify-content-end" md="4">
-                            <div className="text-center">
-                                <img
-                                    src={time}
-                                    height="50"
-                                    alt="Time"
-                                />
-                                <br />
-                                <span>{task.time}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row className="mt-4 justify-content-center">
-                        <Col className="col-print-11" md="9">
-                            <div dangerouslySetInnerHTML={{ __html: task.bodyHTML }} />
-                        </Col>
-                    </Row>
-                </Container>
-            </>
-        )
-            :
-            (
-                <>
-                    <MyNavBar goBack={true} />
+                {task ?
+                    <>
+                        <Container className="d-print-none">
+                            <Row className="mt-4">
+                                <Col className="text-right" /* className="d-flex justify-content-end" */>
+                                    <div className="d-inline-block text-center">
+                                        <img
+                                            src={time}
+                                            height="50"
+                                            alt="Time"
+                                        />
+                                        <br />
+                                        <span>{task.time}</span>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className="mt-4 justify-content-center">
+                                <Col md="9">
+                                    <div dangerouslySetInnerHTML={{ __html: task.bodyHTML }} />
+                                </Col>
+                            </Row>
+                        </Container>
+                        <PrintTask task={task} />
+                    </>
+                    :
                     <Container className="mt-3">
-                        {/* <Row className="mt-3">
-                            <Col>
-                                <small>{this.state.taskMin.subHead}</small>
-                                <h4>{this.state.taskMin.title}</h4>
-                                <Dropdown.Divider />
-                            </Col>
-                        </Row> */}
                         <Row className="mt-2">
                             <Col>
                                 <p>Laddar in...</p>
                             </Col>
                         </Row>
                     </Container>
-                </>
-            );
+                }
+
+            </>
+        )
     }
 }
 
