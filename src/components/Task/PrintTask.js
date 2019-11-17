@@ -1,8 +1,8 @@
 import React from 'react';
 import './PrintTask.css';
-import logo from './logo.png';
-import logoAlt from './assets/logo_alt.png';
-import timeIcon from './assets/time.svg';
+import logo from '../../logo.png';
+import logoAlt from '../../assets/logo_alt.png';
+import timeIcon from '../../assets/time.svg';
 
 const PrintTask = ({ task }) => (
     <div className="d-none d-print-block">

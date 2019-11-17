@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
-import { db } from './FirebaseData';
-import MyNavBar from './components/MyNavBar';
-import time from './assets/time.svg';
+import { db } from '../../FirebaseData';
+import MyNavBar from '../MyNavBar';
+import time from '../../assets/time.svg';
 import './TaskPage.css';
 import PrintTask from './PrintTask';
 

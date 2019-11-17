@@ -15,7 +15,7 @@ import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
 import Chapter from './components/Chapter';
-import TaskPage from './TaskPage';
+import TaskPage from './components/Task/TaskPage';
 import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
 import { revokePremium } from './MyCloudFunctions';
