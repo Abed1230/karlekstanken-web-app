@@ -36,6 +36,8 @@ class Home extends React.Component {
             openMenu: false,
             showPurchaseModal: false,
         };
+        
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     async getData() {
@@ -86,7 +88,7 @@ class Home extends React.Component {
                 taskIds.push.apply(taskIds, chap.taskIds);
             }
         });
-        
+
         // get number of completed tasks
         let numCompletedTasks = 0;
         const completionStatus = coupleData.completionStatus;
@@ -114,6 +116,15 @@ class Home extends React.Component {
         return (numCompletedTasks / numTasks);
     }
 
+    handleClick(chapter, user) {
+        if (chapter.premium && !user.premium) {
+            this.setState({ showPurchaseModal: true });
+            return;
+        }
+
+        this.props.history.push({ pathname: "/chapter", state: { chapter: chapter } })
+    }
+
     componentDidMount() {
         this.mounted = true;
         this.getData();
@@ -129,52 +140,56 @@ class Home extends React.Component {
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
                 <UserConsumer>
-                    {user => (
-                        <CoupleDataConsumer>
-                            {coupleData => {
-                                const showUnlockMsg = user && !user.premium;
-                                return (
-                                    <>
-                                        <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
-                                            <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
-                                        </div>
-                                        <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
-                                            <Row>
-                                                {chapters && chapters.map((item, index) => {
-                                                    return (
-                                                        <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
-                                                            <ListCard
-                                                                subhead={item.subHead}
-                                                                title={item.title}
-                                                                enableCheck={coupleData ? true : false}
-                                                                complete={this.isChapterComplete(coupleData, item.id)}
-                                                                handleClick={() => this.props.history.push({ pathname: "/chapter", state: { chapter: item } })}
-                                                                handleCheck={this.handleCheck.bind(this, user, coupleData, item)} />
-                                                        </Col>
-                                                    );
-                                                })}
-                                            </Row>
-                                        </Container>
-                                        {showUnlockMsg &&
-                                            <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
-                                                <div className="text-center mx-auto">
-                                                    <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
-                                                    <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
-                                                </div>
+                    {pUser => {
+                        const user = pUser ? pUser : {};
+                        return (
+                            <CoupleDataConsumer>
+                                {coupleData => {
+                                    const showUnlockMsg = user && !user.premium;
+                                    return (
+                                        <>
+                                            <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                                                <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                             </div>
-                                        }
-                                        <PurchaseModal
-                                            show={this.state.showPurchaseModal}
-                                            handleHide={(shouldOpenAddPartnerModal) => {
-                                                this.setState({ showPurchaseModal: false });
-                                                if (shouldOpenAddPartnerModal)
-                                                    this.myNavBar.openAddPartnerModal();
-                                            }} />
-                                    </>
-                                )
-                            }}
-                        </CoupleDataConsumer>
-                    )}
+                                            <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                <Row>
+                                                    {chapters && chapters.map((item, index) => {
+                                                        return (
+                                                            <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
+                                                                <ListCard
+                                                                    subhead={item.subHead}
+                                                                    title={item.title}
+                                                                    disabled={item.premium && !user.premium}
+                                                                    enableCheck={coupleData ? true : false}
+                                                                    complete={this.isChapterComplete(coupleData, item.id)}
+                                                                    handleClick={() => this.handleClick(item, user)}
+                                                                    handleCheck={() => this.handleCheck(user, coupleData, item)} />
+                                                            </Col>
+                                                        );
+                                                    })}
+                                                </Row>
+                                            </Container>
+                                            {showUnlockMsg &&
+                                                <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                                    <div className="text-center mx-auto">
+                                                        <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                                        <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <PurchaseModal
+                                                show={this.state.showPurchaseModal}
+                                                handleHide={(shouldOpenAddPartnerModal) => {
+                                                    this.setState({ showPurchaseModal: false });
+                                                    if (shouldOpenAddPartnerModal)
+                                                        this.myNavBar.openAddPartnerModal();
+                                                }} />
+                                        </>
+                                    )
+                                }}
+                            </CoupleDataConsumer>
+                        )
+                    }}
                 </UserConsumer>
             </>
         );
