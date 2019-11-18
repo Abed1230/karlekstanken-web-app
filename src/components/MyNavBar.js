@@ -18,9 +18,15 @@ const BackIcon = (props) => (
 class MyNavBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isOpen: false,
+        };
 
         this.toggler = React.createRef();
+
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.handleDocumentClick = this.handleDocumentClick.bind(this);
+        this.handleToggleClick = this.handleToggleClick.bind(this);
     }
 
     toggleMenu() {
@@ -38,6 +44,27 @@ class MyNavBar extends React.Component {
         }
     }
 
+    handleToggleClick() {
+        const isOpen = this.state.isOpen;
+        // Menu is closed now. It will be open so add listener
+        if (!isOpen) {
+            document.addEventListener('click', this.handleDocumentClick, true);
+        } else {
+            // Menu is open. It will be closed so remove listener
+            document.removeEventListener('click', this.handleDocumentClick, true);
+        }
+
+        this.setState({ isOpen: !isOpen });
+    }
+
+    handleDocumentClick(e) {
+        const modal = document.querySelector('[role="dialog"]');
+        const container = this._element;
+        if (!modal && e.target !== container && !container.contains(e.target)) {
+            this.toggleMenu();
+        }
+    }
+
     // We need to set ref this way beacuse this component is using HOC (withRouter)
     componentDidMount() {
         const onRef = this.props.onRef;
@@ -49,40 +76,44 @@ class MyNavBar extends React.Component {
         const onRef = this.props.onRef;
         if (onRef)
             onRef(undefined);
+
+        document.removeEventListener('click', this.handleDocumentClick, true);
     }
 
     render() {
         const { goBack, history } = this.props;
         return (
-            <Navbar bg="light" sticky="top" expand="xs">
-                {goBack &&
-                    <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
-                        <BackIcon fill="rgba(0, 0, 0, 0.5)" />
+            <div ref={(el) => this._element = el}>
+                <Navbar bg="light" sticky="top" expand="xs">
+                    {goBack &&
+                        <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
+                            <BackIcon fill="rgba(0, 0, 0, 0.5)" />
+                        </Button>
+                    }
+                    <Navbar.Brand className="mx-auto">
+                        <img
+                            className="logo"
+                            src={logo}
+                            height="35"
+                            alt="Logo"
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle ref={el => this.toggler = el} onClick={this.handleToggleClick} aria-controls="navbar-nav" />
+                    <Navbar.Collapse id="navbar-nav">
+                        <Dropdown.Divider />
+                        <UserConsumer>
+                            {user => user ? <UserView ref={el => this.userView = el} /> : null}
+                        </UserConsumer>
+                        <Dropdown.Divider className="mt-4 mb-4" />
+                        {/* TODO: navigate to settings page */}
+                        <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
+                            <span className="mr-1"><GearIcon fill="#6c757d" /></span>
+                            Inställningar
                     </Button>
-                }
-                <Navbar.Brand className="mx-auto">
-                    <img
-                        className="logo"
-                        src={logo}
-                        height="35"
-                        alt="Logo"
-                    />
-                </Navbar.Brand>
-                <Navbar.Toggle ref={el => this.toggler = el} aria-controls="navbar-nav" />
-                <Navbar.Collapse id="navbar-nav">
-                    <Dropdown.Divider />
-                    <UserConsumer>
-                        {user => user ? <UserView ref={el => this.userView = el} /> : null}
-                    </UserConsumer>
-                    <Dropdown.Divider className="mt-4 mb-4" />
-                    {/* TODO: navigate to settings page */}
-                    <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
-                        <span className="mr-1"><GearIcon fill="#6c757d" /></span>
-                        Inställningar
-                    </Button>
-                    <Button className="float-right" variant="outline-danger" onClick={() => fire.auth().signOut()}>Logga ut</Button>
-                </Navbar.Collapse>
-            </Navbar>
+                        <Button className="float-right" variant="outline-danger" onClick={() => fire.auth().signOut()}>Logga ut</Button>
+                    </Navbar.Collapse>
+                </Navbar>
+            </div>
         );
     }
 }

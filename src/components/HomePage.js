@@ -130,7 +130,6 @@ class Home extends React.Component {
         this.getData();
 
         const visited = localStorage.getItem("alreadyVisited");
-        console.log("visited: " + visited);
         if (!visited) {
             localStorage.setItem("alreadyVisited", true);
             this.myNavBar.toggleMenu();
