@@ -36,7 +36,7 @@ class Home extends React.Component {
             openMenu: false,
             showPurchaseModal: false,
         };
-        
+
         this.handleCheck = this.handleCheck.bind(this);
     }
 
@@ -117,7 +117,7 @@ class Home extends React.Component {
     }
 
     handleClick(chapter, user) {
-        if (chapter.premium && !user.premium) {
+        if (chapter.premium && user && !user.premium) {
             this.setState({ showPurchaseModal: true });
             return;
         }
@@ -140,8 +140,7 @@ class Home extends React.Component {
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
                 <UserConsumer>
-                    {pUser => {
-                        const user = pUser ? pUser : {};
+                    {user => {
                         return (
                             <CoupleDataConsumer>
                                 {coupleData => {
@@ -153,20 +152,30 @@ class Home extends React.Component {
                                             </div>
                                             <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
                                                 <Row>
-                                                    {chapters && chapters.map((item, index) => {
-                                                        return (
-                                                            <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
-                                                                <ListCard
-                                                                    subhead={item.subHead}
-                                                                    title={item.title}
-                                                                    disabled={item.premium && !user.premium}
-                                                                    enableCheck={coupleData ? true : false}
-                                                                    complete={this.isChapterComplete(coupleData, item.id)}
-                                                                    handleClick={() => this.handleClick(item, user)}
-                                                                    handleCheck={() => this.handleCheck(user, coupleData, item)} />
+                                                    {chapters ?
+                                                        chapters.map((item, index) => {
+                                                            return (
+                                                                <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
+                                                                    <ListCard
+                                                                        subhead={item.subHead}
+                                                                        title={item.title}
+                                                                        disabled={item.premium && user && !user.premium}
+                                                                        enableCheck={coupleData ? true : false}
+                                                                        complete={this.isChapterComplete(coupleData, item.id)}
+                                                                        handleClick={() => this.handleClick(item, user)}
+                                                                        handleCheck={() => this.handleCheck(user, coupleData, item)} />
+                                                                </Col>
+                                                            );
+                                                        })
+                                                        :
+                                                        [...Array(10)].map((item, index) => (
+                                                            <Col key={index} className="mb-2" xs="12" md="6" lg="4">
+                                                                <div style={{ height: "110px", backgroundColor: "#fafafa" }}>
+
+                                                                </div>
                                                             </Col>
-                                                        );
-                                                    })}
+                                                        ))
+                                                    }
                                                 </Row>
                                             </Container>
                                             {showUnlockMsg &&

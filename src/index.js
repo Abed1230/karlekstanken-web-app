@@ -81,7 +81,7 @@ class App extends React.Component {
 
                     // Only fetch premium status once on component mount 
                     if (!this.state.user) {
-                        this.getPremiumStatus(user);
+                        await this.getPremiumStatus(user);
                     }
                     // We already have premium status
                     if (this.state.user) {
