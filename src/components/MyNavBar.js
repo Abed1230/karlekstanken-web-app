@@ -23,6 +23,11 @@ class MyNavBar extends React.Component {
         this.toggler = React.createRef();
     }
 
+    toggleMenu() {
+        if (this.toggler)
+            this.toggler.click();
+    }
+
     openAddPartnerModal() {
         /* if (!this.state.open)
             this.toggler.click(); */
@@ -39,6 +44,7 @@ class MyNavBar extends React.Component {
         if (onRef)
             onRef(this);
     }
+
     componentWillUnmount() {
         const onRef = this.props.onRef;
         if (onRef)
@@ -73,7 +79,7 @@ class MyNavBar extends React.Component {
                     <Button className="float-left d-flex align-items-center" variant="outline-secondary" as={Link} to="/settings">
                         <span className="mr-1"><GearIcon fill="#6c757d" /></span>
                         Inställningar
-                            </Button>
+                    </Button>
                     <Button className="float-right" variant="outline-danger" onClick={() => fire.auth().signOut()}>Logga ut</Button>
                 </Navbar.Collapse>
             </Navbar>

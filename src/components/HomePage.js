@@ -128,6 +128,13 @@ class Home extends React.Component {
     componentDidMount() {
         this.mounted = true;
         this.getData();
+
+        const visited = localStorage.getItem("alreadyVisited");
+        console.log("visited: " + visited);
+        if (!visited) {
+            localStorage.setItem("alreadyVisited", true);
+            this.myNavBar.toggleMenu();
+        }
     }
 
     componentWillUnmount() {

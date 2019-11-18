@@ -110,7 +110,7 @@ class UserView extends React.Component {
                                         </Col>
                                     </Row>
 
-                                    <Modal size="lg" show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>
+                                    <Modal size="md" show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>{this.state.modalTitle}</Modal.Title>
                                         </Modal.Header>
