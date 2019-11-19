@@ -50,17 +50,22 @@ class MyNavBar extends React.Component {
             // Menu is closed now. It will be open so add listener
             document.addEventListener('click', this.handleDocumentClick, true);
 
-            // Pushes unlock message down
+            // Hides unlock message on small screens
             const unlockMsgElement = document.getElementById("unlock-msg");
-            if (unlockMsgElement)
-                unlockMsgElement.classList.remove("fixed-bottom");
+            if (unlockMsgElement) {
+                unlockMsgElement.classList.remove("d-flex");
+                unlockMsgElement.classList.add("d-none", "d-md-flex");
+            }
+                
         } else {
             // Menu is open. It will be closed so remove listener
             document.removeEventListener('click', this.handleDocumentClick, true);
 
             const unlockMsgElement = document.getElementById("unlock-msg");
-            if (unlockMsgElement)
-                unlockMsgElement.classList.add("fixed-bottom");
+            if (unlockMsgElement) {
+                unlockMsgElement.classList.remove("d-none", "d-md-flex");
+                unlockMsgElement.classList.add("d-flex");
+            }
         }
 
         this.setState({ isOpen: !isOpen });
