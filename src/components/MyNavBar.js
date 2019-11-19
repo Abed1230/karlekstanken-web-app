@@ -46,12 +46,15 @@ class MyNavBar extends React.Component {
 
     handleToggleClick() {
         const isOpen = this.state.isOpen;
-        // Menu is closed now. It will be open so add listener
         if (!isOpen) {
+            // Menu is closed now. It will be open so add listener
             document.addEventListener('click', this.handleDocumentClick, true);
+            // Pushes unlock message down
+            document.getElementById("unlock-msg").classList.remove("fixed-bottom");
         } else {
             // Menu is open. It will be closed so remove listener
             document.removeEventListener('click', this.handleDocumentClick, true);
+            document.getElementById("unlock-msg").classList.add("fixed-bottom");
         }
 
         this.setState({ isOpen: !isOpen });
