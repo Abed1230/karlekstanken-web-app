@@ -151,13 +151,14 @@ class Home extends React.Component {
                                                             {user && chapters ?
                                                                 chapters.map((item, index) => {
                                                                     const premiumUser = user && user.premium;
+                                                                    const enableCheck = item.premium ? coupleData && premiumUser : Boolean(coupleData);
                                                                     return (
                                                                         <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
                                                                             <ListCard
                                                                                 subhead={item.subHead}
                                                                                 title={item.title}
                                                                                 disabled={item.premium && !premiumUser}
-                                                                                enableCheck={coupleData ? true : false}
+                                                                                enableCheck={enableCheck}
                                                                                 complete={this.isChapterComplete(coupleData, item.id)}
                                                                                 handleClick={() => this.handleClick(item, user)}
                                                                                 handleCheck={() => this.handleCheck(user, coupleData, item)} />

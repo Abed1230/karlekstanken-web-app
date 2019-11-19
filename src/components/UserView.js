@@ -81,7 +81,7 @@ class UserView extends React.Component {
                                             {partnerLoveLang ?
                                                 <LoveLangCard name={partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
                                                 :
-                                                partner ?
+                                                user.premium && partner ?
                                                     <Card className="mt-2 h-100">
                                                         <Card.Body >
                                                             <small className="text-muted">{partner.name + "'s kärleksspråk"}</small>
