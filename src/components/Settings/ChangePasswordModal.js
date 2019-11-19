@@ -149,7 +149,7 @@ class ChangePasswordModal extends React.Component {
                                     <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>Stäng</Button>
                                     :
                                     <>
-                                        <Button variant="light" onClick={this.hideAndReset.bind(this, resetForm)}>Avbryt</Button>
+                                        <Button className="mr-2" variant="light" onClick={this.hideAndReset.bind(this, resetForm)}>Avbryt</Button>
                                         <Button variant="info" onClick={handleSubmit}>Spara</Button>
                                     </>
                             }

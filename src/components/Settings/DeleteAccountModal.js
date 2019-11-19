@@ -42,6 +42,7 @@ class DeleteAccountModal extends React.Component {
 
     render() {
         const user = this.props.user;
+        const showWarning = user && user.partner && user.premium;
         return (
             <Modal show={this.props.show} onHide={this.hideAndReset}>
                 {this.state.success ?
@@ -58,14 +59,19 @@ class DeleteAccountModal extends React.Component {
                         <Modal.Header closeButton>
                             <Modal.Title>Är du säker på att du vill avsluta ditt konto?</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                            {user && user.partner && user.premium &&
-                                <p className="text-danger">Observera att er licens kommer sluta gälla för bägge om du avslutar ditt konto</p>
-                            }
-                            {this.state.error &&
+                        {showWarning &&
+                            <Modal.Body>
+                                <p className="text-danger">Varning: Om du avslutar ditt konto kommer er licens att sluta gälla både för dig och {user.partner.name}.</p>
+                                {this.state.error &&
+                                    <Alert variant="danger">{this.state.error}</Alert>
+                                }
+                            </Modal.Body>
+                        }
+                        {this.state.error && !showWarning &&
+                            <Modal.Body>
                                 <Alert variant="danger">{this.state.error}</Alert>
-                            }
-                        </Modal.Body>
+                            </Modal.Body>
+                        }
                     </>
                 }
                 <Modal.Footer>

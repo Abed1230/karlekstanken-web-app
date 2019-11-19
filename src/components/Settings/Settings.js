@@ -6,6 +6,7 @@ import strftime from 'strftime';
 import ChangePasswordModal from './ChangePasswordModal';
 import RemovePartnerModal from './RemovePartnerModal';
 import DeleteAccountModal from './DeleteAccountModal';
+import MyStrings from '../../MyStrings.json';
 
 class Settings extends React.Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class Settings extends React.Component {
                                                     <p>
                                                         {user.firstName + " " + user.lastName}
                                                         <br />
-                                                        E-postaddress: {user.email}
+                                                        {MyStrings.email}: {user.email}
                                                     </p>
 
                                                     <Dropdown.Divider className="mt-3" />
@@ -47,7 +48,7 @@ class Settings extends React.Component {
                                                         <p>
                                                             {user.partner.name}
                                                             <br />
-                                                            E-postaddress: {user.partner.email}
+                                                            {MyStrings.email}: {user.partner.email}
                                                         </p>
                                                         :
                                                         <p>Du har inte laggt till någon partner ännu</p>
@@ -68,7 +69,7 @@ class Settings extends React.Component {
                                             </Card>
                                         </Col>
                                         <Col className="mt-4" md="6">
-                                            <Button className="mb-4" variant="light" block onClick={() => this.setState({ showChangePasswordModal: true })}>Ändra lösenord</Button>
+                                            <Button className="mb-4 border" variant="light" block onClick={() => this.setState({ showChangePasswordModal: true })}>Ändra lösenord</Button>
                                             {!user.premium && user.partner &&
                                                 <>
                                                     <Button variant="outline-danger" block onClick={() => this.setState({ showRemovePartnerModal: true })}>Ta bort partner</Button>

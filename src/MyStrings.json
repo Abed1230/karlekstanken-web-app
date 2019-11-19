@@ -1,5 +1,5 @@
 {
-    "greeting": "hello",
+    "email": "E-postadress",
     "errors": {
         "fieldRequired": "Fältet kan inte vara tomt",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",
