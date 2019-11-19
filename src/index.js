@@ -19,6 +19,7 @@ import TaskPage from './components/Task/TaskPage';
 import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
 import { revokePremium } from './MyCloudFunctions';
+import { ChaptersProvider } from './contexts/ChaptersContext';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -98,6 +99,8 @@ class App extends React.Component {
                 this.setState({ authUser: null, coupleData: null, user: null });
             }
         });
+
+        this.getChapters();
     }
 
     async getPremiumStatus(pUser) {
@@ -114,6 +117,15 @@ class App extends React.Component {
         this.setState({ user: user });
     }
 
+    async getChapters() {
+        const snap = await db.collection("chapters").doc("portals").get();
+        const doc = snap.data();
+
+        this.setState({
+            chapters: doc.list
+        });
+    }
+
     componentWillUnmount() {
         this.unsubAuthUser && this.unsubAuthUser();
         this.unsubUserData && this.unsubUserData();
@@ -126,19 +138,21 @@ class App extends React.Component {
                 <AuthUserProvider value={this.state.authUser}>
                     <UserProvider value={this.state.user}>
                         <CoupleDataProvider value={this.state.coupleData}>
-                            <BrowserRouter>
-                                <Switch>
-                                    <PublicRoute restricted={true} component={Login} path="/signin" exact />
-                                    <PublicRoute restricted={true} component={Register} path="/signup" exact />
-                                    <PrivateRoute component={HomePage} path="/" exact />
-                                    <PrivateRoute component={Settings} path="/settings" exact />
-                                    <PrivateRoute component={LoveTest} path="/languagetest" exact />
-                                    <PrivateRoute component={Chapter} path="/chapter" exact />
-                                    <PrivateRoute component={TaskPage} path="/task" exact />
-                                    <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
-                                    <Route component={NotFound} />
-                                </Switch>
-                            </BrowserRouter>
+                            <ChaptersProvider value={this.state.chapters}>
+                                <BrowserRouter>
+                                    <Switch>
+                                        <PublicRoute restricted={true} component={Login} path="/signin" exact />
+                                        <PublicRoute restricted={true} component={Register} path="/signup" exact />
+                                        <PrivateRoute component={HomePage} path="/" exact />
+                                        <PrivateRoute component={Settings} path="/settings" exact />
+                                        <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                        <PrivateRoute component={Chapter} path="/chapter" exact />
+                                        <PrivateRoute component={TaskPage} path="/task" exact />
+                                        <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
+                                        <Route component={NotFound} />
+                                    </Switch>
+                                </BrowserRouter>
+                            </ChaptersProvider>
                         </CoupleDataProvider>
                     </UserProvider>
                 </AuthUserProvider>

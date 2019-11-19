@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
-import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
 import './Home.css';
 import PurchaseModal from './PurchaseModal';
+import { ChaptersConsumer } from '../contexts/ChaptersContext';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -32,23 +32,11 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chapters: null,
             openMenu: false,
             showPurchaseModal: false,
         };
 
         this.handleCheck = this.handleCheck.bind(this);
-    }
-
-    async getData() {
-        const snap = await db.collection("chapters").doc("portals").get();
-        const doc = snap.data();
-
-        if (this.mounted) {
-            this.setState({
-                chapters: doc.list
-            });
-        }
     }
 
     handleCheck(user, coupleData, chapter) {
@@ -117,7 +105,9 @@ class Home extends React.Component {
     }
 
     handleClick(chapter, user) {
-        if (chapter.premium && user && !user.premium) {
+        console.log(chapter);
+        const premiumUser = user && user.premium;
+        if (chapter.premium && !premiumUser) {
             this.setState({ showPurchaseModal: true });
             return;
         }
@@ -127,7 +117,6 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
-        this.getData();
 
         const visited = localStorage.getItem("alreadyVisited");
         if (!visited) {
@@ -141,71 +130,75 @@ class Home extends React.Component {
     }
 
     render() {
-        const chapters = this.state.chapters;
         return (
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
-                <UserConsumer>
-                    {user => {
-                        return (
-                            <CoupleDataConsumer>
-                                {coupleData => {
-                                    const showUnlockMsg = user && !user.premium;
-                                    return (
-                                        <>
-                                            <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
-                                                <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
-                                            </div>
-                                            <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
-                                                <Row>
-                                                    {chapters ?
-                                                        chapters.map((item, index) => {
-                                                            return (
-                                                                <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
-                                                                    <ListCard
-                                                                        subhead={item.subHead}
-                                                                        title={item.title}
-                                                                        disabled={item.premium && user && !user.premium}
-                                                                        enableCheck={coupleData ? true : false}
-                                                                        complete={this.isChapterComplete(coupleData, item.id)}
-                                                                        handleClick={() => this.handleClick(item, user)}
-                                                                        handleCheck={() => this.handleCheck(user, coupleData, item)} />
-                                                                </Col>
-                                                            );
-                                                        })
-                                                        :
-                                                        [...Array(10)].map((item, index) => (
-                                                            <Col key={index} className="mb-2" xs="12" md="6" lg="4">
-                                                                <div style={{ height: "110px", backgroundColor: "#fafafa" }}>
-
-                                                                </div>
-                                                            </Col>
-                                                        ))
-                                                    }
-                                                </Row>
-                                            </Container>
-                                            {showUnlockMsg &&
-                                                <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
-                                                    <div className="text-center mx-auto">
-                                                        <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
-                                                        <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                <ChaptersConsumer>
+                    {chapters => (
+                        <UserConsumer>
+                            {user => {
+                                return (
+                                    <CoupleDataConsumer>
+                                        {coupleData => {
+                                            const showUnlockMsg = user && !user.premium;
+                                            return (
+                                                <>
+                                                    <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                                                        <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                </div>
-                                            }
-                                            <PurchaseModal
-                                                show={this.state.showPurchaseModal}
-                                                handleHide={(shouldOpenAddPartnerModal) => {
-                                                    this.setState({ showPurchaseModal: false });
-                                                    if (shouldOpenAddPartnerModal)
-                                                        this.myNavBar.openAddPartnerModal();
-                                                }} />
-                                        </>
-                                    )
-                                }}
-                            </CoupleDataConsumer>
-                        )
-                    }}
-                </UserConsumer>
+                                                    <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                        <Row>
+                                                            {user && chapters ?
+                                                                chapters.map((item, index) => {
+                                                                    const premiumUser = user && user.premium;
+                                                                    return (
+                                                                        <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
+                                                                            <ListCard
+                                                                                subhead={item.subHead}
+                                                                                title={item.title}
+                                                                                disabled={item.premium && !premiumUser}
+                                                                                enableCheck={coupleData ? true : false}
+                                                                                complete={this.isChapterComplete(coupleData, item.id)}
+                                                                                handleClick={() => this.handleClick(item, user)}
+                                                                                handleCheck={() => this.handleCheck(user, coupleData, item)} />
+                                                                        </Col>
+                                                                    );
+                                                                })
+                                                                :
+                                                                [...Array(10)].map((item, index) => (
+                                                                    <Col key={index} className="mb-2" xs="12" md="6" lg="4">
+                                                                        <div style={{ height: "110px", backgroundColor: "#fafafa" }}>
+
+                                                                        </div>
+                                                                    </Col>
+                                                                ))
+                                                            }
+                                                        </Row>
+                                                    </Container>
+                                                    {showUnlockMsg &&
+                                                        <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                                            <div className="text-center mx-auto">
+                                                                <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                                                <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <PurchaseModal
+                                                        show={this.state.showPurchaseModal}
+                                                        handleHide={(shouldOpenAddPartnerModal) => {
+                                                            this.setState({ showPurchaseModal: false });
+                                                            if (shouldOpenAddPartnerModal)
+                                                                this.myNavBar.openAddPartnerModal();
+                                                        }} />
+                                                </>
+                                            )
+                                        }}
+                                    </CoupleDataConsumer>
+                                )
+                            }}
+                        </UserConsumer>
+                    )}
+                </ChaptersConsumer>
             </>
         );
     }
