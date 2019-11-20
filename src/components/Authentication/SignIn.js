@@ -13,7 +13,7 @@ function SignIn({ history }) {
             <div className="bg vh-100"></div>
             <Container className="content">
                 <Row className="justify-content-center mt-5 mb-5">
-                    <Col md="9" lg="6" >
+                    <Col md="8" lg="5" >
                         <div className="my-card pt-4 pb-5 pl-3 pr-3 ">
                             <Row>
                                 <Col>
