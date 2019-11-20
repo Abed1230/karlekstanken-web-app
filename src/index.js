@@ -19,8 +19,10 @@ import Chapter from './components/Chapter';
 import TaskPage from './components/Task/TaskPage';
 import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
+import Authentication from './components/Authentication/Authentication';
 import { revokePremium } from './MyCloudFunctions';
 import { ChaptersProvider } from './contexts/ChaptersContext';
+import SignIn from './components/Authentication/SignIn';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -142,6 +144,8 @@ class App extends React.Component {
                             <ChaptersProvider value={this.state.chapters}>
                                 <BrowserRouter>
                                     <Switch>
+                                        <PublicRoute restricted={false} component={Authentication} path="/auth" exact />
+                                        <PublicRoute restricted={false} component={SignIn} path="/auth/signin" exact />
                                         <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                         <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                         <PrivateRoute component={HomePage} path="/" exact />
