@@ -10,7 +10,7 @@ import { UserProvider } from './UserContext';
 import { AuthUserProvider } from './AuthUserContext';
 import { CoupleDataProvider } from './CoupleDataContext';
 
-import Login from './Login.js';
+import Login from './components/Authentication/Login.js';
 import Register from './Register.js';
 import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';

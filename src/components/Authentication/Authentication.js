@@ -3,11 +3,12 @@ import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import Logo from '../../logo.png';
 import './Authentication.css';
+import Login from './Login';
 
 function Select() {
     return (
         <>
-            <Row className="mt-5 text-center">
+            <Row className="mt-3 text-center">
                 <Col xs="12">
                     <h4>Välkommen!</h4>
                 </Col>
@@ -42,15 +43,17 @@ function Authentication({ match }) {
                             <Row >
                                 <Col className="text-center">
                                     <img
-                                        className="img-fluid"
+                                        className="img-fluid mb-2"
                                         style={{ maxHeight: "45px" }}
                                         src={Logo}
                                         height={55} />
+                                    <hr/>
                                 </Col>
                             </Row>
                             <BrowserRouter>
                                 <Switch>
                                     <Route path={`${match.path}/`} component={Select} exact />
+                                    <Route path={`${match.path}/signin`} component={Login} exact />
                                     {/* <Route path={`${match.path}/signin`} component={Login} exact />
                                     <Route path={`${match.path}/signup`} component={Register} exact />
                                     <Route path={`${match.path}/reset`} component={Register} exact /> */}

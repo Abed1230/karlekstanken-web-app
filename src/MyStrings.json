@@ -1,12 +1,15 @@
 {
+    "login": "Logga in",
     "email": "E-postadress",
+    "password": "Lösenord",
+    "emailPlaceholder": "Skriv in din e-postadress",
+    "passwordPlaceholder": "Skriv in din lösenord",
     "errors": {
         "fieldRequired": "Fältet kan inte vara tomt",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",
         "passwordMismatch": "Lösenorden stämmer inte överäns",
         "unknown": "Ett okänt fel inträffade. Var god försök igen",
         "notComplete": "Du måste markera ett svar i alla frågor",
-        "emailInvalid": "Ogiltig Email adress",
         "invalidEmail": "Ogiltig e-postadress"
     }
 }
