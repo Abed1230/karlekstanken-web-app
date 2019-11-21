@@ -30,12 +30,12 @@ function Authentication() {
                                 </Col>
                             </Row>
                             <Row className="mt-4 justify-content-center">
-                                <Col md="11" lg="11">
+                                <Col md="12">
                                     <Button className="p-2 w-100" variant="info" as={Link} to="/auth/signin">Logga in</Button>
                                 </Col>
                             </Row>
                             <Row className="mt-3 justify-content-center">
-                                <Col md="11" lg="11">
+                                <Col md="12">
                                     <Button className="p-2 w-100" variant="info">Registrera mig</Button>
                                 </Col>
 
