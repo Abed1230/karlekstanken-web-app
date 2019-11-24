@@ -10,6 +10,8 @@
         "passwordMismatch": "Lösenorden stämmer inte överäns",
         "unknown": "Ett okänt fel inträffade. Var god försök igen",
         "notComplete": "Du måste markera ett svar i alla frågor",
-        "invalidEmail": "Ogiltig e-postadress"
+        "invalidEmail": "Ogiltig e-postadress",
+        "userNotFound": "Det finns ingen användare med den angivna e-postadressen.",
+        "wrongPassword": "Du har angivit fel lösenord."
     }
 }

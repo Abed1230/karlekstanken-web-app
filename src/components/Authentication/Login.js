@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { fire } from '../../FirebaseData';
-import { Button, Row, Col, Form } from 'react-bootstrap';
+import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
 import TransparentButton from '../TransparentButton';
 import { BackIcon } from '../../assets/svgs';
+import { USER_NOT_FOUND, WRONG_PASSWORD } from '../../AuthErrorCodes';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -20,14 +21,32 @@ const LoginSchema = Yup.object().shape({
 export class Login extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            loading: false,
+        };
 
         this.login = this.login.bind(this);
     }
 
-    login(values) {
-        fire.auth().signInWithEmailAndPassword(values.email, values.password).then((u) => {
-        }).catch((error) => {
-            console.log(error);
+    login({ email, password }) {
+        this.setState({ loading: true });
+        fire.auth().signInWithEmailAndPassword(email, password).then((user) => {
+            // will automatically redirect to home
+        }).catch((e) => {
+            console.log(e);
+            let msg = "";
+            switch (e.code) {
+                case USER_NOT_FOUND:
+                    msg = MyStrings.errors.userNotFound;
+                    break;
+                case WRONG_PASSWORD:
+                    msg = MyStrings.errors.wrongPassword;
+                    break;
+                default:
+                    msg = MyStrings.errors.unknown;
+                    break;
+            }
+            this.setState({ loading: false, error: msg });
         });
     }
 
@@ -73,7 +92,16 @@ export class Login extends Component {
                                             {errors.password}
                                         </Form.Control.Feedback>
                                     </Form.Group>
-                                    <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.login}</Button>
+                                    {this.state.error &&
+                                        <Alert variant="danger">{this.state.error}</Alert>
+                                    }
+                                    {this.state.loading ?
+                                        <div className="p-2 text-center">
+                                            <Spinner className="p-2" animation="border" variant="info" />
+                                        </div>
+                                        :
+                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.login}</Button>
+                                    }
                                     <TransparentButton className="mt-3 text-primary" as={Link} to="/auth/reset">Glömt lösenord?</TransparentButton>
                                 </Form>
                             )}
