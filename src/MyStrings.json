@@ -1,9 +1,12 @@
 {
+    "send": "Skicka",
     "login": "Logga in",
     "email": "E-postadress",
     "password": "Lösenord",
     "emailPlaceholder": "Skriv in din e-postadress",
     "passwordPlaceholder": "Skriv in din lösenord",
+    "passwordResetSentMsg": "Vi har skickat en länk till din e-postadress där du kan återställa ditt lösenord",
+    "passwordResetInfo": "Ange den e-postadress som du använde när du registrerade dig. Vi skickar en länk där du kan återställa ditt lösenord",
     "errors": {
         "fieldRequired": "Fältet kan inte vara tomt",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",

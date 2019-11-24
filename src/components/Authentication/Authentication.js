@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import Logo from '../../logo.png';
 import './Authentication.css';
 import Login from './Login';
+import ForgotPassword from './ForgotPassword';
 
 function Select() {
     return (
@@ -47,13 +48,14 @@ function Authentication({ match }) {
                                         style={{ maxHeight: "45px" }}
                                         src={Logo}
                                         height={55} />
-                                    <hr/>
+                                    <hr />
                                 </Col>
                             </Row>
                             <BrowserRouter>
                                 <Switch>
                                     <Route path={`${match.path}/`} component={Select} exact />
                                     <Route path={`${match.path}/signin`} component={Login} exact />
+                                    <Route path={`${match.path}/reset`} component={ForgotPassword} exact />
                                     {/* <Route path={`${match.path}/signin`} component={Login} exact />
                                     <Route path={`${match.path}/signup`} component={Register} exact />
                                     <Route path={`${match.path}/reset`} component={Register} exact /> */}
