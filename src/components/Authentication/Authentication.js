@@ -5,6 +5,7 @@ import Logo from '../../logo.png';
 import './Authentication.css';
 import Login from './Login';
 import ForgotPassword from './ForgotPassword';
+import Register from './Register';
 
 function Select() {
     return (
@@ -56,9 +57,7 @@ function Authentication({ match }) {
                                     <Route path={`${match.path}/`} component={Select} exact />
                                     <Route path={`${match.path}/signin`} component={Login} exact />
                                     <Route path={`${match.path}/reset`} component={ForgotPassword} exact />
-                                    {/* <Route path={`${match.path}/signin`} component={Login} exact />
                                     <Route path={`${match.path}/signup`} component={Register} exact />
-                                    <Route path={`${match.path}/reset`} component={Register} exact /> */}
                                 </Switch>
                             </BrowserRouter>
                         </div>

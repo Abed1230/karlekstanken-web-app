@@ -11,7 +11,7 @@ import { AuthUserProvider } from './AuthUserContext';
 import { CoupleDataProvider } from './CoupleDataContext';
 
 import Login from './components/Authentication/Login.js';
-import Register from './Register.js';
+import Register from './components/Authentication/Register';
 import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
@@ -143,7 +143,7 @@ class App extends React.Component {
                             <ChaptersProvider value={this.state.chapters}>
                                 <BrowserRouter>
                                     <Switch>
-                                        <PublicRoute restricted={false} component={Authentication} path="/auth" />
+                                        <PublicRoute restricted={true} component={Authentication} path="/auth" />
                                         <PublicRoute restricted={true} component={Login} path="/signin" exact />
                                         <PublicRoute restricted={true} component={Register} path="/signup" exact />
                                         <PrivateRoute component={HomePage} path="/" exact />

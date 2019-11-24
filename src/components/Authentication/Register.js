@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../../FirebaseData';
-import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
+import { auth, db } from '../../FirebaseData.js';
+import { Alert, Spinner, Button, Row, Col, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+import *as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
+import { EMAIL_ALREADY_IN_USE } from '../../AuthErrorCodes.js';
 import TransparentButton from '../TransparentButton';
 import { BackIcon } from '../../assets/svgs';
-import { USER_NOT_FOUND, WRONG_PASSWORD } from '../../AuthErrorCodes';
 
-const LoginSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string()
+        .required(MyStrings.errors.fieldRequired),
+    lastName: Yup.string()
+        .required(MyStrings.errors.fieldRequired),
     email: Yup.string()
         .email(MyStrings.errors.invalidEmail)
         .required(MyStrings.errors.fieldRequired),
@@ -18,7 +22,7 @@ const LoginSchema = Yup.object().shape({
         .required(MyStrings.errors.fieldRequired),
 });
 
-export class Login extends Component {
+export class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -26,22 +30,24 @@ export class Login extends Component {
             error: null,
         };
 
-        this.login = this.login.bind(this);
+        this.signup = this.signup.bind(this);
     }
 
-    login({ email, password }) {
+    signup(values) {
         this.setState({ loading: true });
-        auth.signInWithEmailAndPassword(email, password).then((user) => {
-            // will automatically redirect to home
+        auth.createUserWithEmailAndPassword(values.email, values.password).then((user) => {
+            // Add a new document in collection "users"
+            db.collection("users").doc(user.user.uid).set({
+                email: values.email,
+                firstName: values.firstName,
+                lastName: values.lastName,
+            })
         }).catch((e) => {
             console.log(e);
             let msg = "";
             switch (e.code) {
-                case USER_NOT_FOUND:
-                    msg = MyStrings.errors.userNotFound;
-                    break;
-                case WRONG_PASSWORD:
-                    msg = MyStrings.errors.wrongPassword;
+                case EMAIL_ALREADY_IN_USE:
+                    msg = MyStrings.errors.emailAlreadyInUse;
                     break;
                 default:
                     msg = MyStrings.errors.unknown;
@@ -62,11 +68,39 @@ export class Login extends Component {
                 <Row className="mt-2">
                     <Col>
                         <Formik
-                            initialValues={{ email: '', password: '' }}
-                            validationSchema={LoginSchema}
-                            onSubmit={this.login} >
-                            {({ handleSubmit, handleChange, values, errors, touched }) => (
-                                <Form noValidate={true} onSubmit={handleSubmit}>
+                            initialValues={{ email: '', password: '', firstName: '', lastName: '' }}
+                            validationSchema={RegisterSchema}
+                            onSubmit={this.signup}
+                        >
+                            {({ handleSubmit, handleChange, values, errors, touched }) =>
+                                (<Form noValidate={true} onSubmit={handleSubmit}>
+                                    <Form.Group controlId="firstNameForm">
+                                        <Form.Label>{MyStrings.firstName}</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="firstName"
+                                            placeholder={MyStrings.firstNamePlaceholder}
+                                            value={values.firstName}
+                                            isInvalid={touched.firstName && !!errors.firstName}
+                                            onChange={handleChange} />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.firstName}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+
+                                    <Form.Group controlId="lastNameForm">
+                                        <Form.Label>{MyStrings.lastName}</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="lastName"
+                                            placeholder={MyStrings.lastNamePlaceholder}
+                                            value={values.lastName}
+                                            isInvalid={touched.lastName && !!errors.lastName}
+                                            onChange={handleChange} />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.lastName}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
                                     <Form.Group controlId="emailForm">
                                         <Form.Label>{MyStrings.email}</Form.Label>
                                         <Form.Control
@@ -96,22 +130,25 @@ export class Login extends Component {
                                     {this.state.error &&
                                         <Alert variant="danger">{this.state.error}</Alert>
                                     }
+                                    {/* TODO: update links */}
+                                    <p className="text-muted text-center" style={{ fontSize: "0.95rem" }}>
+                                        Genom att registrera mig godkänner jag <a href="https://www.google.com">användarvilkoren</a> och <a href="https://www.google.com">integritetspolicyn</a>
+                                    </p>
                                     {this.state.loading ?
                                         <div className="p-2 text-center">
                                             <Spinner className="p-2" animation="border" variant="info" />
                                         </div>
                                         :
-                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.login}</Button>
+                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.register}</Button>
                                     }
-                                    <TransparentButton className="mt-3 text-primary" as={Link} to="/auth/reset">Glömt lösenord?</TransparentButton>
-                                </Form>
-                            )}
+                                </Form>)
+                            }
                         </Formik>
                     </Col>
                 </Row>
             </>
-        )
+        );
     }
 }
 
-export default Login
+export default Register
