@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Link, Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import Logo from '../../logo.png';
 import './Authentication.css';
@@ -58,6 +58,7 @@ function Authentication({ match }) {
                                     <Route path={`${match.path}/signin`} component={Login} exact />
                                     <Route path={`${match.path}/reset`} component={ForgotPassword} exact />
                                     <Route path={`${match.path}/signup`} component={Register} exact />
+                                    <Route render={() => (<Redirect to="/auth" />)} />
                                 </Switch>
                             </BrowserRouter>
                         </div>
