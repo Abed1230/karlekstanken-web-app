@@ -10,8 +10,6 @@ import { UserProvider } from './UserContext';
 import { AuthUserProvider } from './AuthUserContext';
 import { CoupleDataProvider } from './CoupleDataContext';
 
-import Login from './Login.js';
-import Register from './Register.js';
 import HomePage from './components/HomePage.js';
 import LoveTest from './LoveTest';
 import NotFound from './components/NotFound';
@@ -21,6 +19,7 @@ import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
 import { revokePremium } from './MyCloudFunctions';
 import { ChaptersProvider } from './contexts/ChaptersContext';
+import Authentication from './components/Authentication/Authentication';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -142,8 +141,7 @@ class App extends React.Component {
                             <ChaptersProvider value={this.state.chapters}>
                                 <BrowserRouter>
                                     <Switch>
-                                        <PublicRoute restricted={true} component={Login} path="/signin" exact />
-                                        <PublicRoute restricted={true} component={Register} path="/signup" exact />
+                                        <PublicRoute restricted={true} component={Authentication} path="/auth" />
                                         <PrivateRoute component={HomePage} path="/" exact />
                                         <PrivateRoute component={Settings} path="/settings" exact />
                                         <PrivateRoute component={LoveTest} path="/languagetest" exact />

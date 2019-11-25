@@ -1,12 +1,26 @@
 {
+    "send": "Skicka",
+    "login": "Logga in",
+    "register": "Registrera",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
     "email": "E-postadress",
+    "password": "Lösenord",
+    "firstNamePlaceholder": "Skriv in ditt förnamn",
+    "lastNamePlaceholder": "Skriv in ditt efternamn",
+    "emailPlaceholder": "Skriv in din e-postadress",
+    "passwordPlaceholder": "Skriv in ditt lösenord",
+    "passwordResetSentMsg": "Vi har skickat en länk till din e-postadress där du kan återställa ditt lösenord",
+    "passwordResetInfo": "Ange den e-postadress som du använde när du registrerade dig. Vi skickar en länk där du kan återställa ditt lösenord",
     "errors": {
         "fieldRequired": "Fältet kan inte vara tomt",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",
         "passwordMismatch": "Lösenorden stämmer inte överäns",
         "unknown": "Ett okänt fel inträffade. Var god försök igen",
         "notComplete": "Du måste markera ett svar i alla frågor",
-        "emailInvalid": "Ogiltig Email adress",
-        "invalidEmail": "Ogiltig e-postadress"
+        "invalidEmail": "Ogiltig e-postadress",
+        "userNotFound": "Det finns ingen användare med den angivna e-postadressen.",
+        "wrongPassword": "Du har angivit fel lösenord.",
+        "emailAlreadyInUse": "Det finns redan en användare med den angivna e-postadressen. "
     }
 }
