@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getQuestions, calculateResults, sum } from "./LoveLanguage";
-import { Row, Col, Form, Button, Container, Card, Dropdown } from "react-bootstrap";
+import { Alert, Spinner, Row, Col, Form, Button, Container, Card, Dropdown } from "react-bootstrap";
 import { UserConsumer } from './UserContext';
 import { Redirect } from 'react-router-dom';
 import LoveLanguages from './LoveLanguages.json';
@@ -29,6 +29,8 @@ export class LoveTest extends Component {
         this.state = {
             lang: null,
             errorMessage: null,
+            loading: false,
+            notCompleteIndexes: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,16 +61,18 @@ export class LoveTest extends Component {
     }
 
     handleSubmit(user) {
-        const lang = calculateResults(this.answers.alt1Value, this.answers.alt2Value, user);
-        if (lang)
-            this.setState({
-                lang: lang
-            });
-
-        // TODO: handle error
-        if (!lang) {
+        const result = calculateResults(this.answers.alt1Value, this.answers.alt2Value, user);
+        if (result.lang) {
+            this.setState({ loading: true, errorMessage: null, notCompleteIndexes: [] });
+            setTimeout(() => {
+                this.setState({
+                    lang: result.lang
+                });
+            }, 2000);
+        } else {
             this.setState({
                 errorMessage: MyStrings['errors'].notComplete,
+                notCompleteIndexes: result.notCompleteIndexes
             })
         }
     }
@@ -80,13 +84,15 @@ export class LoveTest extends Component {
                 <>
                     <MyTitleBar title="Kärleksspråktestet" />
                     <Container>
-                        <Row className="mt-5 justify-content-md-center">
-                            <Col md="9" className="text-center">
+                        <Row className="mt-5 mb-4 justify-content-md-center">
+                            <Col md="6" lg="9" className="text-center">
                                 <h6 className="mb-3">Ditt kärleksspråk</h6>
                                 <Dropdown.Divider />
                                 <h4>{LoveLanguages[lang].name} ({lang})</h4>
                                 <p className="mt-2">{LoveLanguages[lang].description}</p>
-                                <Button className="mt-3" variant="info" onClick={() => this.props.history.replace("/")}>Klar</Button>
+                                <Button className="mt-3 mb-2" variant="info" onClick={() => this.props.history.replace("/")}>Stäng</Button>
+                                <br />
+                                <small className="text-muted">(Ditt kärleksspråk har sparats. Du och din partner kan komma åt den i menyn.)</small>
                             </Col>
                         </Row>
                     </Container>
@@ -96,10 +102,16 @@ export class LoveTest extends Component {
         return (
             <UserConsumer>
                 {user => {
-                    return user && user.premium ?
+                    return true ? //user && user.premium ?
                         <>
                             <MyTitleBar title="Kärleksspråktestet" />
-                            <Container className="mt-3">
+                            <Container className="mt-4">
+                                <Row className="mb-5">
+                                    <Col>
+                                        <Alert variant="info">Ta reda på vilket kärleksspråk du har genom att välja ett påstående i varje grupp som bäst stämmer in på dig</Alert>
+                                        {/* <hr /> */}
+                                    </Col>
+                                </Row>
                                 {
                                     getQuestions().map((q, index) => {
                                         let a1 = this.answers.alt1Value[q.index];
@@ -107,18 +119,28 @@ export class LoveTest extends Component {
                                         //console.log(q.index + "   " + a1);
                                         //console.log(q.index + "   " + a2);
                                         return (
-                                            <Row>
-                                                <Col className="mx-auto" xs="12" lg="8">
-                                                    <div style={{ padding: 10 }}>
-                                                        <Card key={index}>
-                                                            <h5 className="text-left" style={{ borderRadius: 3, backgroundColor: ('#008B8B'), padding: 3, color: ('white') }}>{'Fråga ' + (q.index + 1)}</h5>
+                                            <Row key={index} className="mb-3 justify-content-center">
+                                                <Col className="d-flex align-items-center justify-content-center" xs="1">
+                                                    <h4 className="text-muted">{index + 1}</h4>
+                                                </Col>
+                                                <Col className="" xs="12" lg="7">
+                                                    <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545" } : {}}>
+                                                        {/* <h5 className="text-left" style={{ borderRadius: "3px", backgroundColor: "#008B8B", padding: "4px", color: "white" }}>{'' + (q.index + 1)}</h5> */}
+                                                        <Card.Body className="p-3">
                                                             <Row>
                                                                 <Col>
                                                                     <p>{q.alt1}</p>
                                                                 </Col>
                                                                 <Col xs='2'>
-                                                                    <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check1"
-                                                                        checked={a1} onChange={this.setAnswerAlt1.bind(this, q.index)} />
+                                                                    <Form.Check
+                                                                        className="text-right"
+                                                                        custom
+                                                                        id={"q" + q.index + "alt1"}
+                                                                        label=""
+                                                                        type="checkbox"
+                                                                        name="check1"
+                                                                        checked={a1} o
+                                                                        onChange={this.setAnswerAlt1.bind(this, q.index)} />
                                                                     {/*<p>{a1.toString()}</p>*/}
                                                                 </Col>
                                                             </Row>
@@ -127,23 +149,38 @@ export class LoveTest extends Component {
                                                                     <p>{q.alt2}</p>
                                                                 </Col>
                                                                 <Col xs='2'>
-                                                                    <Form.Check className="text-right" style={{ paddingRight: 10 }} type="checkbox" name="check2"
-                                                                        checked={a2} onChange={this.setAnswerAlt2.bind(this, q.index)} />
+                                                                    <Form.Check
+                                                                        className="text-right"
+                                                                        custom
+                                                                        id={"q" + q.index + "alt2"}
+                                                                        label=""
+                                                                        type="checkbox" name="check2"
+                                                                        checked={a2}
+                                                                        onChange={this.setAnswerAlt2.bind(this, q.index)} />
                                                                     {/*<p>{a2.toString()}</p>*/}
                                                                 </Col>
                                                             </Row>
-                                                        </Card>
-                                                    </div>
+                                                        </Card.Body>
+                                                    </Card>
                                                 </Col>
                                             </Row>
                                         )
                                     })
                                 }
-                                <Row className="text-center">
+                                <Row className="text-center mt-4 mb-4">
                                     <Col className="mx-auto" xs="12" lg="8">
-                                        <Button type="button" onClick={() => this.handleSubmit(user)}>Submit</Button>
                                         {this.state.errorMessage &&
-                                            <p className="mt-3" style={{ color: ('red'), padding: 3 }}>{this.state.errorMessage}</p>
+                                            <>
+                                                <span className="mt-3 text-danger">{this.state.errorMessage}</span>
+                                                <br />
+                                                <br />
+                                            </>
+
+                                        }
+                                        {this.state.loading ?
+                                            <Spinner animation="border" variant="info" />
+                                            :
+                                            <Button type="button" variant="info" size="md" onClick={() => this.handleSubmit(user)}>Färdig</Button>
                                         }
                                     </Col>
                                 </Row>

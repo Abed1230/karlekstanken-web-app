@@ -1,7 +1,7 @@
 import QuestionsData from './QuestionsData.json';
 import { fire, db } from './FirebaseData';
 
-export var sum = 3;
+export var sum = 1;
 
 var counterA = 0;
 var counterB = 0;
@@ -21,7 +21,8 @@ class Question {
 }
 
 export function calculateResults(alt1Values, alt2Values, user) {
-    let complete = true;
+    //let complete = true;
+    const notCompleteIndexes = [];
     ResetResults();
 
     for (let i = 0; i < sum; i++) {
@@ -38,15 +39,22 @@ export function calculateResults(alt1Values, alt2Values, user) {
         }
 
         if (alt1Values[i] == false && alt2Values[i] == false) {
-            complete = false;
+            //complete = false;
+            notCompleteIndexes.push(i);
             console.log("You ain't done yet. Complete the test.");
         }
     }
-    if (complete == true) {
-        //printResults();
-        return SetLeadingCounter(user);
+
+    if (notCompleteIndexes.length > 0) {
+        return {
+            notCompleteIndexes: notCompleteIndexes
+        };
     }
-    return null;
+
+    const lang = SetLeadingCounter(user);
+    return {
+        lang: lang
+    };
 }
 async function writeLetterToDatabase(letter, user) {
     db.runTransaction(async t => {
