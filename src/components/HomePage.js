@@ -96,7 +96,7 @@ class Home extends React.Component {
             });
         }
 
-        if (numCompletedTasks === 0 && numTasks === 0 || numCompletedTasks === 1 && numTasks === 0) {
+        if ((numCompletedTasks === 0 && numTasks === 0) || (numCompletedTasks === 1 && numTasks === 0)) {
             return 0;
         }
 

@@ -95,19 +95,19 @@ function ResetResults() {
 }
 
 function addOneToLetter(letter) {
-    if (letter == "A") {
+    if (letter === "A") {
         counterA++;
     }
-    if (letter == "B") {
+    if (letter === "B") {
         counterB++;
     }
-    if (letter == "C") {
+    if (letter === "C") {
         counterC++;
     }
-    if (letter == "D") {
+    if (letter === "D") {
         counterD++;
     }
-    if (letter == "E") {
+    if (letter === "E") {
         counterE++;
     }
 }
