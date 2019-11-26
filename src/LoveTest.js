@@ -139,7 +139,7 @@ export class LoveTest extends Component {
                                                                         label=""
                                                                         type="checkbox"
                                                                         name="check1"
-                                                                        checked={a1} o
+                                                                        checked={a1}
                                                                         onChange={this.setAnswerAlt1.bind(this, q.index)} />
                                                                     {/*<p>{a1.toString()}</p>*/}
                                                                 </Col>

@@ -1,5 +1,5 @@
 import QuestionsData from './QuestionsData.json';
-import { fire, db } from './FirebaseData';
+import { db } from './FirebaseData';
 
 export var sum = 30;
 
@@ -16,32 +16,27 @@ class Question {
         this.alt1 = alt1;
         this.alt2 = alt2;
         this.index = index;
-        console.log(alt1);
     }
 }
 
 export function calculateResults(alt1Values, alt2Values, user) {
-    //let complete = true;
     const notCompleteIndexes = [];
     ResetResults();
 
     for (let i = 0; i < sum; i++) {
-        if (alt1Values[i] == true) {
-            //  console.log("shutup "+alt1Values[i])
+        if (alt1Values[i] === true) {
             let index = "q" + i;
             let letter = QuestionsData[index].alt1Letter;
             addOneToLetter(letter);
         }
-        if (alt2Values[i] == true) {
+        if (alt2Values[i] === true) {
             let index = "q" + i;
             let letter = QuestionsData[index].alt2Letter;
             addOneToLetter(letter);
         }
 
-        if (alt1Values[i] == false && alt2Values[i] == false) {
-            //complete = false;
+        if (alt1Values[i] === false && alt2Values[i] === false) {
             notCompleteIndexes.push(i);
-            console.log("You ain't done yet. Complete the test.");
         }
     }
 
@@ -64,15 +59,6 @@ async function writeLetterToDatabase(letter, user) {
         t.update(userRef, { loveLanguage: letter });
         t.update(coupleDataRef, { [`loveLanguages.${user.uid}`]: letter });
     });
-}
-
-function printResults() {
-    console.log("A : " + counterA);
-    console.log("B : " + counterB);
-    console.log("C : " + counterC);
-    console.log("D : " + counterD);
-    console.log("E : " + counterE);
-    console.log("Leader : " + leadingCounter)
 }
 
 function SetLeadingCounter(user) {
@@ -109,7 +95,6 @@ function ResetResults() {
 }
 
 function addOneToLetter(letter) {
-    console.log("shutup : " + letter);
     if (letter == "A") {
         counterA++;
     }
