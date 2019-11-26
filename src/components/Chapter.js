@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import MyNavBar from './MyNavBar';
 import { Container, Row, Col, Dropdown } from 'react-bootstrap';
 import ListCard from './ListCard';
@@ -7,10 +7,10 @@ import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
 
-const YoutubePlayer = ({ url }) => {
+const YoutubePlayer = ({ url, title }) => {
     return (
         <div className="embed-responsive embed-responsive-16by9">
-            <iframe className="embed-responsive-item" src={url} allowFullScreen></iframe>
+            <iframe className="embed-responsive-item" title={title} src={url} allowFullScreen></iframe>
         </div>
     );
 }
@@ -132,7 +132,7 @@ class Chapter extends React.Component {
                             chapter.videos.map((item, index) => {
                                 return (
                                     <Col key={index} className="mt-3 mx-auto" xs="12" md="9" lg="6">
-                                        <YoutubePlayer url={item.url} />
+                                        <YoutubePlayer url={item.url} title={item.title} />
                                     </Col>
                                 );
                             })}

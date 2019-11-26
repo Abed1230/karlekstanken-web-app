@@ -37,8 +37,6 @@ class App extends React.Component {
         const expiry = premium.expiry.toDate();
         const now = ServerTimestamp.now().toDate();
 
-        console.log("expiry: " + expiry.toString());
-        console.log("now: " + now.toString());
         if (expiry <= now) {
             console.log("premium expired... revoking now");
             const success = await revokePremium(userUid, partnerUid);
@@ -53,7 +51,6 @@ class App extends React.Component {
     // TODO: clean up this mess
     componentDidMount() {
         this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
-            console.log("auth state changed, authUser: " + authUser);
             // makes sure we only have one subscription
             this.unsubUserData && this.unsubUserData();
             this.unsubCoupleData && this.unsubCoupleData();

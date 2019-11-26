@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import Logo from '../../logo.png';
 import './Authentication.css';
 import Login from './Login';
@@ -48,7 +48,8 @@ function Authentication({ match }) {
                                         className="img-fluid mb-2"
                                         style={{ maxHeight: "45px" }}
                                         src={Logo}
-                                        height={55} />
+                                        height={55} 
+                                        alt="Kärlekstanken"/>
                                     <hr />
                                 </Col>
                             </Row>

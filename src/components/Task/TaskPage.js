@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import { db } from '../../FirebaseData';
 import MyNavBar from '../MyNavBar';

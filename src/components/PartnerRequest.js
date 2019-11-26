@@ -14,14 +14,12 @@ class ReceivedPartnerRequest extends React.Component {
     }
 
     async handleAccept() {
-        {/* TODO: call acceptPartnerRequest cloud function */ }
         this.setState({ loading: true })
         await acceptPartnerRequest();
         this.setState({loading: false});
     }
 
     async handleReject() {
-        {/* TODO: call rejectPartnerRequest cloud function */ }
         this.setState({ loading: true })
         await rejectPartnerRequest();
         this.setState({loading: false});
