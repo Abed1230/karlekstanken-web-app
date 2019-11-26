@@ -123,7 +123,7 @@ export class LoveTest extends Component {
                                                 <Col className="d-flex align-items-center justify-content-center" xs="1">
                                                     <h4 className="text-muted">{index + 1}</h4>
                                                 </Col>
-                                                <Col className="" xs="12" lg="7">
+                                                <Col className="" xs="12" md="10" lg="8">
                                                     <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545" } : {}}>
                                                         {/* <h5 className="text-left" style={{ borderRadius: "3px", backgroundColor: "#008B8B", padding: "4px", color: "white" }}>{'' + (q.index + 1)}</h5> */}
                                                         <Card.Body className="p-3">
