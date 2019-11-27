@@ -106,7 +106,7 @@ class PurchaseModal extends React.Component {
                                 <ul>
                                     <li>Alla {this.props.numChapters} avsnitt innehållande filmer och övningar</li>
                                     <li>Kärleksspråktestet</li>
-                                    <li>Funktionallitet för att fylla kärlekstanken med varje övning som gjorts</li>
+                                    <li>Funktionalitet för att fylla kärlekstanken med varje övning som gjorts</li>
                                 </ul>
                             </div>
                             <p>Licensen gäller i 12 månader</p>
