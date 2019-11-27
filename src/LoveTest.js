@@ -92,7 +92,7 @@ export class LoveTest extends Component {
                                 <p className="mt-2">{LoveLanguages[lang].description}</p>
                                 <Button className="mt-3 mb-2" variant="info" onClick={() => this.props.history.replace("/")}>Stäng</Button>
                                 <br />
-                                <small className="text-muted">(Ditt kärleksspråk har sparats. Du och din partner kan komma åt den i menyn.)</small>
+                                <small className="text-muted">(Ditt kärleksspråk har sparats)</small>
                             </Col>
                         </Row>
                     </Container>
@@ -102,14 +102,13 @@ export class LoveTest extends Component {
         return (
             <UserConsumer>
                 {user => {
-                    return true ? //user && user.premium ?
+                    return user && user.premium ?
                         <>
                             <MyTitleBar title="Kärleksspråktestet" />
                             <Container className="mt-4">
                                 <Row className="mb-5">
                                     <Col>
                                         <Alert variant="info">Ta reda på vilket kärleksspråk du har genom att välja ett påstående i varje grupp som bäst stämmer in på dig</Alert>
-                                        {/* <hr /> */}
                                     </Col>
                                 </Row>
                                 {

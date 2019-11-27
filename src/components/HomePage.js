@@ -190,7 +190,8 @@ class Home extends React.Component {
                                                             this.setState({ showPurchaseModal: false });
                                                             if (shouldOpenAddPartnerModal)
                                                                 this.myNavBar.openAddPartnerModal();
-                                                        }} />
+                                                        }}
+                                                        numChapters={chapters && chapters.length} />
                                                 </>
                                             )
                                         }}

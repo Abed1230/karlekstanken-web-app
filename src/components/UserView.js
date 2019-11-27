@@ -78,7 +78,7 @@ class UserView extends React.Component {
 
                                     <Row className="justify-content-center">
                                         <Col className="mb-2" xs="12" md="6" lg="5">
-                                            {partnerLoveLang ?
+                                            {partnerLoveLang && user.premium ?
                                                 <LoveLangCard name={partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
                                                 :
                                                 user.premium && partner ?
@@ -93,7 +93,7 @@ class UserView extends React.Component {
                                             }
                                         </Col>
                                         <Col className="mb-2" xs="12" md="6" lg="5">
-                                            {userLoveLang ?
+                                            {userLoveLang && user.premium ?
                                                 <LoveLangCard lang={LoveLanguages[userLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[userLoveLang].name, modalText: LoveLanguages[userLoveLang].description })} />
                                                 :
                                                 !user.loveLanguage && user.premium ?
