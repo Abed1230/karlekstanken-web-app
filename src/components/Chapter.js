@@ -20,7 +20,6 @@ class Chapter extends React.Component {
         super(props);
         const { location } = props;
         const chapterMin = location && location.state && location.state.chapter;
-        console.log("chapter min: " + chapterMin);
         this.state = {
             chapterMin: chapterMin,
             shouldRender: chapterMin ? true : false,

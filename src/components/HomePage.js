@@ -83,8 +83,6 @@ class Home extends React.Component {
         if (completionStatus) {
             Object.keys(completionStatus).forEach((key) => {
                 const tasks = completionStatus[key].tasks;
-                console.log(completionStatus[key]);
-
                 if (tasks) {
                     for (const [id, completed] of Object.entries(tasks)) {
                         // Ignores completed tasks that have been deleted
@@ -100,12 +98,10 @@ class Home extends React.Component {
             return 0;
         }
 
-        console.log(numCompletedTasks / numTasks);
         return (numCompletedTasks / numTasks);
     }
 
     handleClick(chapter, user) {
-        console.log(chapter);
         const premiumUser = user && user.premium;
         if (chapter.premium && !premiumUser) {
             this.setState({ showPurchaseModal: true });
