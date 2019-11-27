@@ -72,7 +72,7 @@ class PurchaseModal extends React.Component {
             return;
         }
 
-        const stripe = window.Stripe('pk_test_lpxzB5W0JcFfnGfWFQhJubp100LUZVgWh3');
+        const stripe = window.Stripe('pk_test_tqge5kZj68EjXdvIP9RdoLgH00A9qCldMH');
 
         stripe.redirectToCheckout({
             sessionId: sessionId
@@ -92,21 +92,21 @@ class PurchaseModal extends React.Component {
                 {user => (
                     <Modal show={this.props.show} onHide={this.hideAndReset}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Lås upp kärlekstanken</Modal.Title>
+                            <Modal.Title>Lås upp Kärlekstanken</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <div className="text-center mb-4">
                                 <UnlockIcon />
                             </div>
                             <p>
-                                Köp licens och lås upp alla avsnitt och kärleksspråktestet. Köpet gäller för ett par (två användare) som får tillgång till kärlekstanken med vardera konton.
+                                Köp licens och lås upp Kärlekstanken. Köpet gäller för ett par (två användare) som får tillgång till Kärlekstanken med vardera konton.
                             </p>
                             <div className="mb-2 bg-light p-3 border rounded">
                                 <p>Du låser upp:</p>
                                 <ul>
                                     <li>Alla {this.props.numChapters} avsnitt innehållande filmer och övningar</li>
                                     <li>Kärleksspråktestet</li>
-                                    <li>Funktionalitet för att fylla kärlekstanken med varje övning som gjorts</li>
+                                    <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som gjorts</li>
                                 </ul>
                             </div>
                             <p>Licensen gäller i 12 månader</p>

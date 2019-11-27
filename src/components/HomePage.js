@@ -175,7 +175,7 @@ class Home extends React.Component {
                                                     {showUnlockMsg &&
                                                         <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
                                                             <div className="text-center mx-auto">
-                                                                <p className="text-muted">Köp licens och få tillgång till hela kärlekstanken</p>
+                                                                <p className="text-muted">Köp licens och få tillgång till hela Kärlekstanken</p>
                                                                 <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
                                                             </div>
                                                         </div>
