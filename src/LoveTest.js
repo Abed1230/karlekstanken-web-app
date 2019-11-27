@@ -108,7 +108,7 @@ export class LoveTest extends Component {
                             <Container className="mt-4">
                                 <Row className="mb-5">
                                     <Col>
-                                        <Alert variant="info">Ta reda på vilket kärleksspråk du har genom att välja ett påstående i varje grupp som bäst stämmer in på dig</Alert>
+                                        <p className="lead">Ta reda på vilket kärleksspråk du har genom att välja ett påstående i varje grupp som bäst stämmer in på dig</p>
                                     </Col>
                                 </Row>
                                 {
@@ -120,7 +120,7 @@ export class LoveTest extends Component {
                                         return (
                                             <Row key={index} className="mb-3 justify-content-center">
                                                 <Col className="d-flex align-items-center justify-content-center" xs="1">
-                                                    <h4 className="text-muted">{index + 1}</h4>
+                                                    <h4 className="text-info">{index + 1}</h4>
                                                 </Col>
                                                 <Col className="" xs="12" md="10" lg="8">
                                                     <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545" } : {}}>

@@ -119,7 +119,7 @@ class Chapter extends React.Component {
         return chapter ? (
             <>
                 <MyNavBar goBack={true} />
-                <Container className="mt-3">
+                <Container className="mt-3 mb-3">
                     <Row className="mt-3">
                         <Col>
                             <small>{chapter.subHead}</small>
