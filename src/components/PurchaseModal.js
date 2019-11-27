@@ -99,17 +99,16 @@ class PurchaseModal extends React.Component {
                                 <UnlockIcon />
                             </div>
                             <p>
-                                Köp licens och lås upp Kärlekstanken. Köpet gäller för ett par (två användare) som får tillgång till Kärlekstanken med vardera konton.
+                                Köp licens och lås upp Kärlekstanken. Köpet gäller för ett par (två användare) som får tillgång till Kärlekstanken med vardera konton i 12 månader.
                             </p>
-                            <div className="mb-2 bg-light p-3 border rounded">
-                                <p>Du låser upp:</p>
+                            <div className="bg-light p-3 border rounded">
+                                <p>Ni låser upp:</p>
                                 <ul>
                                     <li>Alla {this.props.numChapters} avsnitt innehållande filmer och övningar</li>
                                     <li>Kärleksspråktestet</li>
-                                    <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som gjorts</li>
+                                    <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som ni gjort</li>
                                 </ul>
                             </div>
-                            <p>Licensen gäller i 12 månader</p>
                         </Modal.Body>
                         <Modal.Footer>
                             <div className="mx-auto text-center">

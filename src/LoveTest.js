@@ -119,15 +119,15 @@ export class LoveTest extends Component {
                                         //console.log(q.index + "   " + a2);
                                         return (
                                             <Row key={index} className="mb-3 justify-content-center">
-                                                {/* <Col className="d-flex align-items-center justify-content-center" xs="1">
-                                                    <h4 className="text-info">{index + 1}</h4>
-                                                </Col> */}
+                                                <Col className="d-flex align-items-center justify-content-center" xs="1">
+                                                    <h5 className="text-info">{index + 1}</h5>
+                                                </Col>
                                                 <Col className="" xs="12" md="10" lg="8">
                                                     <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545" } : {}}>
                                                         {/* <h5 className="text-left" style={{ borderRadius: "3px", backgroundColor: "#008B8B", padding: "4px", color: "white" }}>{'' + (q.index + 1)}</h5> */}
-                                                        <div className="text-center pt-2 bg-light text-info" /* style={{background: "linear-gradient(to left, #36D1DC, #5B86E5)"}} */>
+                                                       {/*  <div className="text-center pt-2 bg-light text-info" /* style={{background: "linear-gradient(to left, #36D1DC, #5B86E5)"}}>
                                                             <h6>{index + 1}</h6>
-                                                        </div>
+                                                        </div> */}
                                                         <Card.Body className="p-3">
                                                             <Row>
                                                                 <Col>
