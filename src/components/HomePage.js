@@ -12,7 +12,7 @@ const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
     const textValue = Math.trunc(value * 100);
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="94" height="94" viewBox="0 0 24 24">
             <defs>
                 <linearGradient id="progress" x1="0" y1="1" x2="0" y2="0">
                     <stop id="stop1" offset={value} stopColor="#e53935" />
