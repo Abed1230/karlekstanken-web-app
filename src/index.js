@@ -7,7 +7,7 @@ import { db, auth, ServerTimestamp } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
-import { AuthUserProvider } from './AuthUserContext';
+import { AuthUserProvider } from './contexts/AuthUserContext';
 import { CoupleDataProvider } from './CoupleDataContext';
 
 import HomePage from './components/HomePage.js';
