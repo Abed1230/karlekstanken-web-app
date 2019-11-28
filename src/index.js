@@ -102,16 +102,20 @@ class App extends React.Component {
 
     async getPremiumStatus(pUser) {
         const user = pUser ? pUser : this.state.user;
+        try {
+            const premiumSnap = await db.collection("users_premium_status").doc(user.uid).get();
+            const premium = premiumSnap.data();
 
-        const premiumSnap = await db.collection("users_premium_status").doc(user.uid).get();
-        const premium = premiumSnap.data();
+            if (premium)
+                this.checkPremiumExpiry(premium, user.uid, user.partner.uid);
 
-        if (premium)
-            this.checkPremiumExpiry(premium, user.uid, user.partner.uid);
+            user.premium = premium;
 
-        user.premium = premium;
+            this.setState({ user: user });
 
-        this.setState({ user: user });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async getChapters() {
