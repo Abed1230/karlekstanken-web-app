@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../logo.png';
+import logo from '../assets/logo.png';
 import { Navbar, Dropdown, Button } from 'react-bootstrap';
 import UserView from './UserView';
 import { fire } from '../FirebaseData';

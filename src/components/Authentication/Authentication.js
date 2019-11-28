@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Logo from '../../logo.png';
+import Logo from '../../assets/logo.png';
 import './Authentication.css';
 import Login from './Login';
 import ForgotPassword from './ForgotPassword';
@@ -34,7 +34,6 @@ function Select() {
 }
 
 function Authentication({ match }) {
-    console.log(match.path);
     return (
         <>
             <div className="bg vh-100"></div>

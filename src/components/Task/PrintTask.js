@@ -1,6 +1,6 @@
 import React from 'react';
 import './PrintTask.css';
-import logo from '../../logo.png';
+import logo from '../../assets/logo.png';
 import logoAlt from '../../assets/logo_alt.png';
 import timeIcon from '../../assets/time.svg';
 
