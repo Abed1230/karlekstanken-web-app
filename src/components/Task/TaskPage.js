@@ -49,6 +49,15 @@ export class TaskPage extends Component {
         this.mounted = false;
     }
 
+    handlePrint() {
+        try {
+            document.execCommand('print', false, null);
+        }
+        catch (e) {
+            window.print();
+        }
+    }
+
     render() {
         if (!this.state.shouldRender) {
             return <Redirect to="/" />
@@ -64,8 +73,8 @@ export class TaskPage extends Component {
                         <Container className="d-print-none">
                             <Row className="mt-4">
                                 <Col>
-                                    <button onClick={() => window.print()}
-                                        style={{ backgroundColor: "transparent", border: "0px" }}>
+                                    <button onClick={() => this.handlePrint()}
+                                        style={{ cursor: "pointer", backgroundColor: "transparent", border: "0px" }}>
                                         <span className="mr-1"><PrintIcon fill="#000" /></span>
                                         Skriv ut
                                     </button>

@@ -15,8 +15,8 @@ function ListCard({ subhead, title, disabled, enableCheck, complete, handleClick
                         <Card.Title>{title}</Card.Title>
                     </Col>
                     {enableCheck &&
-                        <Col className="d-flex justify-content-center" xs="2">
-                            <div className="align-self-center" onClick={(e) => { e.stopPropagation(); handleCheck(); }}><CheckIcon fill={complete ? "#4CAF50" : "grey"} /></div>
+                        <Col className="d-flex justify-content-center" xs="2" onClick={(e) => { e.stopPropagation(); handleCheck(); }}>
+                            <div className="align-self-center"><CheckIcon fill={complete ? "#4CAF50" : "grey"} /></div>
                         </Col>
                     }
                 </Row>

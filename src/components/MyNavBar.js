@@ -56,7 +56,7 @@ class MyNavBar extends React.Component {
                 unlockMsgElement.classList.remove("d-flex");
                 unlockMsgElement.classList.add("d-none", "d-md-flex");
             }
-                
+
         } else {
             // Menu is open. It will be closed so remove listener
             document.removeEventListener('click', this.handleDocumentClick, true);
@@ -100,7 +100,7 @@ class MyNavBar extends React.Component {
             <div ref={(el) => this._element = el}>
                 <Navbar bg="light" sticky="top" expand="xs">
                     {goBack &&
-                        <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
+                        <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => history.goBack()}>
                             <BackIcon fill="rgba(0, 0, 0, 0.5)" />
                         </Button>
                     }
