@@ -143,11 +143,11 @@ class App extends React.Component {
                                 <BrowserRouter>
                                     <Switch>
                                         <PublicRoute restricted={true} component={Authentication} path="/auth" />
-                                        <PrivateRoute component={HomePage} path="/" exact />
+                                        <PublicRoute restricted={false} component={HomePage} path="/" exact />
                                         <PrivateRoute component={Settings} path="/settings" exact />
                                         <PrivateRoute component={LoveTest} path="/languagetest" exact />
-                                        <PrivateRoute component={Chapter} path="/chapter" exact />
-                                        <PrivateRoute component={TaskPage} path="/task" exact />
+                                        <PublicRoute component={Chapter} path="/chapter" exact />
+                                        <PublicRoute component={TaskPage} path="/task" exact />
                                         <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
                                         <Route component={NotFound} />
                                     </Switch>

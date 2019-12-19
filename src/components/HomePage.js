@@ -136,7 +136,7 @@ class Home extends React.Component {
                                 return (
                                     <CoupleDataConsumer>
                                         {coupleData => {
-                                            const showUnlockMsg = user && !user.premium;
+                                            const showUnlockMsg = user ? !user.premium : true;
                                             return (
                                                 <>
                                                     <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
@@ -144,7 +144,7 @@ class Home extends React.Component {
                                                     </div>
                                                     <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
                                                         <Row>
-                                                            {user && chapters ?
+                                                            {chapters ?
                                                                 chapters.map((item, index) => {
                                                                     const premiumUser = user && user.premium;
                                                                     const enableCheck = item.premium ? coupleData && premiumUser : Boolean(coupleData);
