@@ -7,6 +7,25 @@ const CheckIcon = (props) => (
 
 function ListCard({ subhead, title, disabled, enableCheck, complete, handleClick, handleCheck }) {
     return (
+        <button className="h-100 w-100" tabIndex="0" style={{ textAlign: "left", padding: "0px", background: "none", border: "none", cursor: "pointer" }} onClick={handleClick}>
+            <Card bg={disabled ? "light" : undefined} className="mb-2 h-100">
+                <Card.Body>
+                    <Row>
+                        <Col xs="10">
+                            <small className="text-muted">{subhead}</small>
+                            <Card.Title>{title}</Card.Title>
+                        </Col>
+                        {enableCheck &&
+                            <Col className="d-flex justify-content-center" xs="2" onClick={(e) => { e.stopPropagation(); handleCheck(); }}>
+                                <div className="align-self-center"><CheckIcon fill={complete ? "#4CAF50" : "grey"} /></div>
+                            </Col>
+                        }
+                    </Row>
+                </Card.Body>
+            </Card>
+        </button>
+    );
+    /* return (
         <Card bg={disabled ? "light" : undefined} className="mb-2 h-100" tabIndex="0" style={{ cursor: "pointer" }} onClick={handleClick}>
             <Card.Body>
                 <Row>
@@ -22,7 +41,7 @@ function ListCard({ subhead, title, disabled, enableCheck, complete, handleClick
                 </Row>
             </Card.Body>
         </Card>
-    );
+    ); */
 }
 
 export default ListCard;
