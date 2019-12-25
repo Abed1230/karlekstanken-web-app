@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spinner, Card, Button } from 'react-bootstrap';
-import {cancelPartnerRequest, acceptPartnerRequest, rejectPartnerRequest} from '../MyCloudFunctions';
+import { cancelPartnerRequest, acceptPartnerRequest, rejectPartnerRequest } from '../MyCloudFunctions';
+import RoundedCard from './RoundedCard';
 
 class ReceivedPartnerRequest extends React.Component {
     constructor(props) {
@@ -16,19 +17,19 @@ class ReceivedPartnerRequest extends React.Component {
     async handleAccept() {
         this.setState({ loading: true })
         await acceptPartnerRequest();
-        this.setState({loading: false});
+        this.setState({ loading: false });
     }
 
     async handleReject() {
         this.setState({ loading: true })
         await rejectPartnerRequest();
-        this.setState({loading: false});
+        this.setState({ loading: false });
     }
 
     render() {
         const { name, email } = this.props;
         return (
-            <Card>
+            <RoundedCard>
                 <Card.Header>Partner förfrågan mottagen</Card.Header>
                 <Card.Body>
                     <p><span className="font-italic">{name} ({email})</span> vill lägga till dig som partner</p>
@@ -41,7 +42,7 @@ class ReceivedPartnerRequest extends React.Component {
                         </div>
                     }
                 </Card.Body>
-            </Card>
+            </RoundedCard>
         );
     }
 }
@@ -59,13 +60,13 @@ class SentPartnerRequest extends React.Component {
         /* TODO: call cancelPartnerRequest cloud function */
         this.setState({ loading: true });
         await cancelPartnerRequest();
-        this.setState({loading: false});
+        this.setState({ loading: false });
     }
 
     render() {
         const { name, email } = this.props;
         return (
-            <Card>
+            <RoundedCard>
                 <Card.Header>Partner förfrågan skickad</Card.Header>
                 <Card.Body>
                     <p>Väntar på att <span className="font-italic">{name} ({email})</span> ska acceptera din förfrågan</p>
@@ -75,7 +76,7 @@ class SentPartnerRequest extends React.Component {
                         <Button variant="light" className="ml-2" onClick={this.handleCancel}>Avbryt</Button>
                     }
                 </Card.Body>
-            </Card >
+            </RoundedCard >
         );
     }
 }

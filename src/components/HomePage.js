@@ -32,7 +32,6 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            openMenu: false,
             showPurchaseModal: false,
         };
 
@@ -114,11 +113,11 @@ class Home extends React.Component {
     componentDidMount() {
         this.mounted = true;
 
-        const visited = localStorage.getItem("alreadyVisited");
+        /* const visited = localStorage.getItem("alreadyVisited");
         if (!visited) {
             localStorage.setItem("alreadyVisited", true);
             this.myNavBar.toggleMenu();
-        }
+        } */
     }
 
     componentWillUnmount() {
