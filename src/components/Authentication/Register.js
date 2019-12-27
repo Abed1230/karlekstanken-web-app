@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { auth, db } from '../../FirebaseData.js';
 import { Alert, Spinner, Button, Row, Col, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import *as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
 import { EMAIL_ALREADY_IN_USE } from '../../AuthErrorCodes.js';
-import TransparentButton from '../TransparentButton';
-import { BackIcon } from '../../assets/svgs';
+import AuthBaseLayout from './AuthBaseLayout.js';
 
 const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -59,13 +57,8 @@ export class Register extends Component {
 
     render() {
         return (
-            <>
+            <AuthBaseLayout history={this.props.history}>
                 <Row>
-                    <Col className="text-center">
-                        <TransparentButton variant="light" as={Link} to="/auth"><BackIcon /></TransparentButton>
-                    </Col>
-                </Row>
-                <Row className="mt-2">
                     <Col>
                         <Formik
                             initialValues={{ email: '', password: '', firstName: '', lastName: '' }}
@@ -146,7 +139,7 @@ export class Register extends Component {
                         </Formik>
                     </Col>
                 </Row>
-            </>
+            </AuthBaseLayout>
         );
     }
 }

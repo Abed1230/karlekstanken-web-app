@@ -83,8 +83,8 @@ class MyNavBar extends React.Component {
                                 </>
                                 :
                                 <div>
-                                    <Button block variant="info" as={Link} to="/auth/signin">LOGGA IN</Button>
-                                    <Button block variant="info" as={Link} to="/auth/signup">SKAPA KONTO</Button>
+                                    <Button block variant="info" as={Link} to="/signin">LOGGA IN</Button>
+                                    <Button block variant="info" as={Link} to="/signup">SKAPA KONTO</Button>
                                 </div>
                             }
                         </div>

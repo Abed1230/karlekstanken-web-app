@@ -144,9 +144,9 @@ class Home extends React.Component {
                                                     {signedOut &&
                                                         <div className="p-1 bg-warning sticky-top text-center" style={{ top: "60px", zIndex: "1" }}>
                                                             Du är utloggad.
-                                                            <Link className="ml-2 mr-2" to="/auth/signin">Logga in</Link>
+                                                            <Link className="ml-2 mr-2" to="/signin">Logga in</Link>
                                                             |
-                                                            <Link className="ml-2" to="/auth/signup">Registrera dig</Link>
+                                                            <Link className="ml-2" to="/signup">Registrera dig</Link>
                                                         </div>}
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
