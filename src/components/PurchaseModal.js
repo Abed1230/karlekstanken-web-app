@@ -22,7 +22,6 @@ class PurchaseModal extends React.Component {
         super(props);
         this.state = {
             loading: false,
-            showNoPartnerMsg: false,
             checkoutError: null,
         };
 
@@ -35,20 +34,14 @@ class PurchaseModal extends React.Component {
         setTimeout(() => {
             this.setState({
                 loading: false,
-                showNoPartnerMsg: false,
                 checkoutError: null
             });
         }, 500)
     }
 
     handleClick(user) {
-        if (user && user.partner) {
-            // Continue
+        if (user) {
             this.checkout(user);
-        } else {
-            this.setState({
-                showNoPartnerMsg: true
-            });
         }
     }
 
@@ -89,52 +82,58 @@ class PurchaseModal extends React.Component {
     render() {
         return (
             <UserConsumer>
-                {user => (
-                    <Modal show={this.props.show} onHide={this.hideAndReset}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Lås upp Kärlekstanken</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="text-center mb-4">
-                                <UnlockIcon />
-                            </div>
-                            <p>
-                                Köp licens och lås upp Kärlekstanken. Köpet gäller för ett par (två användare) som får tillgång till Kärlekstanken med vardera konton i 12 månader.
-                            </p>
-                            <div className="bg-light p-3 border rounded">
-                                <p>Ni låser upp:</p>
-                                <ul>
-                                    <li>Alla {this.props.numChapters} avsnitt innehållande filmer och övningar</li>
-                                    <li>Kärleksspråktestet</li>
-                                    <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som ni gjort</li>
-                                </ul>
-                            </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <div className="mx-auto text-center">
-                                {this.state.loading ?
-                                    <Spinner animation="border" style={{ color: "#6772E5" }} />
-                                    :
-                                    <Button disabled={this.state.showNoPartnerMsg} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
-                                        id="checkout-button-sku_G9eu1VDO87OV9b"
-                                        role="link">
-                                        Betala med Stripe
-                                    </Button>
-                                }
-                                {this.state.checkoutError &&
-                                    <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
-                                }
-                                {this.state.showNoPartnerMsg &&
-                                    <>
-                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först lägga till din partner</p>
-                                        {/* TODO: navigate to add partern dialog */}
-                                        <Button variant="outline-info" size="sm" onClick={() => this.hideAndReset(true)}>Lägg till nu</Button>
-                                    </>
-                                }
-                            </div>
-                        </Modal.Footer>
-                    </Modal>
-                )}
+                {user => {
+                    const signedIn = user ? true : false;
+                    const hasPartner = user && user.partner;
+                    return (
+                        <Modal show={this.props.show} onHide={this.hideAndReset}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Lås upp Kärlekstanken</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="text-center mb-4">
+                                    <UnlockIcon />
+                                </div>
+                                <p>
+                                    Köp licens och lås upp Kärlekstanken. Köpet gäller för dig och din partner. Ni får tillgång till Kärlekstanken i 12 månader med era enskilda konton.
+                                </p>
+                                <div className="bg-light p-3 border rounded">
+                                    <p>Ni låser upp:</p>
+                                    <ul>
+                                        <li>Alla {this.props.numChapters} teman innehållande filmer och övningar</li>
+                                        <li>Kärleksspråktestet</li>
+                                        <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som ni gjort</li>
+                                    </ul>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <div className="mx-auto text-center">
+                                    {this.state.loading ?
+                                        <Spinner animation="border" style={{ color: "#6772E5" }} />
+                                        :
+                                        <Button disabled={!signedIn || !hasPartner} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
+                                            id="checkout-button-sku_G9eu1VDO87OV9b"
+                                            role="link">
+                                            Betala med Stripe
+                                        </Button>
+                                    }
+                                    {this.state.checkoutError &&
+                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
+                                    }
+                                    {!signedIn &&
+                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste första vara inloggad. Logga in eller registrera dig.</p>
+                                    }
+                                    {signedIn && !hasPartner &&
+                                        <>
+                                            <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först lägga till din partner</p>
+                                            <Button variant="outline-info" size="sm" onClick={() => this.hideAndReset(true)}>Lägg till nu</Button>
+                                        </>
+                                    }
+                                </div>
+                            </Modal.Footer>
+                        </Modal>
+                    );
+                }}
             </UserConsumer>
         );
     }
