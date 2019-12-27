@@ -124,8 +124,13 @@ class App extends React.Component {
         const snap = await db.collection("chapters").doc("portals").get();
         const doc = snap.data();
 
+        if (!doc) return;
+
+        const chaps = doc.list;
+        chaps && chaps.sort((a, b) => a.subHead.localeCompare(b.subHead, undefined, { numeric: true, sensitivity: 'base' }));
+
         this.setState({
-            chapters: doc.list
+            chapters: chaps
         });
     }
 

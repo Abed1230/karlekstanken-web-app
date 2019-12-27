@@ -61,7 +61,11 @@ class Chapter extends React.Component {
         const id = this.state.chapterMin.id;
         const snap = await db.collection("chapters").doc(id).get();
         const doc = snap.data();
+
+        if (!doc) return;
+
         doc.id = snap.id;
+        doc.tasks && doc.tasks.sort((a, b) => a.subHead.localeCompare(b.subHead, undefined, { numeric: true, sensitivity: 'base' }));
 
         if (this.mounted) {
             this.setState({
