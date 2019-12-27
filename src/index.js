@@ -19,7 +19,9 @@ import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
 import { revokePremium } from './MyCloudFunctions';
 import { ChaptersProvider } from './contexts/ChaptersContext';
-import Authentication from './components/Authentication/Authentication';
+import Register from './components/Authentication/Register';
+import Login from './components/Authentication/Login';
+import ForgotPassword from './components/Authentication/ForgotPassword';
 
 const KEY_AUTH_USER = "authUser";
 
@@ -142,12 +144,14 @@ class App extends React.Component {
                             <ChaptersProvider value={this.state.chapters}>
                                 <BrowserRouter>
                                     <Switch>
-                                        <PublicRoute restricted={true} component={Authentication} path="/auth" />
-                                        <PrivateRoute component={HomePage} path="/" exact />
+                                        <PublicRoute restricted={true} component={Login} path="/signin" />
+                                        <PublicRoute restricted={true} component={Register} path="/signup" />
+                                        <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" />
+                                        <PublicRoute restricted={false} component={HomePage} path="/" exact />
                                         <PrivateRoute component={Settings} path="/settings" exact />
                                         <PrivateRoute component={LoveTest} path="/languagetest" exact />
-                                        <PrivateRoute component={Chapter} path="/chapter" exact />
-                                        <PrivateRoute component={TaskPage} path="/task" exact />
+                                        <PublicRoute component={Chapter} path="/chapter" exact />
+                                        <PublicRoute component={TaskPage} path="/task" exact />
                                         <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
                                         <Route component={NotFound} />
                                     </Switch>

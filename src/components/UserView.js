@@ -6,16 +6,17 @@ import { CoupleDataConsumer } from '../CoupleDataContext';
 import { Link } from 'react-router-dom';
 import { ReceivedPartnerRequest, SentPartnerRequest } from './PartnerRequest.js';
 import AddPartnerModal from './AddPartnerModal.js';
+import RoundedCard from './RoundedCard';
 
 const LoveLangCard = ({ name, lang, handleClick }) => {
     return (
-        <Card className="mt-2 h-100">
+        <RoundedCard>
             <Card.Body >
                 <small className="text-muted">{name ? name + "'s kärleksspråk" : "Ditt kärleksspråk"}</small>
                 <Card.Title>{lang}</Card.Title>
-                <Button className="text-primary px-0 py-0" style={{ background: "none", border: "none" }} onClick={handleClick}>Visa beskrivning</Button>
+                <Button className="text-primary p-1" style={{ background: "none", border: "none", fontSize: "0.95rem" }} onClick={handleClick}>Visa beskrivning</Button>
             </Card.Body>
-        </Card>
+        </RoundedCard>
     );
 }
 
@@ -31,7 +32,6 @@ class UserView extends React.Component {
     }
 
     openAddPartnerModal() {
-        //this.setState({showAddPartnerModal: true});
         if (this.addPartnerBtn) {
             this.addPartnerBtn.click();
         }
@@ -50,60 +50,63 @@ class UserView extends React.Component {
                                 && coupleData.loveLanguages[partner.uid];
                             return (
                                 <Container>
-                                    <Row>
+                                    <Row className="mt-4 mb-4 pb-3 pt-3" style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
                                         <Col>
-                                            <h4 className="mt-4 mb-4 text-center">Du & {partner ? partner.name : "?"}</h4>
+                                            <h4 className="text-center text-white" style={{ fontSize: "2rem", fontFamily: "Lobster, Cursive", textShadow: "0px 3px 6px rgba(0,0,0,0.2)" }}>Du & {partner ? partner.name : "?"}</h4>
 
                                             {!partner && !user.partnerRequestFrom && !user.partnerRequestTo &&
-                                                <div className="text-center"><Button variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >Lägg till partner</Button></div>
+                                                <div className="text-center mt-3"><Button block variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >LÄGG TILL PARTNER</Button></div>
                                             }
                                         </Col>
                                     </Row>
 
                                     {user.partnerRequestFrom &&
-                                        <Row className="justify-content-md-center">
-                                            <Col md="9" lg="6">
+                                        <Row className="mb-2">
+                                            <Col className="p-0">
                                                 <ReceivedPartnerRequest name={user.partnerRequestFrom.name} email={user.partnerRequestFrom.email} />
                                             </Col>
                                         </Row>
                                     }
 
                                     {user.partnerRequestTo &&
-                                        <Row className="justify-content-md-center">
-                                            <Col md="9" lg="6">
+                                        <Row className="mb-2">
+                                            <Col className="p-0">
                                                 <SentPartnerRequest name={user.partnerRequestTo.name} email={user.partnerRequestTo.email} />
                                             </Col>
                                         </Row>
                                     }
 
-                                    <Row className="justify-content-center">
-                                        <Col className="mb-2" xs="12" md="6" lg="5">
-                                            {partnerLoveLang && user.premium ?
-                                                <LoveLangCard name={partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
-                                                :
-                                                user.premium && partner ?
-                                                    <Card className="mt-2 h-100">
-                                                        <Card.Body >
-                                                            <small className="text-muted">{partner.name + "'s kärleksspråk"}</small>
-                                                            <p>{partner.name} har ännu inte gjort språktestet</p>
-                                                        </Card.Body>
-                                                    </Card>
-                                                    :
-                                                    null
-                                            }
-                                        </Col>
-                                        <Col className="mb-2" xs="12" md="6" lg="5">
+                                    <Row className="mb-2">
+                                        <Col className="p-0">
                                             {userLoveLang && user.premium ?
                                                 <LoveLangCard lang={LoveLanguages[userLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[userLoveLang].name, modalText: LoveLanguages[userLoveLang].description })} />
                                                 :
                                                 !user.loveLanguage && user.premium ?
-                                                    <Card className="mt-2 h-100">
+                                                    <RoundedCard>
                                                         <Card.Body>
                                                             <small className="text-muted">Ditt kärleksspråk</small>
                                                             <p>Du har ännu inte gjort språktestet</p>
                                                             <Button variant="info" as={Link} to="/languagetest">Gör testet nu</Button>
                                                         </Card.Body>
-                                                    </Card>
+                                                    </RoundedCard>
+                                                    :
+                                                    null
+                                            }
+                                        </Col>
+                                    </Row>
+
+                                    <Row className="mb-2">
+                                        <Col className="p-0">
+                                            {partnerLoveLang && user.premium ?
+                                                <LoveLangCard name={partner.name} lang={LoveLanguages[partnerLoveLang].name} handleClick={() => this.setState({ showModal: true, modalTitle: LoveLanguages[partnerLoveLang].name, modalText: LoveLanguages[partnerLoveLang].description })} />
+                                                :
+                                                user.premium && partner ?
+                                                    <RoundedCard>
+                                                        <Card.Body >
+                                                            <small className="text-muted">{partner.name + "'s kärleksspråk"}</small>
+                                                            <p>{partner.name} har ännu inte gjort språktestet</p>
+                                                        </Card.Body>
+                                                    </RoundedCard>
                                                     :
                                                     null
                                             }

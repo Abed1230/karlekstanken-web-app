@@ -6,8 +6,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
 import TransparentButton from '../TransparentButton';
-import { BackIcon } from '../../assets/svgs';
 import { USER_NOT_FOUND, WRONG_PASSWORD } from '../../AuthErrorCodes';
+import AuthBaseLayout from './AuthBaseLayout';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -53,13 +53,8 @@ export class Login extends Component {
 
     render() {
         return (
-            <>
+            <AuthBaseLayout history={this.props.history}>
                 <Row>
-                    <Col className="text-center">
-                        <TransparentButton variant="light" as={Link} to="/auth"><BackIcon /></TransparentButton>
-                    </Col>
-                </Row>
-                <Row className="mt-2">
                     <Col>
                         <Formik
                             initialValues={{ email: '', password: '' }}
@@ -103,13 +98,13 @@ export class Login extends Component {
                                         :
                                         <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.login}</Button>
                                     }
-                                    <TransparentButton className="mt-3 text-primary" as={Link} to="/auth/reset">Glömt lösenord?</TransparentButton>
+                                    <TransparentButton className="mt-3 text-primary" as={Link} to="/reset-password">Glömt lösenord?</TransparentButton>
                                 </Form>
                             )}
                         </Formik>
                     </Col>
                 </Row>
-            </>
+            </AuthBaseLayout>
         )
     }
 }

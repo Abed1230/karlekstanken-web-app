@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
-import TransparentButton from '../TransparentButton';
-import { BackIcon } from '../../assets/svgs';
 import { auth } from '../../FirebaseData';
 import { USER_NOT_FOUND } from '../../AuthErrorCodes.js';
+import AuthBaseLayout from './AuthBaseLayout.js';
 
 const Schema = Yup.object().shape({
     email: Yup.string()
@@ -52,11 +50,6 @@ class ForgotPassword extends React.Component {
             return (
                 <>
                     <Row>
-                        <Col className="text-center">
-                            <TransparentButton variant="light" as={Link} to="/auth/signin"><BackIcon /></TransparentButton>
-                        </Col>
-                    </Row>
-                    <Row className="mt-2">
                         <Col>
                             <p>{MyStrings.passwordResetSentMsg}</p>
                         </Col>
@@ -66,13 +59,8 @@ class ForgotPassword extends React.Component {
         }
 
         return (
-            <>
+            <AuthBaseLayout history={this.props.history}>
                 <Row>
-                    <Col className="text-center">
-                        <TransparentButton variant="light" as={Link} to="/auth/signin"><BackIcon /></TransparentButton>
-                    </Col>
-                </Row>
-                <Row className="mt-2">
                     <Col>
                         <p>{MyStrings.passwordResetInfo}</p>
                     </Col>
@@ -113,7 +101,7 @@ class ForgotPassword extends React.Component {
                         </Formik>
                     </Col>
                 </Row>
-            </>
+            </AuthBaseLayout>
         );
     }
 }

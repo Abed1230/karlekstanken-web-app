@@ -7,6 +7,8 @@ import { UserConsumer } from '../UserContext';
 import './Home.css';
 import PurchaseModal from './PurchaseModal';
 import { ChaptersConsumer } from '../contexts/ChaptersContext';
+import { Link } from 'react-router-dom';
+import { auth } from '../FirebaseData';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -32,7 +34,6 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            openMenu: false,
             showPurchaseModal: false,
         };
 
@@ -114,11 +115,11 @@ class Home extends React.Component {
     componentDidMount() {
         this.mounted = true;
 
-        const visited = localStorage.getItem("alreadyVisited");
+        /* const visited = localStorage.getItem("alreadyVisited");
         if (!visited) {
             localStorage.setItem("alreadyVisited", true);
             this.myNavBar.toggleMenu();
-        }
+        } */
     }
 
     componentWillUnmount() {
@@ -126,6 +127,7 @@ class Home extends React.Component {
     }
 
     render() {
+        const signedOut = auth.currentUser ? false : true;
         return (
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
@@ -136,15 +138,22 @@ class Home extends React.Component {
                                 return (
                                     <CoupleDataConsumer>
                                         {coupleData => {
-                                            const showUnlockMsg = user && !user.premium;
+                                            const showUnlockMsg = user ? !user.premium : true;
                                             return (
-                                                <>
-                                                    <div className="sticky-top mt-3 text-center" style={{ top: "78px", zIndex: "1" }}>
+                                                <div>
+                                                    {signedOut &&
+                                                        <div className="p-1 bg-warning sticky-top text-center" style={{ top: "60px", zIndex: "1" }}>
+                                                            Du är utloggad.
+                                                            <Link className="ml-2 mr-2" to="/signin">Logga in</Link>
+                                                            |
+                                                            <Link className="ml-2" to="/signup">Registrera dig</Link>
+                                                        </div>}
+                                                    <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
                                                     <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
                                                         <Row>
-                                                            {user && chapters ?
+                                                            {chapters ?
                                                                 chapters.map((item, index) => {
                                                                     const premiumUser = user && user.premium;
                                                                     const enableCheck = item.premium ? coupleData && premiumUser : Boolean(coupleData);
@@ -188,7 +197,7 @@ class Home extends React.Component {
                                                                 this.myNavBar.openAddPartnerModal();
                                                         }}
                                                         numChapters={chapters && chapters.length} />
-                                                </>
+                                                </div>
                                             )
                                         }}
                                     </CoupleDataConsumer>
