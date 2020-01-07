@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { db, auth, ServerTimestamp } from './FirebaseData.js';
+import { db, auth, FieldValue } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
@@ -17,7 +17,6 @@ import Chapter from './components/Chapter';
 import TaskPage from './components/Task/TaskPage';
 import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
-import { revokePremium } from './MyCloudFunctions';
 import { ChaptersProvider } from './contexts/ChaptersContext';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
@@ -32,21 +31,6 @@ class App extends React.Component {
             user: null,
             coupleData: null,
             authUser: JSON.parse(localStorage.getItem(KEY_AUTH_USER)),
-        }
-    }
-
-    async checkPremiumExpiry(premium, userUid, partnerUid) {
-        const expiry = premium.expiry.toDate();
-        const now = ServerTimestamp.now().toDate();
-
-        if (expiry <= now) {
-            console.log("premium expired... revoking now");
-            const success = await revokePremium(userUid, partnerUid);
-            // Call this to update premium status on the user object in state
-            // Important: only call this function on success, otherwise we may end up 
-            // calling cloud function multiple times 
-            if (success)
-                this.getPremiumStatus();
         }
     }
 
@@ -79,14 +63,19 @@ class App extends React.Component {
                         });
                     }
 
-                    // Only fetch premium status once on component mount 
+                    // Only get premium status once on component mount 
                     if (!this.state.user) {
-                        await this.getPremiumStatus(user);
-                    }
-                    // We already have premium status
-                    if (this.state.user) {
+                        user.premium = await this.getPremiumStatus(authUser, false);
+                    } else {
+                        // We already have premium status
                         const premium = this.state.user.premium;
                         user.premium = premium;
+                    }
+                    
+                    // Premium has been purchased. Get new premium status object
+                    if (user.shouldRefreshIdToken) {
+                        db.collection("users").doc(authUser.uid).update({ shouldRefreshIdToken: FieldValue.delete() });
+                        user.premium = await this.getPremiumStatus(authUser, true);
                     }
 
                     this.setState({
@@ -102,21 +91,17 @@ class App extends React.Component {
         this.getChapters();
     }
 
-    async getPremiumStatus(pUser) {
-        const user = pUser ? pUser : this.state.user;
+    async getPremiumStatus(authUser, refresh) {
         try {
-            const premiumSnap = await db.collection("users_premium_status").doc(user.uid).get();
-            const premium = premiumSnap.data();
-
-            if (premium)
-                this.checkPremiumExpiry(premium, user.uid, user.partner.uid);
-
-            user.premium = premium;
-
-            this.setState({ user: user });
-
+            const idTokenResult = await authUser.getIdTokenResult(refresh);
+            const premium = idTokenResult.claims.premium;
+            if (premium) {
+                return premium;
+            }
+            return null;
         } catch (e) {
-            console.log(e);
+            console.error(e);
+            return null;
         }
     }
 
