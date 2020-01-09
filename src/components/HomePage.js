@@ -9,6 +9,8 @@ import PurchaseModal from './PurchaseModal';
 import { ChaptersConsumer } from '../contexts/ChaptersContext';
 import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseData';
+import InstallBanner from './InstallationGuide/InstallBanner';
+import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -35,9 +37,12 @@ class Home extends React.Component {
         super(props);
         this.state = {
             showPurchaseModal: false,
+            showInstallationGuideModal: false,
+            showInstallationBanner: !localStorage.getItem("hideInstallationBanner")
         };
 
         this.handleCheck = this.handleCheck.bind(this);
+        this.hideInstallationBanner = this.hideInstallationBanner.bind(this);
     }
 
     handleCheck(user, coupleData, chapter) {
@@ -112,14 +117,13 @@ class Home extends React.Component {
         this.props.history.push({ pathname: "/chapter", state: { chapter: chapter } })
     }
 
+    hideInstallationBanner() {
+        localStorage.setItem("hideInstallationBanner", true);
+        this.setState({ showInstallationBanner: false });
+    }
+
     componentDidMount() {
         this.mounted = true;
-
-        /* const visited = localStorage.getItem("alreadyVisited");
-        if (!visited) {
-            localStorage.setItem("alreadyVisited", true);
-            this.myNavBar.toggleMenu();
-        } */
     }
 
     componentWillUnmount() {
@@ -128,6 +132,8 @@ class Home extends React.Component {
 
     render() {
         const signedOut = auth.currentUser ? false : true;
+        const showInstallationBanner = this.state.showInstallationBanner && !isInStandaloneMode();
+        console.log("show installation banner: " + showInstallationBanner);
         return (
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
@@ -181,7 +187,7 @@ class Home extends React.Component {
                                                             }
                                                         </Row>
                                                     </Container>
-                                                    {showUnlockMsg &&
+                                                    {showUnlockMsg && !showInstallationBanner &&
                                                         <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
                                                             <div className="text-center mx-auto">
                                                                 <p className="text-muted">Köp licens och få tillgång till hela Kärlekstanken</p>
@@ -206,9 +212,21 @@ class Home extends React.Component {
                         </UserConsumer>
                     )}
                 </ChaptersConsumer>
+                {showInstallationBanner &&
+                    <InstallBanner
+                        handleClick={() => this.setState({ showInstallationGuideModal: true })}
+                        handleClose={() => this.hideInstallationBanner()}
+                    />
+                }
+                <InstallationGuideModal
+                    show={this.state.showInstallationGuideModal}
+                    handleHide={() => this.setState({ showInstallationGuideModal: false })}
+                />
             </>
         );
     }
 }
+
+const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
 export default Home;
