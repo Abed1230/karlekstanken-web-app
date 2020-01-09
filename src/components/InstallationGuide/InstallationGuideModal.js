@@ -4,6 +4,7 @@ import SafariIcon from '../../assets/safari.svg';
 import IosShareIcon from '../../assets/ios_share_icon.svg';
 import ChromeIcon from '../../assets/chrome.svg';
 import ChromeMoreIcon from '../../assets/more_vert-24px.svg';
+import CircleAdd from '../../assets/cricular_add.svg';
 
 const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -37,6 +38,8 @@ const InstallationGuideModal = () => {
     );
 }
 
+const notice = "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.";
+
 const IOSInstructions = () => (
     <>
         <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
@@ -51,7 +54,7 @@ const IOSInstructions = () => (
                 <li>Välj "Lägg till på hemskärmen"</li>
                 <li>Lägg till</li>
             </ol>
-            <p className="text-muted">Notera: Du kommer att behöva logga in på nytt när du startar appen från hemskärmen för första gången.</p>
+            <p className="text-muted">{notice}</p>
         </div>
     </>
 );
@@ -70,11 +73,27 @@ const AndroidInstructions = () => (
                 <li>Välj "Lägg till på startskärmen"</li>
                 <li>Lägg till</li>
             </ol>
-            <p className="text-muted">Notera: Du kommer att behöva logga in på nytt när du startar appen från hemskärmen för första gången.</p>
+            <p className="text-muted">{notice}</p>
         </div>
     </>
 );
 
-const OtherInstructions = () => ("is windows or mac");
+const OtherInstructions = () => (
+    <>
+        <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
+        <div className="d-inline-block bg-light p-1 rounded">
+            <img src={ChromeIcon} width={24} height={24} className="mr-1" />
+            Google Chrome
+        </div>
+        <div className="mt-3">
+            <p>Gör så här:</p>
+            <ol>
+                <li>Tryck på <img src={CircleAdd} width={24} height={24} /> som finns i webbläsarens högra sida av addressfältet, bredvid bokmärk symbolen.</li>
+                <li>Installera</li>
+            </ol>
+            <p className="text-muted">{notice}</p>
+        </div>
+    </>
+);
 
 export default InstallationGuideModal;
