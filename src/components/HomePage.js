@@ -9,6 +9,10 @@ import PurchaseModal from './PurchaseModal';
 import { ChaptersConsumer } from '../contexts/ChaptersContext';
 import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseData';
+import TransparentButton from './TransparentButton';
+import { CloseIcon } from '../assets/svgs';
+import InstallBanner from './InstallationGuide/InstallBanner';
+import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -206,6 +210,8 @@ class Home extends React.Component {
                         </UserConsumer>
                     )}
                 </ChaptersConsumer>
+                <InstallBanner />
+                <InstallationGuideModal />
             </>
         );
     }
