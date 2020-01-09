@@ -16,13 +16,10 @@ const isAndroid = () => {
     return userAgent.indexOf("android") > -1;
 }
 
-const InstallationGuideModal = () => {
+const InstallationGuideModal = ({ show, handleHide }) => {
     return (
-        <Modal show={true} onHide={() => { }}>
+        <Modal show={show} onHide={handleHide}>
             <Modal.Header closeButton>
-                {/* <Modal.Title>
-                    Instruktioner för att lägg till på hemskärmen
-                </Modal.Title> */}
             </Modal.Header>
             <Modal.Body>
                 {isIos() ?
