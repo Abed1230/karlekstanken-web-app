@@ -67,7 +67,7 @@ class AddPartnerModal extends React.Component {
                             {this.state.success ?
                                 <>
                                     <Alert variant="success">
-                                        Partner förfrågan skickad. Din partner hittar förfågan i sidomenyn.
+                                        Partner förfrågan skickades. Din partner hittar förfågan i menyn.
                                     </Alert>
                                     <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>Stäng</Button>
                                 </>

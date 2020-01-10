@@ -19,7 +19,7 @@ class Settings extends React.Component {
     }
 
     timeStampToDateString(ts) {
-        return strftime('%F %T', ts.toDate());
+        return strftime('%F', new Date(ts));
     }
 
     render() {
@@ -60,7 +60,7 @@ class Settings extends React.Component {
                                                         <p>
                                                             Sedan {this.timeStampToDateString(user.premium.since)}
                                                             <br />
-                                                            <mark>Upphör att gälla {this.timeStampToDateString(user.premium.expiry)}</mark>
+                                                            Till och med {this.timeStampToDateString(user.premium.expiry)}
                                                         </p>
                                                         :
                                                         <p>Du har ingen licens</p>
