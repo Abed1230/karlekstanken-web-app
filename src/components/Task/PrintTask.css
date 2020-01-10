@@ -15,6 +15,7 @@
 
 .content {
     clear: both;
+    margin-top: 50px;
 }
 
 @media print {

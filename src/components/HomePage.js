@@ -133,7 +133,6 @@ class Home extends React.Component {
     render() {
         const signedOut = auth.currentUser ? false : true;
         const showInstallationBanner = this.state.showInstallationBanner && !isInStandaloneMode();
-        console.log("show installation banner: " + showInstallationBanner);
         return (
             <>
                 <MyNavBar onRef={ref => (this.myNavBar = ref)} />
