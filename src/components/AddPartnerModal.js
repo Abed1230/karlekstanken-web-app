@@ -67,7 +67,7 @@ class AddPartnerModal extends React.Component {
                             {this.state.success ?
                                 <>
                                     <Alert variant="success">
-                                        Partner förfrågan skickades. Din partner hittar förfågan i menyn uppe i högra hörnet.
+                                        Partner förfrågan skickad. Din partner hittar förfågan i sidomenyn.
                                     </Alert>
                                     <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>Stäng</Button>
                                 </>
@@ -75,7 +75,7 @@ class AddPartnerModal extends React.Component {
                                 <Form noValidate onSubmit={handleSubmit}>
                                     <Form.Group controlId="emailField">
                                         <Form.Label>
-                                            Ange din partners e-postadress som hen registrerade sig med på kärlekstanken
+                                            Ange din partners e-postadress som hen registrerade sig med på Kärlekstanken
                                     </Form.Label>
                                         <Form.Control
                                             type="email"
@@ -109,4 +109,4 @@ class AddPartnerModal extends React.Component {
     }
 }
 
-export default AddPartnerModal;
+export default AddPartnerModal; 

@@ -117,6 +117,8 @@ class PurchaseModal extends React.Component {
                                             Betala med Stripe
                                         </Button>
                                     }
+                                    <br />
+                                    <small className="text-muted">Genom att fortsätta med betalningen godkänner du våra <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a></small>
                                     {this.state.checkoutError &&
                                         <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
                                     }

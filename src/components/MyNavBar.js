@@ -86,8 +86,7 @@ class MyNavBar extends React.Component {
                             }
                             <div style={{ marginTop: "50px" }}>
                                 <hr />
-                                {/* <a href="#" style={{fontSize: "1.2rem"}}>Om kärlekstanken</a> */}
-                                <p>Eventuella frågor är du välkommen att ställa till <a href="mailto:kundservice@karlekstanken.se">kundservice@karlekstanken.se</a></p>
+                                <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
                                 <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
                                 <br />
                                 <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>

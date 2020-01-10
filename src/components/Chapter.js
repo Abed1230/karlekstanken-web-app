@@ -135,6 +135,7 @@ class Chapter extends React.Component {
                             chapter.videos.map((item, index) => {
                                 return (
                                     <Col key={index} className="mt-3 mx-auto" xs="12" md="9" lg="6">
+                                        <h6>{item.title}</h6>
                                         <YoutubePlayer url={item.url} title={item.title} />
                                     </Col>
                                 );
