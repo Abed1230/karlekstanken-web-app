@@ -123,9 +123,8 @@ export class Register extends Component {
                                     {this.state.error &&
                                         <Alert variant="danger">{this.state.error}</Alert>
                                     }
-                                    {/* TODO: update links */}
                                     <p className="text-muted text-center" style={{ fontSize: "0.95rem" }}>
-                                        Genom att registrera mig godkänner jag <a href="https://www.google.com">användarvilkoren</a> och <a href="https://www.google.com">integritetspolicyn</a>
+                                        Genom att registrera mig godkänner jag <a href={MyStrings.licenseTermsUrl}>Användarvilkoren</a> och <a href={MyStrings.privacyPolicyUrl}>Personuppgiftspolicyn</a>
                                     </p>
                                     {this.state.loading ?
                                         <div className="p-2 text-center">
