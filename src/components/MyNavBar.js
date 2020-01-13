@@ -111,9 +111,9 @@ class MyNavBar extends React.Component {
                         <p>{/* I'm required */}</p>
                     </Sidebar>
                 </div>
-                <Navbar bg="light" sticky="top" expand="xs" >
+                <Navbar sticky="top" expand="xs" >
                     {goBack &&
-                        <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => history.goBack()}>
+                        <Button className="rounded py-1 px-2" style={{ background: "none", borderColor: "rgba(0,0,0,.1)", cursor: "pointer" }} onClick={() => history.goBack()}>
                             <BackIcon width="24" height="24" color="rgba(0, 0, 0, 0.5)" />
                         </Button>
                     }
@@ -126,7 +126,7 @@ class MyNavBar extends React.Component {
                         />
                     </Navbar.Brand>
                     {this.state.sidebarOpen ?
-                        <Button className="border rounded py-1 px-3" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => this.onSetSidebarOpen(false)}>
+                        <Button className="rounded py-1 px-3" style={{ background: "none", borderColor: "rgba(0,0,0,.1)", cursor: "pointer" }} onClick={() => this.onSetSidebarOpen(false)}>
                             <CloseIcon width="24" height="24" color="rgba(0, 0, 0, 0.5)" />
                         </Button>
                         :

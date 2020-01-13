@@ -10,7 +10,7 @@ function MyTitleBar({ title, history }) {
     return (
         <Navbar bg="light" sticky="top">
 
-            <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none" }} onClick={() => history.goBack()}>
+            <Button className="rounded py-1 px-2" style={{ background: "none", borderColor: "rgba(0,0,0,.1)" }} onClick={() => history.goBack()}>
                 <BackIcon fill="rgba(0, 0, 0, 0.5)" />
             </Button>
 
