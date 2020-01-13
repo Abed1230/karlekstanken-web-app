@@ -55,7 +55,9 @@ class UserView extends React.Component {
                                             <h4 className="text-center text-white" style={{ fontSize: "2rem", fontFamily: "Lobster, Cursive", textShadow: "0px 3px 6px rgba(0,0,0,0.2)" }}>Du & {partner ? partner.name : "?"}</h4>
 
                                             {!partner && !user.partnerRequestFrom && !user.partnerRequestTo &&
-                                                <div className="text-center mt-3"><Button block variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >LÄGG TILL PARTNER</Button></div>
+                                                <div className="text-center mt-3">
+                                                    <Button block variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >LÄGG TILL PARTNER</Button>
+                                                </div>
                                             }
                                         </Col>
                                     </Row>

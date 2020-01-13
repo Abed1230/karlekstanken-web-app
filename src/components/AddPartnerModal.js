@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { sendPartnerRequest } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.json';
+import TransparentButton from "./TransparentButton";;
 
 const EmailSchema = Yup.object().shape({
     email: Yup.string()
@@ -50,6 +51,19 @@ class AddPartnerModal extends React.Component {
         }
     }
 
+    handleShare() {
+        if (window.navigator.share) {
+            window.navigator.share({
+                title: MyStrings.invitationTitle,
+                text: MyStrings.invitationText,
+            });
+        } else {
+            const mail = document.createElement("a");
+            mail.href = "mailto:?subject=" + MyStrings.invitationTitle + "&body=" + MyStrings.invitationMailText;
+            mail.click();
+        }
+    }
+
     render() {
         return (
             <Formik
@@ -75,8 +89,12 @@ class AddPartnerModal extends React.Component {
                                 <Form noValidate onSubmit={handleSubmit}>
                                     <Form.Group controlId="emailField">
                                         <Form.Label>
-                                            Ange din partners e-postadress som hen registrerade sig med på Kärlekstanken
-                                    </Form.Label>
+                                            Ange din partners e-postadress som hen registrerade sig med på Kärlekstanken.
+                                            <br />
+                                            Har din partner inte har registrerat sig ännu?
+                                            <br />
+                                            <TransparentButton className="text-primary" onClick={() => this.handleShare()}>Skicka inbjudan här</TransparentButton>
+                                        </Form.Label>
                                         <Form.Control
                                             type="email"
                                             name="email"
@@ -90,6 +108,7 @@ class AddPartnerModal extends React.Component {
                                         <p className="text-muted mt-2" style={{ fontSize: "0.95rem" }}>
                                             Din e-postadress: {this.props.user.email}
                                         </p>
+
                                     </Form.Group>
                                     {this.state.error &&
                                         <Alert variant="danger">{this.state.error}</Alert>
