@@ -156,7 +156,7 @@ class Home extends React.Component {
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                    <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                    <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
                                                         <Row>
                                                             {chapters ?
                                                                 chapters.map((item, index) => {
@@ -187,10 +187,10 @@ class Home extends React.Component {
                                                         </Row>
                                                     </Container>
                                                     {showUnlockMsg && !showInstallationBanner &&
-                                                        <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                                        <div id="unlock-msg" className="fixed-bottom bg-dark text-white d-flex align-items-center">
                                                             <div className="text-center mx-auto">
-                                                                <p className="text-muted">Köp licens och få tillgång till hela Kärlekstanken</p>
-                                                                <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                                <h6>Köp licens och få tillgång till hela Kärlekstanken</h6>
+                                                                <Button className="mt-2" size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
                                                             </div>
                                                         </div>
                                                     }
