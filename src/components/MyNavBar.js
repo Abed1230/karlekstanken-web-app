@@ -23,13 +23,15 @@ class MyNavBar extends React.Component {
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
     }
 
-    openAddPartnerModal() {
+    openAddPartnerModal(alsoOpenSidebar) {
         /* if (!this.state.open)
             this.toggler.click(); */
 
         const userView = this.userView;
         if (userView) {
             userView.openAddPartnerModal();
+            if (alsoOpenSidebar)
+                this.onSetSidebarOpen(true);
         }
     }
 

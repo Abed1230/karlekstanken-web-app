@@ -8,9 +8,6 @@ const InstallBanner = ({ handleClick, handleClose }) => (
         <Row className="d-flex align-items-center ">
             <Col>
                 <h6>Lägg till Kärlekstanken på din hemskärm för snabb åtkomst</h6>
-
-                {/* <Button size="sm" variant="outline-info" onClick={handleClick}>Se hur du gör</Button> */}
-                {/* <TransparentButton onClick={handleClick} variant="outline-light">Tryck här</TransparentButton> */}
                 <Button className="mt-1" variant="outline-light" size="sm" onClick={handleClick}>Lägg till</Button>
             </Col>
             <Col className="" xs="2" lg="1">
