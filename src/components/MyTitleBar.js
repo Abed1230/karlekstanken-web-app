@@ -15,7 +15,7 @@ function MyTitleBar({ title, history }) {
             </Button>
 
             <Navbar.Brand className="ml-3 pt-0 pb-0" style={{ height: "50px" }}>
-                <h5 className="h-100 d-flex align-items-center">{title}</h5>
+                <h4 className="h-100 d-flex align-items-center">{title}</h4>
             </Navbar.Brand>
         </Navbar>
     );
