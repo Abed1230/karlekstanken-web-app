@@ -124,6 +124,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
+        //localStorage.clear();
     }
 
     componentWillUnmount() {
@@ -187,10 +188,10 @@ class Home extends React.Component {
                                                         </Row>
                                                     </Container>
                                                     {showUnlockMsg && !showInstallationBanner &&
-                                                        <div id="unlock-msg" className="fixed-bottom bg-dark text-white d-flex align-items-center">
+                                                        <div id="unlock-msg" className="fixed-bottom bg-info text-white d-flex align-items-center">
                                                             <div className="text-center mx-auto">
                                                                 <h6>Köp licens och få tillgång till hela Kärlekstanken</h6>
-                                                                <Button className="mt-2" size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                                <Button className="mt-2" size="sm" variant="outline-light" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
                                                             </div>
                                                         </div>
                                                     }
