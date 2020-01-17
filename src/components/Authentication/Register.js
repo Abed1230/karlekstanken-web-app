@@ -34,9 +34,11 @@ export class Register extends Component {
     signup(values) {
         this.setState({ loading: true });
         auth.createUserWithEmailAndPassword(values.email, values.password).then((user) => {
+            let emailLowerCase = values.email.toLowerCase();
+
             // Add a new document in collection "users"
             db.collection("users").doc(user.user.uid).set({
-                email: values.email,
+                email: emailLowerCase,
                 firstName: values.firstName,
                 lastName: values.lastName,
             })
