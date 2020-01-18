@@ -18,6 +18,7 @@ import TaskPage from './components/Task/TaskPage';
 import Settings from './components/Settings/Settings.js';
 import PurchaseSuccess from './components/PurchaseSuccess';
 import { ChaptersProvider } from './contexts/ChaptersContext';
+import { StringsProvider } from './contexts/StringsContext';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import ForgotPassword from './components/Authentication/ForgotPassword';
@@ -71,7 +72,7 @@ class App extends React.Component {
                         const premium = this.state.user.premium;
                         user.premium = premium;
                     }
-                    
+
                     // Premium has been purchased. Get new premium status object
                     if (user.shouldRefreshIdToken) {
                         db.collection("users").doc(authUser.uid).update({ shouldRefreshIdToken: FieldValue.delete() });
@@ -88,6 +89,7 @@ class App extends React.Component {
             }
         });
 
+        this.getStrings();
         this.getChapters();
     }
 
@@ -119,6 +121,15 @@ class App extends React.Component {
         });
     }
 
+    async getStrings() {
+        const snap = await db.collection('other').doc('strings').get();
+        const doc = snap.data();
+
+        this.setState({
+            strings: doc
+        });
+    }
+
     componentWillUnmount() {
         this.unsubAuthUser && this.unsubAuthUser();
         this.unsubUserData && this.unsubUserData();
@@ -132,20 +143,22 @@ class App extends React.Component {
                     <UserProvider value={this.state.user}>
                         <CoupleDataProvider value={this.state.coupleData}>
                             <ChaptersProvider value={this.state.chapters}>
-                                <BrowserRouter>
-                                    <Switch>
-                                        <PublicRoute restricted={true} component={Login} path="/signin" />
-                                        <PublicRoute restricted={true} component={Register} path="/signup" />
-                                        <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" />
-                                        <PublicRoute restricted={false} component={HomePage} path="/" exact />
-                                        <PrivateRoute component={Settings} path="/settings" exact />
-                                        <PrivateRoute component={LoveTest} path="/languagetest" exact />
-                                        <PublicRoute component={Chapter} path="/chapter" exact />
-                                        <PublicRoute component={TaskPage} path="/task" exact />
-                                        <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
-                                        <Route component={NotFound} />
-                                    </Switch>
-                                </BrowserRouter>
+                                <StringsProvider value={this.state.strings}>
+                                    <BrowserRouter>
+                                        <Switch>
+                                            <PublicRoute restricted={true} component={Login} path="/signin" />
+                                            <PublicRoute restricted={true} component={Register} path="/signup" />
+                                            <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" />
+                                            <PublicRoute restricted={false} component={HomePage} path="/" exact />
+                                            <PrivateRoute component={Settings} path="/settings" exact />
+                                            <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                            <PublicRoute component={Chapter} path="/chapter" exact />
+                                            <PublicRoute component={TaskPage} path="/task" exact />
+                                            <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
+                                            <Route component={NotFound} />
+                                        </Switch>
+                                    </BrowserRouter>
+                                </StringsProvider>
                             </ChaptersProvider>
                         </CoupleDataProvider>
                     </UserProvider>

@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo.png';
-import { Navbar, Dropdown, Button } from 'react-bootstrap';
+import { Navbar, Button } from 'react-bootstrap';
 import UserView from './UserView';
 import { auth } from '../FirebaseData';
 import { withRouter, Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { UserConsumer } from '../UserContext';
 import Sidebar from "react-sidebar";
 import './MyNavBar.css';
 import { CloseIcon, BackIcon } from '../assets/svgs';
-import MyStrings from '../MyStrings.json';
+import AboutModal from './AboutModal';
 
 const mql = window.matchMedia(`(max-width: 350px)`);
 
@@ -18,6 +18,7 @@ class MyNavBar extends React.Component {
         this.state = {
             isOpen: false,
             sidebarOpen: false,
+            showAboutModal: false
         };
 
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -89,10 +90,11 @@ class MyNavBar extends React.Component {
                                 }
                                 <div style={{ marginTop: "50px" }}>
                                     <hr />
-                                    <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
+                                    <Button id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>OM KÄRLEKSTANKEN</Button>
+                                    {/* <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
                                     <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
                                     <br />
-                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
+                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a> */}
                                 </div>
                             </div>
                         }
@@ -135,6 +137,7 @@ class MyNavBar extends React.Component {
                         <Navbar.Toggle onClick={() => this.onSetSidebarOpen(true)} />
                     }
                 </Navbar>
+                <AboutModal show={this.state.showAboutModal} handleHide={() => this.setState({ showAboutModal: false })} />
             </>
         );
     }
