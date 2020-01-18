@@ -163,7 +163,7 @@ class Home extends React.Component {
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="6">
                                                                     <Alert variant="info" >
-                                                                        Du har inte laggt till din partner ännu.
+                                                                        Du har ännu inte laggt till din partner.
                                                                         <br />
                                                                         <TransparentButton className="text-primary" onClick={() => this.myNavBar.openAddPartnerModal(true)}>Lägg till nu</TransparentButton>
                                                                     </Alert>
