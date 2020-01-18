@@ -102,7 +102,7 @@ class PurchaseModal extends React.Component {
                                     <ul>
                                         <li>Alla {this.props.numChapters} teman innehållande filmer och övningar</li>
                                         <li>Kärleksspråktestet</li>
-                                        <li>Funktionalitet för att fylla kärlekstanken(hjärtat) med varje övning som ni gjort</li>
+                                        <li>Funktionalitet för att fylla kärlekstanken (hjärtat) med varje övning som ni gjort</li>
                                     </ul>
                                 </div>
                             </Modal.Body>
@@ -117,13 +117,17 @@ class PurchaseModal extends React.Component {
                                             Betala med Stripe
                                         </Button>
                                     }
-                                    <br />
-                                    <small className="text-muted">Genom att fortsätta med betalningen godkänner du våra <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a></small>
+                                    {signedIn && hasPartner &&
+                                        <>
+                                            <br />
+                                            <small className="text-muted">Genom att fortsätta med betalningen godkänner du våra <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a></small>
+                                        </>
+                                    }
                                     {this.state.checkoutError &&
                                         <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
                                     }
                                     {!signedIn &&
-                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste första vara inloggad. Logga in eller registrera dig.</p>
+                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först vara inloggad. Logga in eller registrera dig.</p>
                                     }
                                     {signedIn && !hasPartner &&
                                         <>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Card, Button, Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { CoupleDataConsumer } from '../CoupleDataContext';
@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { auth } from '../FirebaseData';
 import InstallBanner from './InstallationGuide/InstallBanner';
 import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
+import TransparentButton from "./TransparentButton";
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -124,6 +125,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
+        //localStorage.clear();
     }
 
     componentWillUnmount() {
@@ -156,7 +158,18 @@ class Home extends React.Component {
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                    <Container id="container" className="mt-3" style={showUnlockMsg ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                    <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                        {user && !user.partner &&
+                                                            <Row className="mb-4 justify-content-center">
+                                                                <Col xs="12" md="6">
+                                                                    <Alert variant="info" >
+                                                                        Du har ännu inte laggt till din partner.
+                                                                        <br />
+                                                                        <TransparentButton className="text-primary" onClick={() => this.myNavBar.openAddPartnerModal(true)}>Lägg till nu</TransparentButton>
+                                                                    </Alert>
+                                                                </Col>
+                                                            </Row>
+                                                        }
                                                         <Row>
                                                             {chapters ?
                                                                 chapters.map((item, index) => {
@@ -187,10 +200,10 @@ class Home extends React.Component {
                                                         </Row>
                                                     </Container>
                                                     {showUnlockMsg && !showInstallationBanner &&
-                                                        <div id="unlock-msg" className="fixed-bottom bg-light d-flex align-items-center">
+                                                        <div id="unlock-msg" className="fixed-bottom bg-info text-white d-flex align-items-center">
                                                             <div className="text-center mx-auto">
-                                                                <p className="text-muted">Köp licens och få tillgång till hela Kärlekstanken</p>
-                                                                <Button size="sm" variant="outline-info" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                                <h6>Köp licens och få tillgång till hela Kärlekstanken</h6>
+                                                                <Button className="mt-2" size="sm" variant="outline-light" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
                                                             </div>
                                                         </div>
                                                     }
@@ -199,7 +212,7 @@ class Home extends React.Component {
                                                         handleHide={(shouldOpenAddPartnerModal) => {
                                                             this.setState({ showPurchaseModal: false });
                                                             if (shouldOpenAddPartnerModal)
-                                                                this.myNavBar.openAddPartnerModal();
+                                                                this.myNavBar.openAddPartnerModal(false);
                                                         }}
                                                         numChapters={chapters && chapters.length} />
                                                 </div>

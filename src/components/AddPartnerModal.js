@@ -41,10 +41,11 @@ class AddPartnerModal extends React.Component {
     async handleSubmit({ email }, { setErrors }) {
         this.setState({ loading: true, error: null });
 
-        let error = await sendPartnerRequest(email);
+        let emailLowerCase = email.toLowerCase();
+        let error = await sendPartnerRequest(emailLowerCase);
 
         if (error) {
-            setErrors({ email: " " });
+            setErrors({ emailLowerCase: " " });
             this.setState({ loading: false, error: error });
         } else {
             this.setState({ loading: false, error: null, success: true });
