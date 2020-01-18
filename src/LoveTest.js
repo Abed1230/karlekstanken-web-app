@@ -123,7 +123,7 @@ export class LoveTest extends Component {
                                                     <h5 className="text-info">{index + 1}</h5>
                                                 </Col>
                                                 <Col className="" xs="12" md="10" lg="8">
-                                                    <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545", backgroundColor: "#fafafa" } : { borderTop: "2px solid #008B8B", backgroundColor: "#fafafa" }} >
+                                                    <Card key={index} style={this.state.notCompleteIndexes.includes(index) ? { borderColor: "#dc3545" } : { borderTop: "2px solid #008B8B" }} >
                                                         {/* <h5 className="text-left" style={{ borderRadius: "3px", backgroundColor: "#008B8B", padding: "4px", color: "white" }}>{'' + (q.index + 1)}</h5> */}
                                                         {/*  <div className="text-center pt-2 bg-light text-info" /* style={{background: "linear-gradient(to left, #36D1DC, #5B86E5)"}}>
                                                             <h6>{index + 1}</h6>

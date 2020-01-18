@@ -37,7 +37,7 @@ class Settings extends React.Component {
                                                 <Card.Body>
                                                     <h5 className="text-center">Inloggad som</h5>
                                                     <p>
-                                                        {user.firstName + " " + user.lastName}
+                                                        Namn: {user.firstName + " " + user.lastName}
                                                         <br />
                                                         {MyStrings.email}: {user.email}
                                                     </p>
@@ -46,7 +46,7 @@ class Settings extends React.Component {
                                                     <span><strong>Partner</strong></span>
                                                     {user.partner ?
                                                         <p>
-                                                            {user.partner.name}
+                                                            Namn: {user.partner.name}
                                                             <br />
                                                             {MyStrings.email}: {user.partner.email}
                                                         </p>

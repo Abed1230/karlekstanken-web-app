@@ -69,33 +69,38 @@ export class Register extends Component {
                         >
                             {({ handleSubmit, handleChange, values, errors, touched }) =>
                                 (<Form noValidate={true} onSubmit={handleSubmit}>
-                                    <Form.Group controlId="firstNameForm">
-                                        <Form.Label>{MyStrings.firstName}</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="firstName"
-                                            placeholder={MyStrings.firstNamePlaceholder}
-                                            value={values.firstName}
-                                            isInvalid={touched.firstName && !!errors.firstName}
-                                            onChange={handleChange} />
-                                        <Form.Control.Feedback type="invalid">
-                                            {errors.firstName}
-                                        </Form.Control.Feedback>
-                                    </Form.Group>
-
-                                    <Form.Group controlId="lastNameForm">
-                                        <Form.Label>{MyStrings.lastName}</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="lastName"
-                                            placeholder={MyStrings.lastNamePlaceholder}
-                                            value={values.lastName}
-                                            isInvalid={touched.lastName && !!errors.lastName}
-                                            onChange={handleChange} />
-                                        <Form.Control.Feedback type="invalid">
-                                            {errors.lastName}
-                                        </Form.Control.Feedback>
-                                    </Form.Group>
+                                    <Form.Row>
+                                        <Col>
+                                            <Form.Group controlId="firstNameForm">
+                                                <Form.Label>{MyStrings.firstName}</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="firstName"
+                                                    placeholder={MyStrings.firstNamePlaceholder}
+                                                    value={values.firstName}
+                                                    isInvalid={touched.firstName && !!errors.firstName}
+                                                    onChange={handleChange} />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.firstName}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col>
+                                            <Form.Group controlId="lastNameForm">
+                                                <Form.Label>{MyStrings.lastName}</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="lastName"
+                                                    placeholder={MyStrings.lastNamePlaceholder}
+                                                    value={values.lastName}
+                                                    isInvalid={touched.lastName && !!errors.lastName}
+                                                    onChange={handleChange} />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.lastName}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Col>
+                                    </Form.Row>
                                     <Form.Group controlId="emailForm">
                                         <Form.Label>{MyStrings.email}</Form.Label>
                                         <Form.Control
@@ -110,7 +115,7 @@ export class Register extends Component {
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group controlId="passwordForm">
-                                        <Form.Label>{MyStrings.password}</Form.Label>
+                                        <Form.Label>{MyStrings.password + " (minst 6 tecken)"}</Form.Label>
                                         <Form.Control
                                             type="password"
                                             name="password"
@@ -125,9 +130,8 @@ export class Register extends Component {
                                     {this.state.error &&
                                         <Alert variant="danger">{this.state.error}</Alert>
                                     }
-                                    {/* TODO: update links */}
                                     <p className="text-muted text-center" style={{ fontSize: "0.95rem" }}>
-                                        Genom att registrera mig godkänner jag <a href="https://www.google.com">användarvilkoren</a> och <a href="https://www.google.com">integritetspolicyn</a>
+                                        Genom att registrera mig godkänner jag <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkoren</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicyn</a>
                                     </p>
                                     {this.state.loading ?
                                         <div className="p-2 text-center">

@@ -23,13 +23,15 @@ class MyNavBar extends React.Component {
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
     }
 
-    openAddPartnerModal() {
+    openAddPartnerModal(alsoOpenSidebar) {
         /* if (!this.state.open)
             this.toggler.click(); */
 
         const userView = this.userView;
         if (userView) {
             userView.openAddPartnerModal();
+            if (alsoOpenSidebar)
+                this.onSetSidebarOpen(true);
         }
     }
 
@@ -64,54 +66,56 @@ class MyNavBar extends React.Component {
         const { goBack, history } = this.props;
         return (
             <>
-                <Sidebar
-                    sidebar={
-                        <div className="p-3">
-                            {auth.currentUser ?
-                                <>
+                <div className="d-print-none">
+                    <Sidebar
+                        sidebar={
+                            <div className="p-3">
+                                {auth.currentUser ?
+                                    <>
+                                        <div>
+                                            <Button block variant="light" as={Link} to="/settings">INSTÄLLNINGAR</Button>
+                                            <Button className="mt-2" block variant="danger" style={{ backgroundColor: "#FF6464", borderColor: "#FF6464" }} onClick={() => auth.signOut()}>LOGGA UT</Button>
+                                            <hr />
+                                        </div>
+                                        <UserConsumer>
+                                            {user => user ? <UserView ref={el => this.userView = el} /> : null}
+                                        </UserConsumer>
+                                    </>
+                                    :
                                     <div>
-                                        <Button block variant="light" as={Link} to="/settings">INSTÄLLNINGAR</Button>
-                                        <Button className="mt-2" block variant="danger" style={{ backgroundColor: "#FF6464", borderColor: "#FF6464" }} onClick={() => auth.signOut()}>LOGGA UT</Button>
-                                        <hr />
+                                        <Button block variant="info" as={Link} to="/signin">LOGGA IN</Button>
+                                        <Button block variant="info" as={Link} to="/signup">SKAPA KONTO</Button>
                                     </div>
-                                    <UserConsumer>
-                                        {user => user ? <UserView ref={el => this.userView = el} /> : null}
-                                    </UserConsumer>
-                                </>
-                                :
-                                <div>
-                                    <Button block variant="info" as={Link} to="/signin">LOGGA IN</Button>
-                                    <Button block variant="info" as={Link} to="/signup">SKAPA KONTO</Button>
+                                }
+                                <div style={{ marginTop: "50px" }}>
+                                    <hr />
+                                    <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
+                                    <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
+                                    <br />
+                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
                                 </div>
-                            }
-                            <div style={{ marginTop: "50px" }}>
-                                <hr />
-                                <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
-                                <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
-                                <br />
-                                <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
                             </div>
-                        </div>
-                    }
-                    open={this.state.sidebarOpen}
-                    onSetOpen={this.onSetSidebarOpen}
-                    pullRight
-                    styles={{
-                        sidebar: {
-                            position: "fixed",
-                            width: mql.matches ? [`${window.innerWidth - 50}px`] : "300px",
-                            background: "linear-gradient(to right, #ffafbd, #ffc3a0)",
-                            zIndex: 3,
-                            paddingTop: "70px",
-                        },
-                        overlay: { zIndex: 2 }
-                    }}
-                >
-                    <p>{/* I'm required */}</p>
-                </Sidebar>
-                <Navbar bg="light" sticky="top" expand="xs" >
+                        }
+                        open={this.state.sidebarOpen}
+                        onSetOpen={this.onSetSidebarOpen}
+                        pullRight
+                        styles={{
+                            sidebar: {
+                                position: "fixed",
+                                width: mql.matches ? [`${window.innerWidth - 50}px`] : "300px",
+                                background: "linear-gradient(to right, #ffafbd, #ffc3a0)",
+                                zIndex: 3,
+                                paddingTop: "70px",
+                            },
+                            overlay: { zIndex: 2 }
+                        }}
+                    >
+                        <p>{/* I'm required */}</p>
+                    </Sidebar>
+                </div>
+                <Navbar sticky="top" expand="xs" >
                     {goBack &&
-                        <Button className="border rounded py-1 px-2" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => history.goBack()}>
+                        <Button className="rounded py-1 px-2" style={{ background: "none", borderColor: "rgba(0,0,0,.1)", cursor: "pointer" }} onClick={() => history.goBack()}>
                             <BackIcon width="24" height="24" color="rgba(0, 0, 0, 0.5)" />
                         </Button>
                     }
@@ -124,7 +128,7 @@ class MyNavBar extends React.Component {
                         />
                     </Navbar.Brand>
                     {this.state.sidebarOpen ?
-                        <Button className="border rounded py-1 px-3" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => this.onSetSidebarOpen(false)}>
+                        <Button className="rounded py-1 px-3" style={{ background: "none", borderColor: "rgba(0,0,0,.1)", cursor: "pointer" }} onClick={() => this.onSetSidebarOpen(false)}>
                             <CloseIcon width="24" height="24" color="rgba(0, 0, 0, 0.5)" />
                         </Button>
                         :

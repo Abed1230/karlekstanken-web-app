@@ -15,6 +15,7 @@
 
 .content {
     clear: both;
+    margin-top: 50px;
 }
 
 @media print {
@@ -23,5 +24,6 @@
     }
     body {
         font-size: 18pt;
+        background: #FFFFFF !important;
     }
 }
