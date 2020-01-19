@@ -88,7 +88,7 @@ class PurchaseModal extends React.Component {
                     return (
                         <Modal show={this.props.show} onHide={this.hideAndReset}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Lås upp Kärlekstanken</Modal.Title>
+                                <Modal.Title>Lås upp Kärlekstanken®</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <div className="text-center mb-4">

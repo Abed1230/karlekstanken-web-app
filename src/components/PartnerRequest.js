@@ -30,7 +30,7 @@ class ReceivedPartnerRequest extends React.Component {
         const { name, email } = this.props;
         return (
             <RoundedCard>
-                <Card.Header>Partner förfrågan mottagen</Card.Header>
+                <Card.Header>Partnerförfrågan mottagen</Card.Header>
                 <Card.Body>
                     <p><span className="font-italic">{name} ({email})</span> vill lägga till dig som partner</p>
                     {this.state.loading ?
@@ -67,7 +67,7 @@ class SentPartnerRequest extends React.Component {
         const { name, email } = this.props;
         return (
             <RoundedCard>
-                <Card.Header>Partner förfrågan skickad</Card.Header>
+                <Card.Header>Partnerförfrågan skickad</Card.Header>
                 <Card.Body>
                     <p>Väntar på att <span className="font-italic">{name} ({email})</span> ska acceptera din förfrågan</p>
                     {this.state.loading ?
