@@ -4,7 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { sendPartnerRequest } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.json';
-import TransparentButton from "./TransparentButton";;
+import TransparentButton from "./TransparentButton";
+import { StringsConsumer } from '../contexts/StringsContext';
 
 const EmailSchema = Yup.object().shape({
     email: Yup.string()
@@ -52,15 +53,19 @@ class AddPartnerModal extends React.Component {
         }
     }
 
-    handleShare() {
+    handleShare(strings) {
+        const invitationTitle = strings && strings.invitationTitle;
+        const invitationText = strings && strings.invitationText;
+        const invitationMailText = strings && strings.invitationMailText;
+
         if (window.navigator.share) {
             window.navigator.share({
-                title: MyStrings.invitationTitle,
-                text: MyStrings.invitationText,
+                title: invitationTitle,
+                text: invitationText.replace(/\\n/g, '\n'),
             });
         } else {
             const mail = document.createElement("a");
-            mail.href = "mailto:?subject=" + MyStrings.invitationTitle + "&body=" + MyStrings.invitationMailText;
+            mail.href = "mailto:?subject=" + invitationTitle + "&body=" + invitationMailText;
             mail.click();
         }
     }
@@ -94,7 +99,11 @@ class AddPartnerModal extends React.Component {
                                             <br />
                                             Har din partner inte har registrerat sig ännu?
                                             <br />
-                                            <TransparentButton className="text-primary" onClick={() => this.handleShare()}>Skicka inbjudan här</TransparentButton>
+                                            <StringsConsumer>
+                                                {strings => (
+                                                    <TransparentButton className="text-primary" onClick={() => this.handleShare(strings)}>Skicka inbjudan här</TransparentButton>
+                                                )}
+                                            </StringsConsumer>
                                         </Form.Label>
                                         <Form.Control
                                             type="email"
