@@ -121,7 +121,7 @@ class MyNavBar extends React.Component {
                             <BackIcon width="24" height="24" color="rgba(0, 0, 0, 0.5)" />
                         </Button>
                     }
-                    <Navbar.Brand className="mx-auto">
+                    <Navbar.Brand className="mx-auto" as={Link} to="/">
                         <img
                             className="logo"
                             src={logo}
