@@ -41,13 +41,13 @@ const IOSInstructions = () => (
     <>
         <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
         <div className="d-inline-block bg-light p-1 rounded">
-            <img src={SafariIcon} width={24} height={24} className="mr-1" />
+            <img src={SafariIcon} width={24} height={24} alt="Safari Icon" className="mr-1" />
             Safari
         </div>
         <div className="mt-3">
             <p>Gör så här:</p>
             <ol>
-                <li>Tryck på <img src={IosShareIcon} width={32} height={32} /> (dela) som finns i webbläsarens botten eller topp</li>
+                <li>Tryck på <img src={IosShareIcon} width={32} height={32} alt="iOS Share Button Icon" /> (dela) som finns i webbläsarens botten eller topp</li>
                 <li>Välj "Lägg till på hemskärmen"</li>
                 <li>Lägg till</li>
             </ol>
@@ -60,13 +60,13 @@ const AndroidInstructions = () => (
     <>
         <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
         <div className="d-inline-block bg-light p-1 rounded">
-            <img src={ChromeIcon} width={24} height={24} className="mr-1" />
+            <img src={ChromeIcon} width={24} height={24} alt="Chrome Icon" className="mr-1" />
             Google Chrome
         </div>
         <div className="mt-3">
             <p>Gör så här:</p>
             <ol>
-                <li>Tryck på <img src={ChromeMoreIcon} width={24} height={24} /> som finns i webbläsarens topp</li>
+                <li>Tryck på <img src={ChromeMoreIcon} width={24} height={24} alt="Chrome More Button Icon" /> som finns i webbläsarens topp</li>
                 <li>Välj "Lägg till på startskärmen"</li>
                 <li>Lägg till</li>
             </ol>
@@ -79,13 +79,13 @@ const OtherInstructions = () => (
     <>
         <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
         <div className="d-inline-block bg-light p-1 rounded">
-            <img src={ChromeIcon} width={24} height={24} className="mr-1" />
+            <img src={ChromeIcon} width={24} height={24} alt="Chrome Icon" className="mr-1" />
             Google Chrome
         </div>
         <div className="mt-3">
             <p>Gör så här:</p>
             <ol>
-                <li>Tryck på <img src={CircleAdd} width={24} height={24} /> som finns i webbläsarens högra sida av addressfältet, bredvid bokmärk symbolen.</li>
+                <li>Tryck på <img src={CircleAdd} width={24} height={24} alt="Chrome Install/Add Button Icon" /> som finns i webbläsarens högra sida av addressfältet, bredvid bokmärk symbolen.</li>
                 <li>Installera</li>
             </ol>
             <p className="text-muted">{notice}</p>

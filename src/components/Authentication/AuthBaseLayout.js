@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Logo from '../../assets/logo.png';
 import './AuthBaseLayout.css';
 import { BackIcon } from '../../assets/svgs';

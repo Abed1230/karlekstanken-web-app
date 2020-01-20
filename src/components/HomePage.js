@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Card, Button, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Button, Container, Row, Col } from 'react-bootstrap';
 import MyNavBar from './MyNavBar';
 import ListCard from './ListCard';
 import { CoupleDataConsumer } from '../CoupleDataContext';
@@ -162,7 +162,7 @@ class Home extends React.Component {
                                                     <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
                                                         {user && !user.partner &&
                                                             <Row className="mb-4 justify-content-center">
-                                                                <Col xs="12" md="6">
+                                                                <Col xs="12" md="8" lg="6">
                                                                     <Alert variant="info" >
                                                                         Du har ännu inte laggt till din partner.
                                                                         <br />
