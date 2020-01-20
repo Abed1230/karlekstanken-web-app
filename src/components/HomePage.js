@@ -12,6 +12,7 @@ import { auth } from '../FirebaseData';
 import InstallBanner from './InstallationGuide/InstallBanner';
 import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
 import TransparentButton from "./TransparentButton";
+import { isInStandaloneMode } from '../UtilFunctions';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -238,7 +239,5 @@ class Home extends React.Component {
         );
     }
 }
-
-const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
 export default Home;

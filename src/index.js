@@ -23,6 +23,7 @@ import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import WelcomeModal from './components/WelcomeModal';
+import { isInStandaloneMode } from './UtilFunctions';
 
 const KEY_AUTH_USER = "authUser";
 const KEY_HIDE_WELCOME_MODAL = "hideWelcomeModal";
@@ -136,7 +137,7 @@ class App extends React.Component {
     hideWelcomeModal() {
         localStorage.setItem(KEY_HIDE_WELCOME_MODAL, true);
         // in ios content behind modal scrolls as well, so we reset scroll position
-        window.scroll(0,0);
+        window.scroll(0, 0);
         this.setState({ showWelcomeModal: false });
     }
 
@@ -147,6 +148,7 @@ class App extends React.Component {
     }
 
     render() {
+        const showWelcomeModal = this.state.showWelcomeModal && !isInStandaloneMode();
         return (
             <div className="App">
                 <AuthUserProvider value={this.state.authUser}>
@@ -168,7 +170,7 @@ class App extends React.Component {
                                             <Route component={NotFound} />
                                         </Switch>
                                     </BrowserRouter>
-                                    <WelcomeModal show={this.state.showWelcomeModal} handleHide={() => (this.hideWelcomeModal())} />
+                                    <WelcomeModal show={showWelcomeModal} handleHide={() => (this.hideWelcomeModal())} />
                                 </StringsProvider>
                             </ChaptersProvider>
                         </CoupleDataProvider>
