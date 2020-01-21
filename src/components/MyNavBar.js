@@ -92,17 +92,13 @@ class MyNavBar extends React.Component {
                                 }
                                 <div style={{ marginTop: "50px" }}>
                                     <hr />
-                                    <Button id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>OM KÄRLEKSTANKEN</Button>
+                                    <Button className="mb-4" id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>OM KÄRLEKSTANKEN</Button>
                                     <StringsConsumer>
                                         {strings => {
                                             const contactEmail = strings && strings.contactEmail;
-                                            return (
-                                                <>
-                                                    {contactEmail &&
-                                                        <p className="mt-4">{MyStrings.contactUsText}<a href={"mailto:" + contactEmail}>{contactEmail}</a></p>
-                                                    }
-                                                </>
-                                            );
+                                            if (contactEmail) {
+                                                return (<p>{MyStrings.contactUsText}<a href={"mailto:" + contactEmail}>{contactEmail}</a></p>);
+                                            }
                                         }}
                                     </StringsConsumer>
                                     <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
