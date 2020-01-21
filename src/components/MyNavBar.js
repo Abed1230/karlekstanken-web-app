@@ -9,6 +9,8 @@ import Sidebar from "react-sidebar";
 import './MyNavBar.css';
 import { CloseIcon, BackIcon } from '../assets/svgs';
 import AboutModal from './AboutModal';
+import MyStrings from '../MyStrings.json';
+import { StringsConsumer } from '../contexts/StringsContext';
 
 const mql = window.matchMedia(`(max-width: 350px)`);
 
@@ -91,10 +93,21 @@ class MyNavBar extends React.Component {
                                 <div style={{ marginTop: "50px" }}>
                                     <hr />
                                     <Button id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>OM KÄRLEKSTANKEN</Button>
-                                    {/* <p>{MyStrings.contactUsText}<a href={"mailto:" + MyStrings.contactEmail}>{MyStrings.contactEmail}</a></p>
+                                    <StringsConsumer>
+                                        {strings => {
+                                            const contactEmail = strings && strings.contactEmail;
+                                            return (
+                                                <>
+                                                    {contactEmail &&
+                                                        <p className="mt-4">{MyStrings.contactUsText}<a href={"mailto:" + contactEmail}>{contactEmail}</a></p>
+                                                    }
+                                                </>
+                                            );
+                                        }}
+                                    </StringsConsumer>
                                     <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
                                     <br />
-                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a> */}
+                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
                                 </div>
                             </div>
                         }
