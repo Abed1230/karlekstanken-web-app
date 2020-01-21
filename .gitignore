@@ -25,4 +25,4 @@ yarn-error.log*
 /src/FirebaseData.js
 /src/QuestionsData.json
 
-.firebase/*
+.firebase/
