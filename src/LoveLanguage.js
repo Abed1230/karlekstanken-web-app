@@ -1,7 +1,7 @@
 import QuestionsData from './QuestionsData.json';
 import { db } from './FirebaseData';
 
-export var sum = 30;
+export var sum = 20;
 
 var counterA = 0;
 var counterB = 0;
