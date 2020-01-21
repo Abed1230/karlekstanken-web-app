@@ -104,6 +104,7 @@ class MyNavBar extends React.Component {
                                     <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
                                     <br />
                                     <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
+                                    <p className="mt-3 text-muted" style={{ fontSize: "0.95rem" }}>{MyStrings.copyright}</p>
                                 </div>
                             </div>
                         }
