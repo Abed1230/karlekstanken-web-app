@@ -144,7 +144,13 @@ class Chapter extends React.Component {
                     <Row className="mt-5 justify-content-md-center">
                         <Col lg="9">
                             <h5>{chapter.bodyTitle}</h5>
-                            <p>{chapter.bodyText}</p>
+                            <p>{chapter.bodyText && chapter.bodyText.split('\n').map((text, index) => (
+                                <React.Fragment key={`${text}-${index}`}>
+                                    {text}
+                                    <br />
+                                </React.Fragment>
+                            ))
+                            }</p>
                         </Col>
                     </Row>
                     <Row className="mt-3">
