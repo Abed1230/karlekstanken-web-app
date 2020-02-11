@@ -4,8 +4,9 @@ import Logo from '../../assets/logo.png';
 import './AuthBaseLayout.css';
 import { BackIcon } from '../../assets/svgs';
 import TransparentButton from '../TransparentButton';
+import { Link } from 'react-router-dom';
 
-function AuthBaseLayout({ history, children }) {
+function AuthBaseLayout({ goBackRoute, children }) {
     return (
         <>
             <div className="bg vh-100"></div>
@@ -15,18 +16,20 @@ function AuthBaseLayout({ history, children }) {
                         <div className="my-card pt-5 pb-5 pl-3 pr-3 ">
                             <Row >
                                 <Col className="text-center">
-                                    <img
-                                        className="img-fluid mb-2"
-                                        style={{ maxHeight: "45px" }}
-                                        src={Logo}
-                                        height={55}
-                                        alt="Kärlekstanken" />
+                                    <Link to="/">
+                                        <img
+                                            className="img-fluid mb-2"
+                                            style={{ maxHeight: "45px" }}
+                                            src={Logo}
+                                            height={55}
+                                            alt="Kärlekstanken" />
+                                    </Link>
                                     <hr />
                                 </Col>
                             </Row>
                             <Row className="mb-2">
                                 <Col className="text-center">
-                                    <TransparentButton variant="light" onClick={() => history.goBack()}><BackIcon /></TransparentButton>
+                                    <Link to={goBackRoute ? goBackRoute : "/"}><BackIcon /></Link>
                                 </Col>
                             </Row>
                             {children}

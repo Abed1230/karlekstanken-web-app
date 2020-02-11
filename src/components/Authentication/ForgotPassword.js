@@ -48,18 +48,18 @@ class ForgotPassword extends React.Component {
     render() {
         if (this.state.success) {
             return (
-                <>
+                <AuthBaseLayout goBackRoute="/signin">
                     <Row>
                         <Col>
                             <p>{MyStrings.passwordResetSentMsg}</p>
                         </Col>
                     </Row>
-                </>
+                </AuthBaseLayout>
             );
         }
 
         return (
-            <AuthBaseLayout history={this.props.history}>
+            <AuthBaseLayout goBackRoute="/signin">
                 <Row>
                     <Col>
                         <p>{MyStrings.passwordResetInfo}</p>

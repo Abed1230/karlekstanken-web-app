@@ -59,7 +59,7 @@ export class Register extends Component {
 
     render() {
         return (
-            <AuthBaseLayout history={this.props.history}>
+            <AuthBaseLayout>
                 <Row>
                     <Col>
                         <Formik
