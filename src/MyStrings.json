@@ -16,6 +16,10 @@
     "passwordPlaceholder": "Skriv in ditt lösenord",
     "passwordResetSentMsg": "Vi har skickat en länk till din e-postadress där du kan återställa ditt lösenord",
     "passwordResetInfo": "Ange den e-postadress som du använde när du registrerade dig. Vi skickar en länk där du kan återställa ditt lösenord",
+    "purchaseModal": {
+        "notSignedIn": "Du behöver först ett konto innan du kan fortsätta till betalningen. ",
+        "signUp": "Skapa ett konto här"
+    },
     "errors": {
         "fieldRequired": "Fältet kan inte vara tomt",
         "passwordTooShort": "Lösenordet kan inte vara mindre än 6 tecken",
