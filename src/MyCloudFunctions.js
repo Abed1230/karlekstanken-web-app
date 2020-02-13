@@ -8,6 +8,25 @@ const ERROR_RECEIVER_HAS_PENDING_REQUEST = 'ERROR_RECEIVER_HAS_PENDING_REQUEST';
 //const ERROR_RECEIVER_EMAIL_REQUIRED = 'ERROR_RECEIVER_EMAIL_REQUIRED';
 const ERROR_RECEIVER_EMAIL_IS_SENDERS = 'ERROR_RECEIVER_EMAIL_IS_SENDERS';
 
+export async function addPartner(email) {
+    try {
+        const addPartner = functions.httpsCallable('addPartner');
+        await addPartner({ email: email.toLowerCase() });
+    } catch (e) {
+        console.error(e.message);
+        switch (e.message) {
+            case ERROR_USER_NOT_FOUND:
+                return MyStrings.errors.userNotFound;
+            case ERROR_RECEIVER_ALREADY_HAS_PARTNER:
+                return MyStrings.errors.receiverAlreadyHasPartner;
+            case ERROR_RECEIVER_EMAIL_IS_SENDERS:
+                return MyStrings.errors.cannotAddSelf;
+            default:
+                return MyStrings.errors.unknown;
+        }
+    }
+}
+
 export async function rejectPartnerRequest() {
     try {
         var rejectPartnerRequest = functions.httpsCallable('rejectPartnerRequest');

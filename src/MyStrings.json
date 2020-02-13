@@ -25,6 +25,8 @@
         "invalidEmail": "Ogiltig e-postadress",
         "userNotFound": "Det finns ingen användare med den angivna e-postadressen.",
         "wrongPassword": "Du har angivit fel lösenord.",
-        "emailAlreadyInUse": "Det finns redan en användare med den angivna e-postadressen. "
+        "emailAlreadyInUse": "Det finns redan en användare med den angivna e-postadressen. ",
+        "receiverAlreadyHasPartner": "Användaren har redan en partner.",
+        "cannotAddSelf": "Du kan inte lägga till dig själv, vännen."
     }
 }

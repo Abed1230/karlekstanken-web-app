@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Spinner, Form, Alert, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { sendPartnerRequest } from '../MyCloudFunctions';
+import { addPartner } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.json';
 import TransparentButton from "./TransparentButton";
 import { StringsConsumer } from '../contexts/StringsContext';
@@ -42,11 +42,9 @@ class AddPartnerModal extends React.Component {
     async handleSubmit({ email }, { setErrors }) {
         this.setState({ loading: true, error: null });
 
-        let emailLowerCase = email.toLowerCase();
-        let error = await sendPartnerRequest(emailLowerCase);
-
+        const error = await addPartner(email);
         if (error) {
-            setErrors({ emailLowerCase: " " });
+            setErrors({ email: " " });
             this.setState({ loading: false, error: error });
         } else {
             this.setState({ loading: false, error: null, success: true });
