@@ -6,12 +6,15 @@ const ERROR_USER_NOT_FOUND = 'ERROR_USER_NOT_FOUND';
 const ERROR_RECEIVER_ALREADY_HAS_PARTNER = 'ERROR_RECEIVER_ALREADY_HAS_PARTNER';
 const ERROR_RECEIVER_HAS_PENDING_REQUEST = 'ERROR_RECEIVER_HAS_PENDING_REQUEST';
 //const ERROR_RECEIVER_EMAIL_REQUIRED = 'ERROR_RECEIVER_EMAIL_REQUIRED';
+const ERROR_RECEIVER_EMAIL_OR_UID_REQUIRED = 'ERROR_RECEIVER_EMAIL_OR_UID_REQUIRED';
 const ERROR_RECEIVER_EMAIL_IS_SENDERS = 'ERROR_RECEIVER_EMAIL_IS_SENDERS';
+const ERROR_CAN_NOT_ADD_SELF = "ERROR_CAN_NOT_ADD_SELF";
+const ERROR_USER_HAS_NO_PARTNER = 'ERROR_USER_HAS_NO_PARTNER';
 
-export async function addPartner(email) {
+export async function addPartner(email, userId) {
     try {
         const addPartner = functions.httpsCallable('addPartner');
-        await addPartner({ email: email.toLowerCase() });
+        await addPartner({ email: email && email.toLowerCase(), userId: userId });
     } catch (e) {
         console.error(e.message);
         switch (e.message) {

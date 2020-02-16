@@ -6,6 +6,8 @@ import *as Yup from 'yup';
 import MyStrings from '../../MyStrings.json';
 import { EMAIL_ALREADY_IN_USE } from '../../AuthErrorCodes.js';
 import AuthBaseLayout from './AuthBaseLayout.js';
+import { addPartner } from '../../MyCloudFunctions.js';
+import { Redirect } from 'react-router-dom';
 
 const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -24,6 +26,7 @@ export class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            redirect: false,
             loading: false,
             error: null,
         };
@@ -31,19 +34,41 @@ export class Register extends Component {
         this.signup = this.signup.bind(this);
     }
 
-    signup(values) {
-        this.setState({ loading: true });
-        auth.createUserWithEmailAndPassword(values.email, values.password).then((user) => {
-            let emailLowerCase = values.email.toLowerCase();
+    componentDidMount() {
+        this.mounted = true;
+    }
 
-            // Add a new document in collection "users"
-            db.collection("users").doc(user.user.uid).set({
-                email: emailLowerCase,
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
+    async signup(values) {
+        this.setState({ loading: true });
+
+        const email = values.email.toLowerCase();
+        await auth.createUserWithEmailAndPassword(email, values.password).then((user) => {
+            // Create user document in db
+            return db.collection("users").doc(user.user.uid).set({
+                email: email,
                 firstName: values.firstName,
                 lastName: values.lastName,
-            })
+            });
+        }).then(() => {
+            // if URL includes partnerUID then go ahead and add partner
+            const partnerUID = this.props.match.params.partnerUID;
+            if (partnerUID) {
+                return addPartner(null, partnerUID);
+            }
+        }).then(() => {
+            if (this.mounted) {
+                this.setState({ redirect: true });
+            }
         }).catch((e) => {
             console.log(e);
+            if (!e.code.includes("auth")) {
+                this.setState({ redirect: true });
+            }
+
             let msg = "";
             switch (e.code) {
                 case EMAIL_ALREADY_IN_USE:
@@ -58,6 +83,10 @@ export class Register extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return (<Redirect to="/" />);
+        }
+
         return (
             <AuthBaseLayout>
                 <Row>
