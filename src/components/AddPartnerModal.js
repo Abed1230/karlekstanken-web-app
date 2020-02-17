@@ -2,8 +2,7 @@ import React from 'react';
 import { Modal, Spinner, Form, Alert, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { addPartner } from '../MyCloudFunctions';
-import { StringsConsumer } from '../contexts/StringsContext';
+import { addPartner, sendInvite } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.js';
 
 const EmailSchema = Yup.object().shape({
@@ -22,11 +21,11 @@ function Undetermined({ handleYes, handleNo }) {
     );
 }
 
-function AddForm({ handleSubmit, handleChange, values, errors, touched, error, loading, userEmail }) {
+function Add({ handleSubmit, handleChange, values, errors, touched, error, loading, userEmail }) {
     return (
         <Form noValidate onSubmit={handleSubmit}>
             <Form.Group controlId="emailField">
-                <Form.Label>{MyStrings.AddPartnerModal.addFormViewLabel}</Form.Label>
+                <Form.Label>{MyStrings.AddPartnerModal.addViewFormLabel}</Form.Label>
                 <Form.Control
                     type="email"
                     name="email"
@@ -48,24 +47,43 @@ function AddForm({ handleSubmit, handleChange, values, errors, touched, error, l
             {loading ?
                 <Spinner animation="border" variant="info" />
                 :
-                <Button block variant="info" type="submit">{MyStrings.AddPartnerModal.addFormViewAddBtn}</Button>
+                <Button block variant="info" type="submit">{MyStrings.AddPartnerModal.addViewFormSubmit}</Button>
             }
         </Form>
     );
 }
 
-function Invite({ handleClick }) {
+function Invite({ handleSubmit, handleChange, values, errors, touched, error, loading }) {
     return (
-        <>
+        <Form noValidate onSubmit={handleSubmit}>
             <p>{MyStrings.AddPartnerModal.inviteViewText1}</p>
-            <Button className="mb-2" block variant="info" onClick={handleClick}>{MyStrings.AddPartnerModal.inviteViewInviteBtn}</Button>
-            <p className="text-muted" style={{ fontSize: "0.9rem" }}>{MyStrings.AddPartnerModal.inviteViewText2}</p>
-        </>
+            <Form.Group controlId="emailField">
+                <Form.Label>{MyStrings.AddPartnerModal.inviteViewFormLabel}</Form.Label>
+                <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder={MyStrings.email}
+                    value={values.email}
+                    onChange={handleChange}
+                    isInvalid={touched.email && !!errors.email} />
+                <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                </Form.Control.Feedback>
+            </Form.Group>
+            {error &&
+                <Alert variant="danger">{error}</Alert>
+            }
+            {loading ?
+                <Spinner animation="border" variant="info" />
+                :
+                <Button block variant="info" type="submit">{MyStrings.AddPartnerModal.inviteViewFormSubmit}</Button>
+            }
+        </Form>
     );
 }
 
 const UNDETERMINED_VIEW = "Undetermined";
-const ADD_FORM_VIEW = "AddForm";
+const ADD_VIEW = "Add";
 const INVITE_VIEW = "Invite"
 
 class AddPartnerModal extends React.Component {
@@ -78,9 +96,10 @@ class AddPartnerModal extends React.Component {
             success: false,
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleYes = this.handleYes.bind(this);
         this.handleNo = this.handleNo.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleInvite = this.handleInvite.bind(this);
     }
 
     hideAndReset(resetForm) {
@@ -98,9 +117,9 @@ class AddPartnerModal extends React.Component {
         }, 500);
     }
 
-    async handleSubmit({ email }, { setErrors }) {
+    async handleAdd({ email }, { setErrors }) {
         this.setState({ loading: true, error: null });
-
+        console.log(email);
         const error = await addPartner(email);
         if (error) {
             setErrors({ email: " " });
@@ -110,32 +129,21 @@ class AddPartnerModal extends React.Component {
         }
     }
 
-    handleShare(strings, userFullName) {
-        let invitationTitle = strings && strings.invitationTitle;
-        if (invitationTitle)
-            invitationTitle = invitationTitle.replace(/XXXX/g, userFullName);
+    async handleInvite({ email }, { setErrors }) {
+        this.setState({ loading: true, error: null });
 
-        let invitationText = strings && strings.invitationText;
-        if (invitationText) {
-            invitationText = invitationText.replace(/XXXX/g, userFullName);
-            invitationText = invitationText.replace(/\\n/g, '\n');
-        }
-
-        if (window.navigator.share) {
-            window.navigator.share({
-                title: invitationTitle,
-                text: invitationText,
-            });
+        const userFullName = this.props.user.firstName + " " + this.props.user.lastName;
+        const error = await sendInvite(email, userFullName);
+        if (error) {
+            this.setState({ loading: false, error: error });
         } else {
-            const mail = document.createElement("a");
-            mail.href = "mailto:?subject=" + invitationTitle + "&body=" + encodeURIComponent(invitationText);
-            mail.click();
+            this.setState({ loading: false, error: null, success: true });
         }
     }
 
     handleYes() {
         this.setState({
-            toRender: ADD_FORM_VIEW
+            toRender: ADD_VIEW
         });
     }
 
@@ -152,7 +160,7 @@ class AddPartnerModal extends React.Component {
                     email: ""
                 }}
                 validationSchema={EmailSchema}
-                onSubmit={this.handleSubmit}>
+                onSubmit={this.state.toRender === ADD_VIEW ? this.handleAdd : this.handleInvite}>
                 {({ handleSubmit, handleChange, values, errors, touched, resetForm }) => (
                     <Modal show={this.props.show} onHide={this.hideAndReset.bind(this, resetForm)}>
                         <Modal.Header closeButton>
@@ -162,7 +170,16 @@ class AddPartnerModal extends React.Component {
                             {this.state.success ?
                                 <>
                                     <Alert variant="success">
-                                        {this.props.user.partner && this.props.user.partner.name} {MyStrings.AddPartnerModal.successText}
+                                        {this.state.toRender === ADD_VIEW ?
+                                            <>
+                                                {this.props.user.partner && this.props.user.partner.name} {MyStrings.AddPartnerModal.addSuccess}
+                                            </>
+                                            :
+                                            <>
+                                                {MyStrings.AddPartnerModal.inviteSuccess} {values.email}
+                                            </>
+                                        }
+
                                     </Alert>
                                     <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>{MyStrings.AddPartnerModal.closeBtn}</Button>
                                 </>
@@ -171,8 +188,8 @@ class AddPartnerModal extends React.Component {
                                     {this.state.toRender === UNDETERMINED_VIEW &&
                                         <Undetermined handleYes={this.handleYes} handleNo={this.handleNo} />
                                     }
-                                    {this.state.toRender === ADD_FORM_VIEW &&
-                                        <AddForm
+                                    {this.state.toRender === ADD_VIEW &&
+                                        <Add
                                             handleSubmit={handleSubmit}
                                             handleChange={handleChange}
                                             values={values}
@@ -184,14 +201,15 @@ class AddPartnerModal extends React.Component {
                                         />
                                     }
                                     {this.state.toRender === INVITE_VIEW &&
-                                        <StringsConsumer>
-                                            {strings => {
-                                                const userFullName = this.props.user.firstName + " " + this.props.user.lastName;
-                                                return (
-                                                    <Invite handleClick={() => this.handleShare(strings, userFullName)} />
-                                                );
-                                            }}
-                                        </StringsConsumer>
+                                        <Invite
+                                            handleSubmit={handleSubmit}
+                                            handleChange={handleChange}
+                                            values={values}
+                                            errors={errors}
+                                            touched={touched}
+                                            error={this.state.error}
+                                            loading={this.state.loading}
+                                        />
                                     }
                                 </>
                             }

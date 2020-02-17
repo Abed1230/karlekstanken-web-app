@@ -11,6 +11,16 @@ const ERROR_RECEIVER_EMAIL_IS_SENDERS = 'ERROR_RECEIVER_EMAIL_IS_SENDERS';
 const ERROR_CAN_NOT_ADD_SELF = "ERROR_CAN_NOT_ADD_SELF";
 const ERROR_USER_HAS_NO_PARTNER = 'ERROR_USER_HAS_NO_PARTNER';
 
+export async function sendInvite(receiverEmail, senderFullName) {
+    try {
+        const sendInvite = functions.httpsCallable('sendInvite');
+        await sendInvite({ receiverEmail: receiverEmail, senderFullName: senderFullName });
+    } catch (e) {
+        console.error(e.message);
+        return MyStrings.errors.unknown;
+    }
+}
+
 export async function addPartner(email, userId) {
     try {
         const addPartner = functions.httpsCallable('addPartner');
