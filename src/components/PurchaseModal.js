@@ -66,7 +66,7 @@ class PurchaseModal extends React.Component {
             return;
         }
 
-        const stripe = window.Stripe('pk_test_tqge5kZj68EjXdvIP9RdoLgH00A9qCldMH');
+        const stripe = window.Stripe('pk_live_QWiSrSy2RSzTX9Z3lTANAxf000ahB4xIgQ');
 
         stripe.redirectToCheckout({
             sessionId: sessionId
