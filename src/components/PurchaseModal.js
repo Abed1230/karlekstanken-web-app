@@ -1,8 +1,9 @@
 import React from 'react';
-import { Modal, Button, Spinner } from 'react-bootstrap';
+import { Alert, Modal, Button, Spinner } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { createStripeCheckoutSession } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.json';
+import { Link } from 'react-router-dom';
 
 const UnlockIcon = () => (
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" heigh="80" width="80" viewBox="0 0 512.65 512.65">
@@ -54,7 +55,7 @@ class PurchaseModal extends React.Component {
             user.uid,
             user.firstName + " " + user.lastName,
             user.email,
-            user.partner.uid
+            user.partner ? user.partner.uid : null
         );
 
         if (!sessionId) {
@@ -108,32 +109,25 @@ class PurchaseModal extends React.Component {
                             </Modal.Body>
                             <Modal.Footer>
                                 <div className="mx-auto text-center">
-                                    {this.state.loading ?
-                                        <Spinner animation="border" style={{ color: "#6772E5" }} />
-                                        :
-                                        <Button disabled={!signedIn || !hasPartner} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
-                                            id="checkout-button-sku_G9eu1VDO87OV9b"
-                                            role="link">
-                                            Betala med Stripe
-                                        </Button>
-                                    }
-                                    {signedIn && hasPartner &&
+                                    {signedIn ?
                                         <>
+                                            {this.state.checkoutError &&
+                                                <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
+                                            }
+                                            {this.state.loading ?
+                                                <Spinner animation="border" style={{ color: "#6772E5" }} />
+                                                :
+                                                <Button disabled={!signedIn} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
+                                                    id="checkout-button-sku_G9eu1VDO87OV9b"
+                                                    role="link">
+                                                    Betala med Stripe
+                                                </Button>
+                                            }
                                             <br />
                                             <small className="text-muted">Genom att fortsätta med betalningen godkänner du våra <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a></small>
                                         </>
-                                    }
-                                    {this.state.checkoutError &&
-                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>{this.state.checkoutError}</p>
-                                    }
-                                    {!signedIn &&
-                                        <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först vara inloggad. Logga in eller registrera dig.</p>
-                                    }
-                                    {signedIn && !hasPartner &&
-                                        <>
-                                            <p className="text-danger mt-2" style={{ fontSize: "0.95rem" }}>Du måste först lägga till din partner</p>
-                                            <Button variant="outline-info" size="sm" onClick={() => this.hideAndReset(true)}>Lägg till nu</Button>
-                                        </>
+                                        :
+                                        <Alert variant="warning" className="mt-2">{MyStrings.purchaseModal.notSignedIn} <Link to="/signup">{MyStrings.purchaseModal.signUp}</Link></Alert>
                                     }
                                 </div>
                             </Modal.Footer>

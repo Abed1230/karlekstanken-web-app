@@ -158,9 +158,10 @@ class App extends React.Component {
                                 <StringsProvider value={this.state.strings}>
                                     <BrowserRouter>
                                         <Switch>
-                                            <PublicRoute restricted={true} component={Login} path="/signin" />
-                                            <PublicRoute restricted={true} component={Register} path="/signup" />
-                                            <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" />
+                                            <PublicRoute restricted={true} component={Login} path="/signin" exact />
+                                            <PublicRoute restricted={true} component={Register} path="/signup" exact />
+                                            <PublicRoute restricted={false} component={Register} path="/signup/:partnerUID" exact />
+                                            <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" exact />
                                             <PublicRoute restricted={false} component={HomePage} path="/" exact />
                                             <PrivateRoute component={Settings} path="/settings" exact />
                                             <PrivateRoute component={LoveTest} path="/languagetest" exact />
