@@ -4,18 +4,18 @@ import { auth } from '../../FirebaseData';
 import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import MyStrings from '../../MyStrings.json';
+import MyStrings from '../../MyStrings.js';
 import TransparentButton from '../TransparentButton';
 import { USER_NOT_FOUND, WRONG_PASSWORD } from '../../AuthErrorCodes';
 import AuthBaseLayout from './AuthBaseLayout';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
-        .email(MyStrings.errors.invalidEmail)
-        .required(MyStrings.errors.fieldRequired),
+        .email(MyStrings.Errors.invalidEmail)
+        .required(MyStrings.Errors.fieldRequired),
     password: Yup.string()
-        .min(6, MyStrings.errors.passwordTooShort)
-        .required(MyStrings.errors.fieldRequired),
+        .min(6, MyStrings.Errors.passwordTooShort)
+        .required(MyStrings.Errors.fieldRequired),
 });
 
 export class Login extends Component {
@@ -38,13 +38,13 @@ export class Login extends Component {
             let msg = "";
             switch (e.code) {
                 case USER_NOT_FOUND:
-                    msg = MyStrings.errors.userNotFound;
+                    msg = MyStrings.Errors.userNotFound;
                     break;
                 case WRONG_PASSWORD:
-                    msg = MyStrings.errors.wrongPassword;
+                    msg = MyStrings.Errors.wrongPassword;
                     break;
                 default:
-                    msg = MyStrings.errors.unknown;
+                    msg = MyStrings.Errors.unknown;
                     break;
             }
             this.setState({ loading: false, error: msg });
@@ -96,9 +96,9 @@ export class Login extends Component {
                                             <Spinner className="p-2" animation="border" variant="info" />
                                         </div>
                                         :
-                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.login}</Button>
+                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.Auth.signInBtn}</Button>
                                     }
-                                    <TransparentButton className="mt-3 text-primary" as={Link} to="/reset-password">Glömt lösenord?</TransparentButton>
+                                    <TransparentButton className="mt-3 text-primary" as={Link} to="/reset-password">{MyStrings.Auth.forgotPasswordBtn}</TransparentButton>
                                 </Form>
                             )}
                         </Formik>

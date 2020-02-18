@@ -13,6 +13,7 @@ import InstallBanner from './InstallationGuide/InstallBanner';
 import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
 import TransparentButton from "./TransparentButton";
 import { isInStandaloneMode } from '../UtilFunctions';
+import MyStrings from '../MyStrings.js';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -151,10 +152,10 @@ class Home extends React.Component {
                                                 <div>
                                                     {signedOut &&
                                                         <div className="p-1 bg-warning sticky-top text-center" style={{ top: "60px", zIndex: "1" }}>
-                                                            Du är utloggad.
-                                                            <Link className="ml-2 mr-2" to="/signin">Logga in</Link>
+                                                            {MyStrings.signedOut}
+                                                            <Link className="ml-2 mr-2" to="/signin">{MyStrings.signIn}</Link>
                                                             |
-                                                            <Link className="ml-2" to="/signup">Registrera dig</Link>
+                                                            <Link className="ml-2" to="/signup">{MyStrings.createAccount}</Link>
                                                         </div>}
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
@@ -164,9 +165,9 @@ class Home extends React.Component {
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="8" lg="6">
                                                                     <Alert variant="info" >
-                                                                        Du har ännu inte laggt till din partner.
+                                                                        {MyStrings.AddPartnerAlert.text}
                                                                         <br />
-                                                                        <TransparentButton className="text-primary" onClick={() => this.myNavBar.openAddPartnerModal(true)}>Lägg till nu</TransparentButton>
+                                                                        <TransparentButton className="text-primary" onClick={() => this.myNavBar.openAddPartnerModal(true)}>{MyStrings.AddPartnerAlert.addBtn}</TransparentButton>
                                                                     </Alert>
                                                                 </Col>
                                                             </Row>
@@ -203,8 +204,8 @@ class Home extends React.Component {
                                                     {showUnlockMsg && !showInstallationBanner &&
                                                         <div id="unlock-msg" className="fixed-bottom bg-info text-white d-flex align-items-center">
                                                             <div className="text-center mx-auto">
-                                                                <h6>Köp licens och få tillgång till hela Kärlekstanken</h6>
-                                                                <Button className="mt-2" size="sm" variant="outline-light" onClick={() => this.setState({ showPurchaseModal: true })}>Till köp</Button>
+                                                                <h6>{MyStrings.PurchaseBanner.text}</h6>
+                                                                <Button className="mt-2" size="sm" variant="outline-light" onClick={() => this.setState({ showPurchaseModal: true })}>{MyStrings.PurchaseBanner.btn}</Button>
                                                             </div>
                                                         </div>
                                                     }

@@ -2,21 +2,21 @@ import React from 'react';
 import { Spinner, Form, Modal, Button, Alert } from 'react-bootstrap';
 import { auth, EmailAuthProvider } from '../../FirebaseData';
 import { WRONG_PASSWORD } from '../../AuthErrorCodes';
-import MyStrings from '../../MyStrings.json';
+import MyStrings from '../../MyStrings.js';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 const ChangePasswordSchema = Yup.object().shape({
     currentPassword: Yup.string()
-        .min(6, MyStrings.errors.passwordTooShort)
-        .required(MyStrings.errors.fieldRequired),
+        .min(6, MyStrings.Errors.passwordTooShort)
+        .required(MyStrings.Errors.fieldRequired),
     newPassword: Yup.string()
-        .min(6, MyStrings.errors.passwordTooShort)
-        .required(MyStrings.errors.fieldRequired),
+        .min(6, MyStrings.Errors.passwordTooShort)
+        .required(MyStrings.Errors.fieldRequired),
     confirmPassword: Yup.string()
-        .min(6, MyStrings.errors.passwordTooShort)
-        .required(MyStrings.errors.fieldRequired)
-        .oneOf([Yup.ref("newPassword"), null], MyStrings.errors.passwordMismatch),
+        .min(6, MyStrings.Errors.passwordTooShort)
+        .required(MyStrings.Errors.fieldRequired)
+        .oneOf([Yup.ref("newPassword"), null], MyStrings.Errors.passwordMismatch),
 });
 
 class ChangePasswordModal extends React.Component {
@@ -64,13 +64,13 @@ class ChangePasswordModal extends React.Component {
                 setErrors({ currentPassword: " " });
                 this.setState({
                     loading: false,
-                    error: "Du har angivit fel nuvarande lösenord. Försök igen"
+                    error: MyStrings.Errors.wrongCurrentPassword
                 });
 
             } else {
                 this.setState({
                     loading: false,
-                    error: MyStrings.errors.unknown
+                    error: MyStrings.Errors.unknown
                 });
             }
         }
@@ -89,19 +89,19 @@ class ChangePasswordModal extends React.Component {
                 {({ handleSubmit, handleChange, values, errors, touched, resetForm }) => (
                     <Modal show={this.props.show} onHide={this.hideAndReset.bind(this, resetForm)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Ändra lösenord</Modal.Title>
+                            <Modal.Title>{MyStrings.ChangePasswordModal.title}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {this.state.success ?
-                                <Alert variant="success">Ditt lösenord har nu ändrats</Alert>
+                                <Alert variant="success">{MyStrings.ChangePasswordModal.success}</Alert>
                                 :
                                 <Form noValidate>
                                     <Form.Group controlId="currentPasswordField">
-                                        <Form.Label>Ditt nuvarande lösenord</Form.Label>
+                                        <Form.Label>{MyStrings.ChangePasswordModal.currentPasswordLabel}</Form.Label>
                                         <Form.Control
                                             type="password"
                                             name="currentPassword"
-                                            placeholder="Nuvarande lösenord"
+                                            placeholder={MyStrings.ChangePasswordModal.currentPasswordPlaceholder}
                                             value={values.currentPassword}
                                             onChange={handleChange}
                                             isInvalid={touched.currentPassword && !!errors.currentPassword} />
@@ -110,11 +110,11 @@ class ChangePasswordModal extends React.Component {
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group controlId="newPassWordField">
-                                        <Form.Label>Nytt lösenord</Form.Label>
+                                        <Form.Label>{MyStrings.ChangePasswordModal.passwordLabel}</Form.Label>
                                         <Form.Control
                                             type="password"
                                             name="newPassword"
-                                            placeholder="Nytt lösenord (minst 6 tecken)"
+                                            placeholder={MyStrings.ChangePasswordModal.passwordPlaceholder}
                                             value={values.newPassword}
                                             onChange={handleChange}
                                             isInvalid={touched.newPassword && !!errors.newPassword} />
@@ -123,11 +123,11 @@ class ChangePasswordModal extends React.Component {
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group controlId="confirmPassWordField">
-                                        <Form.Label>Bekräfta nytt lösenord</Form.Label>
+                                        <Form.Label>{MyStrings.ChangePasswordModal.repeatPasswordLabel}</Form.Label>
                                         <Form.Control
                                             type="password"
                                             name="confirmPassword"
-                                            placeholder="Bekräfta nytt lösenord"
+                                            placeholder={MyStrings.ChangePasswordModal.repeatPasswordPlaceholder}
                                             value={values.confirmPassword}
                                             onChange={handleChange}
                                             isInvalid={touched.confirmPassword && !!errors.confirmPassword} />
@@ -146,11 +146,11 @@ class ChangePasswordModal extends React.Component {
                                 <Spinner animation="border" variant="info" />
                                 :
                                 this.state.success ?
-                                    <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>Stäng</Button>
+                                    <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>{MyStrings.ChangePasswordModal.closeBtn}</Button>
                                     :
                                     <>
-                                        <Button className="mr-2" variant="light" onClick={this.hideAndReset.bind(this, resetForm)}>Avbryt</Button>
-                                        <Button variant="info" onClick={handleSubmit}>Spara</Button>
+                                        <Button className="mr-2" variant="light" onClick={this.hideAndReset.bind(this, resetForm)}>{MyStrings.cancel}</Button>
+                                        <Button variant="info" onClick={handleSubmit}>{MyStrings.ChangePasswordModal.submitBtn}</Button>
                                     </>
                             }
                         </Modal.Footer>

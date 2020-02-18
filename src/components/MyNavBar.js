@@ -9,7 +9,7 @@ import Sidebar from "react-sidebar";
 import './MyNavBar.css';
 import { CloseIcon, BackIcon } from '../assets/svgs';
 import AboutModal from './AboutModal';
-import MyStrings from '../MyStrings.json';
+import MyStrings from '../MyStrings.js';
 import { StringsConsumer } from '../contexts/StringsContext';
 
 const mql = window.matchMedia(`(max-width: 350px)`);
@@ -76,8 +76,8 @@ class MyNavBar extends React.Component {
                                 {auth.currentUser ?
                                     <>
                                         <div>
-                                            <Button block variant="light" as={Link} to="/settings">INSTÄLLNINGAR</Button>
-                                            <Button className="mt-2" block variant="danger" style={{ backgroundColor: "#FF6464", borderColor: "#FF6464" }} onClick={() => auth.signOut()}>LOGGA UT</Button>
+                                            <Button block variant="light" as={Link} to="/settings">{MyStrings.MyNavBar.settingsBtn}</Button>
+                                            <Button className="mt-2" block variant="danger" style={{ backgroundColor: "#FF6464", borderColor: "#FF6464" }} onClick={() => auth.signOut()}>{MyStrings.MyNavBar.signOutBtn}</Button>
                                             <hr />
                                         </div>
                                         <UserConsumer>
@@ -86,24 +86,24 @@ class MyNavBar extends React.Component {
                                     </>
                                     :
                                     <div>
-                                        <Button block variant="info" as={Link} to="/signin">LOGGA IN</Button>
-                                        <Button block variant="info" as={Link} to="/signup">SKAPA KONTO</Button>
+                                        <Button block variant="info" as={Link} to="/signin">{MyStrings.MyNavBar.signInBtn}</Button>
+                                        <Button block variant="info" as={Link} to="/signup">{MyStrings.MyNavBar.signUpBtn}</Button>
                                     </div>
                                 }
                                 <div style={{ marginTop: "50px" }}>
                                     <hr />
-                                    <Button className="mb-4" id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>OM KÄRLEKSTANKEN</Button>
+                                    <Button className="mb-4" id="about-btn" block variant="light" onClick={() => this.setState({ showAboutModal: true })}>{MyStrings.MyNavBar.aboutBtn}</Button>
                                     <StringsConsumer>
                                         {strings => {
                                             const contactEmail = strings && strings.contactEmail;
                                             if (contactEmail) {
-                                                return (<p>{MyStrings.contactUsText}<a href={"mailto:" + contactEmail}>{contactEmail}</a></p>);
+                                                return (<p>{MyStrings.MyNavBar.contactUsText}<a href={"mailto:" + contactEmail}>{contactEmail}</a></p>);
                                             }
                                         }}
                                     </StringsConsumer>
-                                    <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a>
+                                    <a href={MyStrings.licenseAndTermsUrl} target="_blank">{MyStrings.licenseAndTerms}</a>
                                     <br />
-                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a>
+                                    <a href={MyStrings.privacyPolicyUrl} target="_blank">{MyStrings.privacyPolicy}</a>
                                     <p className="mt-3 text-muted" style={{ fontSize: "0.95rem" }}>{MyStrings.copyright}</p>
                                 </div>
                             </div>

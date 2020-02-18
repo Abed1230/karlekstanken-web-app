@@ -5,7 +5,7 @@ import { UserConsumer } from './UserContext';
 import { Redirect } from 'react-router-dom';
 import LoveLanguages from './LoveLanguages.json';
 import MyTitleBar from './components/MyTitleBar';
-import MyStrings from './MyStrings.json';
+import MyStrings from './MyStrings.js';
 
 class Answers {
     constructor(props) {
@@ -71,7 +71,7 @@ export class LoveTest extends Component {
             }, 2000);
         } else {
             this.setState({
-                errorMessage: MyStrings['errors'].notComplete,
+                errorMessage: MyStrings.Errors.testNotComplete,
                 notCompleteIndexes: result.notCompleteIndexes
             })
         }
@@ -82,17 +82,17 @@ export class LoveTest extends Component {
         if (lang) {
             return (
                 <>
-                    <MyTitleBar title="Kärleksspråktestet" />
+                    <MyTitleBar title={MyStrings.LoveLanguageTest.title} />
                     <Container>
                         <Row className="mt-5 mb-4 justify-content-md-center">
                             <Col md="6" lg="9" className="text-center">
-                                <h6 className="mb-3">Ditt kärleksspråk</h6>
+                                <h6 className="mb-3">{MyStrings.yourLoveLang}</h6>
                                 <Dropdown.Divider />
                                 <h4>{LoveLanguages[lang].name} ({lang})</h4>
                                 <p className="mt-2">{LoveLanguages[lang].description}</p>
                                 <Button className="mt-3 mb-2" variant="info" onClick={() => this.props.history.replace("/")}>Stäng</Button>
                                 <br />
-                                <small className="text-muted">(Ditt kärleksspråk har sparats)</small>
+                                <small className="text-muted">{MyStrings.LoveLanguageTest.langSaved}</small>
                             </Col>
                         </Row>
                     </Container>
@@ -104,11 +104,11 @@ export class LoveTest extends Component {
                 {user => {
                     return user && user.premium ?
                         <>
-                            <MyTitleBar title="Kärleksspråktestet" />
+                            <MyTitleBar title={MyStrings.LoveLanguageTest.title} />
                             <Container className="mt-4">
                                 <Row className="mb-5">
                                     <Col>
-                                        <p className="lead">Ta reda på vilket kärleksspråk du har genom att välja ett påstående i varje grupp som bäst stämmer in på dig</p>
+                                        <p className="lead">{MyStrings.LoveLanguageTest.instructions}</p>
                                     </Col>
                                 </Row>
                                 {
@@ -182,7 +182,7 @@ export class LoveTest extends Component {
                                         {this.state.loading ?
                                             <Spinner animation="border" variant="info" />
                                             :
-                                            <Button type="button" variant="info" size="md" onClick={() => this.handleSubmit(user)}>Färdig</Button>
+                                            <Button type="button" variant="info" size="md" onClick={() => this.handleSubmit(user)}>{MyStrings.LoveLanguageTest.submitBtn}</Button>
                                         }
                                     </Col>
                                 </Row>

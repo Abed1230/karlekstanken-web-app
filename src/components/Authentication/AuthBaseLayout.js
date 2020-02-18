@@ -5,6 +5,7 @@ import './AuthBaseLayout.css';
 import { BackIcon } from '../../assets/svgs';
 import TransparentButton from '../TransparentButton';
 import { Link } from 'react-router-dom';
+import MyStrings from '../../MyStrings.js';
 
 function AuthBaseLayout({ goBackRoute, children }) {
     return (
@@ -22,7 +23,7 @@ function AuthBaseLayout({ goBackRoute, children }) {
                                             style={{ maxHeight: "45px" }}
                                             src={Logo}
                                             height={55}
-                                            alt="Kärlekstanken" />
+                                            alt={MyStrings.logoAlt} />
                                     </Link>
                                     <hr />
                                 </Col>

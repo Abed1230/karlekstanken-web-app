@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Modal, Button, Spinner } from 'react-bootstrap';
 import { UserConsumer } from '../UserContext';
 import { createStripeCheckoutSession } from '../MyCloudFunctions';
-import MyStrings from '../MyStrings.json';
+import MyStrings from '../MyStrings.js';
 import { Link } from 'react-router-dom';
 
 const UnlockIcon = () => (
@@ -61,7 +61,7 @@ class PurchaseModal extends React.Component {
         if (!sessionId) {
             this.setState({
                 loading: false,
-                checkoutError: MyStrings.errors.unknown
+                checkoutError: MyStrings.Errors.unknown
             });
             return;
         }
@@ -89,23 +89,24 @@ class PurchaseModal extends React.Component {
                     return (
                         <Modal show={this.props.show} onHide={this.hideAndReset}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Lås upp Kärlekstanken®</Modal.Title>
+                                <Modal.Title>{MyStrings.PurchaseModal.title}</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <div className="text-center mb-4">
                                     <UnlockIcon />
                                 </div>
-                                <p>
-                                    Köp licens och lås upp Kärlekstanken. Köpet gäller för dig och din partner. Ni får tillgång till Kärlekstanken i 12 månader med era enskilda konton.
+                                {/* // TODO: read HTML from StringsConsumer */}
+                                    <p>
+                                        Köp licens och lås upp Kärlekstanken. Köpet gäller för dig och din partner. Ni får tillgång till Kärlekstanken i 12 månader med era enskilda konton.
                                 </p>
-                                <div className="bg-light p-3 border rounded">
-                                    <p>Ni låser upp:</p>
-                                    <ul>
-                                        <li>Alla {this.props.numChapters} teman innehållande filmer och övningar</li>
-                                        <li>Kärleksspråktestet</li>
-                                        <li>Funktionalitet för att fylla kärlekstanken (hjärtat) med varje övning som ni gjort</li>
-                                    </ul>
-                                </div>
+                                    <div className="bg-light p-3 border rounded">
+                                        <p>Ni låser upp:</p>
+                                        <ul>
+                                            <li>Alla {this.props.numChapters} teman innehållande filmer och övningar</li>
+                                            <li>Kärleksspråktestet</li>
+                                            <li>Funktionalitet för att fylla kärlekstanken (hjärtat) med varje övning som ni gjort</li>
+                                        </ul>
+                                    </div>
                             </Modal.Body>
                             <Modal.Footer>
                                 <div className="mx-auto text-center">
@@ -120,14 +121,14 @@ class PurchaseModal extends React.Component {
                                                 <Button disabled={!signedIn} onClick={this.handleClick.bind(this, user)} style={{ backgroundColor: "#6772E5", color: "#FFF", padding: "8px 12px", border: "0", borderRadius: "4px", fontSize: "1em" }}
                                                     id="checkout-button-sku_G9eu1VDO87OV9b"
                                                     role="link">
-                                                    Betala med Stripe
+                                                    {MyStrings.PurchaseModal.checkoutBtn}
                                                 </Button>
                                             }
                                             <br />
-                                            <small className="text-muted">Genom att fortsätta med betalningen godkänner du våra <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkor</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicy</a></small>
+                                            <small className="text-muted">{MyStrings.PurchaseModal.byContinuing} <a href={MyStrings.licenseAndTermsUrl} target="_blank">{MyStrings.licenseAndTerms}</a> {MyStrings.and} <a href={MyStrings.privacyPolicyUrl} target="_blank">{MyStrings.privacyPolicy}</a></small>
                                         </>
                                         :
-                                        <Alert variant="warning" className="mt-2">{MyStrings.purchaseModal.notSignedIn} <Link to="/signup">{MyStrings.purchaseModal.signUp}</Link></Alert>
+                                        <Alert variant="warning" className="mt-2">{MyStrings.PurchaseModal.notSignedIn} <Link to="/signup">{MyStrings.PurchaseModal.signUp}</Link></Alert>
                                     }
                                 </div>
                             </Modal.Footer>

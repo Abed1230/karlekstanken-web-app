@@ -2,15 +2,15 @@ import React from 'react';
 import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import MyStrings from '../../MyStrings.json';
+import MyStrings from '../../MyStrings.js';
 import { auth } from '../../FirebaseData';
 import { USER_NOT_FOUND } from '../../AuthErrorCodes.js';
 import AuthBaseLayout from './AuthBaseLayout.js';
 
 const Schema = Yup.object().shape({
     email: Yup.string()
-        .email(MyStrings.errors.invalidEmail)
-        .required(MyStrings.errors.fieldRequired)
+        .email(MyStrings.Errors.invalidEmail)
+        .required(MyStrings.Errors.fieldRequired)
 });
 
 class ForgotPassword extends React.Component {
@@ -35,10 +35,10 @@ class ForgotPassword extends React.Component {
             let msg = "";
             switch (e.code) {
                 case USER_NOT_FOUND:
-                    msg = MyStrings.errors.userNotFound;
+                    msg = MyStrings.Errors.userNotFound;
                     break;
                 default:
-                    msg = MyStrings.erros.unknown;
+                    msg = MyStrings.Errors.unknown;
                     break;
             }
             this.setState({ loading: false, error: msg });
@@ -51,7 +51,7 @@ class ForgotPassword extends React.Component {
                 <AuthBaseLayout goBackRoute="/signin">
                     <Row>
                         <Col>
-                            <p>{MyStrings.passwordResetSentMsg}</p>
+                            <p>{MyStrings.Auth.passwordResetSent}</p>
                         </Col>
                     </Row>
                 </AuthBaseLayout>
@@ -62,7 +62,7 @@ class ForgotPassword extends React.Component {
             <AuthBaseLayout goBackRoute="/signin">
                 <Row>
                     <Col>
-                        <p>{MyStrings.passwordResetInfo}</p>
+                        <p>{MyStrings.Auth.passwordResetInfo}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -94,7 +94,7 @@ class ForgotPassword extends React.Component {
                                             <Spinner className="p-2" animation="border" variant="info" />
                                         </div>
                                         :
-                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.send}</Button>
+                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.Auth.passwordResetSubmit}</Button>
                                     }
                                 </Form>
                             )}

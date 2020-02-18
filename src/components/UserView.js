@@ -7,14 +7,15 @@ import { Link } from 'react-router-dom';
 import { ReceivedPartnerRequest, SentPartnerRequest } from './PartnerRequest.js';
 import AddPartnerModal from './AddPartnerModal.js';
 import RoundedCard from './RoundedCard';
+import MyStrings from '../MyStrings.js';
 
 const LoveLangCard = ({ name, lang, handleClick }) => {
     return (
         <RoundedCard>
             <Card.Body >
-                <small className="text-muted">{name ? name + "'s kärleksspråk" : "Ditt kärleksspråk"}</small>
+                <small className="text-muted">{name ? name + "'s " + MyStrings.loveLang : MyStrings.yourLoveLang}</small>
                 <Card.Title>{lang}</Card.Title>
-                <Button className="text-primary p-1" style={{ background: "none", border: "none", fontSize: "0.95rem" }} onClick={handleClick}>Visa beskrivning</Button>
+                <Button className="text-primary p-1" style={{ background: "none", border: "none", fontSize: "0.95rem" }} onClick={handleClick}>{MyStrings.MyNavBar.showDescriptionBtn}</Button>
             </Card.Body>
         </RoundedCard>
     );
@@ -52,11 +53,11 @@ class UserView extends React.Component {
                                 <Container>
                                     <Row className="mt-4 mb-4 pb-3 pt-3" style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
                                         <Col>
-                                            <h4 className="text-center text-white" style={{ fontSize: "2rem", fontFamily: "Lobster, Cursive", textShadow: "0px 3px 6px rgba(0,0,0,0.2)" }}>Du & {partner ? partner.name : "?"}</h4>
+                                            <h4 className="text-center text-white" style={{ fontSize: "2rem", fontFamily: "Lobster, Cursive", textShadow: "0px 3px 6px rgba(0,0,0,0.2)" }}>{MyStrings.you} & {partner ? partner.name : "?"}</h4>
 
                                             {!partner && !user.partnerRequestFrom && !user.partnerRequestTo &&
                                                 <div className="text-center mt-3">
-                                                    <Button block variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >LÄGG TILL PARTNER</Button>
+                                                    <Button block variant="info" ref={el => this.addPartnerBtn = el} onClick={() => this.setState({ showAddPartnerModal: true })} >{MyStrings.MyNavBar.addPartnerBtn}</Button>
                                                 </div>
                                             }
                                         </Col>
@@ -86,9 +87,9 @@ class UserView extends React.Component {
                                                 !user.loveLanguage && user.premium ?
                                                     <RoundedCard>
                                                         <Card.Body>
-                                                            <small className="text-muted">Ditt kärleksspråk</small>
-                                                            <p>Du har ännu inte gjort språktestet</p>
-                                                            <Button variant="info" as={Link} to="/languagetest">Gör testet nu</Button>
+                                                            <small className="text-muted">{MyStrings.yourLoveLang}</small>
+                                                            <p>{MyStrings.MyNavBar.loveLangTestNotDone}</p>
+                                                            <Button variant="info" as={Link} to="/languagetest">{MyStrings.MyNavBar.doTestBtn}</Button>
                                                         </Card.Body>
                                                     </RoundedCard>
                                                     :
@@ -105,8 +106,8 @@ class UserView extends React.Component {
                                                 user.premium && partner ?
                                                     <RoundedCard>
                                                         <Card.Body >
-                                                            <small className="text-muted">{partner.name + "'s kärleksspråk"}</small>
-                                                            <p>{partner.name} har ännu inte gjort språktestet</p>
+                                                            <small className="text-muted">{partner.name + "'s " + MyStrings.loveLang}</small>
+                                                            <p>{partner.name} {MyStrings.MyNavBar.haveNotDoneLangTest}</p>
                                                         </Card.Body>
                                                     </RoundedCard>
                                                     :

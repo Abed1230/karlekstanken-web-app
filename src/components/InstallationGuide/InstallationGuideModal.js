@@ -5,6 +5,7 @@ import IosShareIcon from '../../assets/ios_share_icon.svg';
 import ChromeIcon from '../../assets/chrome.svg';
 import ChromeMoreIcon from '../../assets/more_vert-24px.svg';
 import CircleAdd from '../../assets/cricular_add.svg';
+import MyStrings from '../../MyStrings.js';
 
 const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -35,60 +36,58 @@ const InstallationGuideModal = ({ show, handleHide }) => {
     );
 }
 
-const notice = "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.";
-
 const IOSInstructions = () => (
     <>
-        <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
+        <span>{MyStrings.InstallationGuideModal.youCanInstallWith} </span>
         <div className="d-inline-block bg-light p-1 rounded">
             <img src={SafariIcon} width={24} height={24} alt="Safari Icon" className="mr-1" />
             Safari
         </div>
         <div className="mt-3">
-            <p>Gör så här:</p>
+            <p>{MyStrings.InstallationGuideModal.doLikeThis}</p>
             <ol>
-                <li>Tryck på <img src={IosShareIcon} width={32} height={32} alt="iOS Share Button Icon" /> (dela) som finns i webbläsarens botten eller topp</li>
-                <li>Välj "Lägg till på hemskärmen"</li>
-                <li>Lägg till</li>
+                <li>{MyStrings.InstallationGuideModal.press} <img src={IosShareIcon} width={32} height={32} alt="iOS Share Button Icon" /> {MyStrings.InstallationGuideModal.iOSInstructions.step1}</li>
+                <li>{MyStrings.InstallationGuideModal.iOSInstructions.step2}</li>
+                <li>{MyStrings.InstallationGuideModal.iOSInstructions.step3}</li>
             </ol>
-            <p className="text-muted">{notice}</p>
+            <p className="text-muted">{MyStrings.InstallationGuideModal.notice}</p>
         </div>
     </>
 );
 
 const AndroidInstructions = () => (
     <>
-        <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
+        <span>{MyStrings.InstallationGuideModal.youCanInstallWith} </span>
         <div className="d-inline-block bg-light p-1 rounded">
             <img src={ChromeIcon} width={24} height={24} alt="Chrome Icon" className="mr-1" />
             Google Chrome
         </div>
         <div className="mt-3">
-            <p>Gör så här:</p>
+            <p>{MyStrings.InstallationGuideModal.doLikeThis}</p>
             <ol>
-                <li>Tryck på <img src={ChromeMoreIcon} width={24} height={24} alt="Chrome More Button Icon" /> som finns i webbläsarens topp</li>
-                <li>Välj "Lägg till på startskärmen"</li>
-                <li>Lägg till</li>
+                <li>{MyStrings.InstallationGuideModal.press} <img src={ChromeMoreIcon} width={24} height={24} alt="Chrome More Button Icon" /> {MyStrings.InstallationGuideModal.androidInstructions.step1}</li>
+                <li>{MyStrings.InstallationGuideModal.androidInstructions.step2}</li>
+                <li>{MyStrings.InstallationGuideModal.androidInstructions.step3}</li>
             </ol>
-            <p className="text-muted">{notice}</p>
+            <p className="text-muted">{MyStrings.InstallationGuideModal.notice}</p>
         </div>
     </>
 );
 
 const OtherInstructions = () => (
     <>
-        <span>Du kan installera Kärlekstanken på din hemskärm med webbläsaren </span>
+        <span>{MyStrings.InstallationGuideModal.youCanInstallWith} </span>
         <div className="d-inline-block bg-light p-1 rounded">
             <img src={ChromeIcon} width={24} height={24} alt="Chrome Icon" className="mr-1" />
             Google Chrome
         </div>
         <div className="mt-3">
-            <p>Gör så här:</p>
+            <p>{MyStrings.InstallationGuideModal.doLikeThis}</p>
             <ol>
-                <li>Tryck på <img src={CircleAdd} width={24} height={24} alt="Chrome Install/Add Button Icon" /> som finns i webbläsarens högra sida av addressfältet, bredvid bokmärk symbolen.</li>
-                <li>Installera</li>
+                <li>{MyStrings.InstallationGuideModal.press} <img src={CircleAdd} width={24} height={24} alt="Chrome Install/Add Button Icon" /> {MyStrings.InstallationGuideModal.otherInstructions.step1}</li>
+                <li>{MyStrings.InstallationGuideModal.otherInstructions.step2}</li>
             </ol>
-            <p className="text-muted">{notice}</p>
+            <p className="text-muted">{MyStrings.InstallationGuideModal.notice}</p>
         </div>
     </>
 );

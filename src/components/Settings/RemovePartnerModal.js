@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spinner, Modal, Button, Alert } from 'react-bootstrap';
 import { removePartner } from '../../MyCloudFunctions';
+import MyStrings from '../../MyStrings.js';
 
 class RemovePartnerModal extends React.Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class RemovePartnerModal extends React.Component {
         return (
             <Modal show={this.props.show} onHide={this.hideAndReset}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Är du säker på att du vill ta bort {user.partner && user.partner.name} som partner?</Modal.Title>
+                    <Modal.Title>{MyStrings.RemovePartnerModal.areYouSure} {user.partner && user.partner.name} {MyStrings.RemovePartnerModal.asPartner}</Modal.Title>
                 </Modal.Header>
                 {this.state.error &&
                     <Modal.Body>
@@ -56,8 +57,8 @@ class RemovePartnerModal extends React.Component {
                         <Spinner animation="border" variant="info" />
                         :
                         <>
-                            <Button className="mr-3" variant="danger" onClick={this.handleDelete}>Ta bort</Button>
-                            <Button variant="info" onClick={this.hideAndReset}>Avbryt</Button>
+                            <Button className="mr-3" variant="danger" onClick={this.handleDelete}>{MyStrings.RemovePartnerModal.removeBtn}</Button>
+                            <Button variant="info" onClick={this.hideAndReset}>{MyStrings.cancel}</Button>
                         </>
                     }
                 </Modal.Footer>

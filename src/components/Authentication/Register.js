@@ -3,7 +3,7 @@ import { auth, db } from '../../FirebaseData.js';
 import { Alert, Spinner, Button, Row, Col, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import *as Yup from 'yup';
-import MyStrings from '../../MyStrings.json';
+import MyStrings from '../../MyStrings.js';
 import { EMAIL_ALREADY_IN_USE } from '../../AuthErrorCodes.js';
 import AuthBaseLayout from './AuthBaseLayout.js';
 import { addPartner } from '../../MyCloudFunctions.js';
@@ -11,15 +11,15 @@ import { Redirect } from 'react-router-dom';
 
 const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
-        .required(MyStrings.errors.fieldRequired),
+        .required(MyStrings.Errors.fieldRequired),
     lastName: Yup.string()
-        .required(MyStrings.errors.fieldRequired),
+        .required(MyStrings.Errors.fieldRequired),
     email: Yup.string()
-        .email(MyStrings.errors.invalidEmail)
-        .required(MyStrings.errors.fieldRequired),
+        .email(MyStrings.Errors.invalidEmail)
+        .required(MyStrings.Errors.fieldRequired),
     password: Yup.string()
-        .min(6, MyStrings.errors.passwordTooShort)
-        .required(MyStrings.errors.fieldRequired),
+        .min(6, MyStrings.Errors.passwordTooShort)
+        .required(MyStrings.Errors.fieldRequired),
 });
 
 export class Register extends Component {
@@ -72,10 +72,10 @@ export class Register extends Component {
             let msg = "";
             switch (e.code) {
                 case EMAIL_ALREADY_IN_USE:
-                    msg = MyStrings.errors.emailAlreadyInUse;
+                    msg = MyStrings.Errors.emailAlreadyInUse;
                     break;
                 default:
-                    msg = MyStrings.errors.unknown;
+                    msg = MyStrings.Errors.unknown;
                     break;
             }
             this.setState({ loading: false, error: msg });
@@ -144,7 +144,7 @@ export class Register extends Component {
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group controlId="passwordForm">
-                                        <Form.Label>{MyStrings.password + " (minst 6 tecken)"}</Form.Label>
+                                        <Form.Label>{MyStrings.Auth.passwordFieldLabel}</Form.Label>
                                         <Form.Control
                                             type="password"
                                             name="password"
@@ -160,14 +160,14 @@ export class Register extends Component {
                                         <Alert variant="danger">{this.state.error}</Alert>
                                     }
                                     <p className="text-muted text-center" style={{ fontSize: "0.95rem" }}>
-                                        Genom att registrera mig godkänner jag <a href={MyStrings.licenseTermsUrl} target="_blank">Användarvilkoren</a> och <a href={MyStrings.privacyPolicyUrl} target="_blank">Personuppgiftspolicyn</a>
+                                        {MyStrings.Auth.bySigningUp} <a href={MyStrings.licenseAndTermsUrl} target="_blank">{MyStrings.Auth.theLicenseAndTerms}</a> {MyStrings.and} <a href={MyStrings.privacyPolicyUrl} target="_blank">{MyStrings.Auth.thePrivacyPolicy}</a>
                                     </p>
                                     {this.state.loading ?
                                         <div className="p-2 text-center">
                                             <Spinner className="p-2" animation="border" variant="info" />
                                         </div>
                                         :
-                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.register}</Button>
+                                        <Button className="p-2 w-100" type="submit" variant="info">{MyStrings.Auth.signUpBtn}</Button>
                                     }
                                 </Form>)
                             }

@@ -1,5 +1,5 @@
 import { functions } from './FirebaseData';
-import MyStrings from './MyStrings.json';
+import MyStrings from './MyStrings.js';
 
 //const ERROR_INTERNAL = 'ERROR_INTERNAL';
 const ERROR_USER_NOT_FOUND = 'ERROR_USER_NOT_FOUND';
@@ -17,7 +17,7 @@ export async function sendInvite(receiverEmail, senderFullName) {
         await sendInvite({ receiverEmail: receiverEmail, senderFullName: senderFullName });
     } catch (e) {
         console.error(e.message);
-        return MyStrings.errors.unknown;
+        return MyStrings.Errors.unknown;
     }
 }
 
@@ -29,13 +29,13 @@ export async function addPartner(email, userId) {
         console.error(e.message);
         switch (e.message) {
             case ERROR_USER_NOT_FOUND:
-                return MyStrings.errors.userNotFound;
+                return MyStrings.Errors.userNotFound;
             case ERROR_RECEIVER_ALREADY_HAS_PARTNER:
-                return MyStrings.errors.receiverAlreadyHasPartner;
+                return MyStrings.Errors.receiverAlreadyHasPartner;
             case ERROR_RECEIVER_EMAIL_IS_SENDERS:
-                return MyStrings.errors.cannotAddSelf;
+                return MyStrings.Errors.cannotAddSelf;
             default:
-                return MyStrings.errors.unknown;
+                return MyStrings.Errors.unknown;
         }
     }
 }
@@ -79,10 +79,10 @@ export async function sendPartnerRequest(email) {
         console.log(e.message);
         switch (e.message) {
             default:
-                return MyStrings.errors.unknown;
+                return MyStrings.Errors.unknown;
 
             case ERROR_USER_NOT_FOUND:
-                return MyStrings.errors.userNotFound;
+                return MyStrings.Errors.userNotFound;
 
             case ERROR_RECEIVER_ALREADY_HAS_PARTNER:
                 return 'Användaren har redan en partner.'
@@ -103,7 +103,7 @@ export async function removePartner() {
         return null;
     } catch (e) {
         console.log("removePartner error: " + e);
-        return "Kunde inte ta bort din partner. Ett okänt fel inträffade. Var god försök igen senare";
+        return MyStrings.Errors.unknownTryLater;
     }
 }
 
@@ -115,9 +115,9 @@ export async function deleteAccount() {
     } catch (e) {
         console.log("delete account error: " + e);
         if (e.code.startsWith("auth")) {
-            return "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttagen. Var god försök igen senare för att avsluta ditt konto fullständigt"
+            return MyStrings.Errors.couldNotDeleteAccount;
         }
-        return "Ett okänt fel inträffade. Var god försök igen senare";
+        return MyStrings.Errors.unknownTryLater;
     }
 }
 

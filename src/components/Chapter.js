@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
+import MyStrings from '../MyStrings.js';
 
 const YoutubePlayer = ({ url, title }) => {
     return (
@@ -155,7 +156,7 @@ class Chapter extends React.Component {
                     </Row>
                     <Row className="mt-3">
                         <Col>
-                            <h6 className="text-secondary">ÖVNINGAR</h6>
+                            <h6 className="text-secondary">{MyStrings.exercises}</h6>
                             <Dropdown.Divider />
                         </Col>
                     </Row>
@@ -198,7 +199,7 @@ class Chapter extends React.Component {
                     </Row>
                     <Row className="mt-2">
                         <Col>
-                            <p>Laddar in...</p>
+                            <p>{MyStrings.loading}</p>
                         </Col>
                     </Row>
                 </Container>

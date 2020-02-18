@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner, Modal, Button, Alert } from 'react-bootstrap';
 import { auth } from '../../FirebaseData';
 import { deleteAccount } from '../../MyCloudFunctions';
+import MyStrings from '../../MyStrings.js';
 
 class DeleteAccountModal extends React.Component {
     constructor(props) {
@@ -48,9 +49,9 @@ class DeleteAccountModal extends React.Component {
                 {this.state.success ?
                     <Modal.Body>
                         <Alert variant="light">{user && user.partner ?
-                            "Era konton är nu avslutade"
+                            MyStrings.DeleteAccountModal.success2
                             :
-                            "Ditt konto är nu avslutad"
+                            MyStrings.DeleteAccountModal.success1
                         }
                         </Alert>
                     </Modal.Body>
@@ -58,15 +59,15 @@ class DeleteAccountModal extends React.Component {
                     <>
                         <Modal.Header closeButton>
                             <Modal.Title>  {user && user.partner ?
-                                "Är du säker på att du vill avsluta din och " + user.partner.name + "'s konto?"
+                                MyStrings.DeleteAccountModal.title2 + " " + user.partner.name + MyStrings.DeleteAccountModal.account
                                 :
-                                "Är du säker på att du vill avsluta ditt konto?"
+                                MyStrings.DeleteAccountModal.title1
                             }
                             </Modal.Title>
                         </Modal.Header>
                         {showWarning &&
                             <Modal.Body>
-                                <p className="text-danger">OBS: Om du avslutar ditt konto kommer er licens att upphöra.</p>
+                                <p className="text-danger">{MyStrings.DeleteAccountModal.warningText}</p>
                                 {this.state.error &&
                                     <Alert variant="danger">{this.state.error}</Alert>
                                 }
@@ -84,11 +85,11 @@ class DeleteAccountModal extends React.Component {
                         <Spinner animation="border" variant="info" />
                         :
                         this.state.success ?
-                            <Button variant="info" onClick={() => auth.signOut()}>Logga ut</Button>
+                            <Button variant="info" onClick={() => auth.signOut()}>{MyStrings.signOut}</Button>
                             :
                             <>
-                                <Button className="mr-3" variant="danger" onClick={this.handleSubmit}>Avsluta</Button>
-                                <Button variant="info" onClick={this.hideAndReset}>Avbryt</Button>
+                                <Button className="mr-3" variant="danger" onClick={this.handleSubmit}>{MyStrings.DeleteAccountModal.deleteBtn}</Button>
+                                <Button variant="info" onClick={this.hideAndReset}>{MyStrings.cancel}</Button>
                             </>
                     }
                 </Modal.Footer>

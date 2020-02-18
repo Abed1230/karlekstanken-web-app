@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import logoAlt from '../assets/logo_alt.png';
 import { Link } from 'react-router-dom';
+import MyStrings from '../MyStrings.js';
 
 function PurchaseSuccess() {
     return (
@@ -17,12 +18,12 @@ function PurchaseSuccess() {
             </Row>
             <Row className="mt-5 justify-content-center">
                 <Col className="text-center" md="6">
-                    <h3>Ditt köp lyckades!</h3>
-                    <p className="mt-3 lead">Ni har nu licens och tillgång till hela kärlekstanken.</p>
-                    <p>Varsågod och fortsätt där ni slutade och göra nästa kärleksövning för att lyfta er relation till 2.0</p>
-                    <small>Notera: Ni kan komma att behöva ladda om sidan eller logga in på nytt för att alla avsnitt ska bli upplåsta för första gången.</small>
+                    <h3>{MyStrings.PurchaseSuccess.header}</h3>
+                    <p className="mt-3 lead">{MyStrings.PurchaseSuccess.lead}</p>
+                    <p>{MyStrings.PurchaseSuccess.text}</p>
+                    <small>{MyStrings.PurchaseSuccess.notice}</small>
                     <br />
-                    <Button className="mt-3 mb-3" variant="info" as={Link} to="/">Till alla avsnitt</Button>
+                    <Button className="mt-3 mb-3" variant="info" as={Link} to="/">{MyStrings.PurchaseSuccess.btn}</Button>
                 </Col>
             </Row>
         </Container>
