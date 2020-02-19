@@ -185,6 +185,7 @@ class Home extends React.Component {
                                                                                 disabled={item.premium && !premiumUser}
                                                                                 enableCheck={enableCheck}
                                                                                 complete={this.isChapterComplete(coupleData, item.id)}
+                                                                                tasksCount={item.taskIds && item.taskIds.length}
                                                                                 handleClick={() => this.handleClick(item, user)}
                                                                                 handleCheck={() => this.handleCheck(user, coupleData, item)} />
                                                                         </Col>
