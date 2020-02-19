@@ -33,6 +33,7 @@ const MyStrings = {
     exercises: "ÖVNINGAR",
     loading: "Laddar in...",
     print: "Skriv ut",
+    welcomeModalBtn: "Sätt igång",
     InstallationGuideModal: {
         notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.",
         youCanInstallWith:  "Du kan installera Kärlekstanken® på din hemskärm med webbläsaren",
@@ -129,7 +130,7 @@ const MyStrings = {
         undeterminedViewNoBtn: "Nej, bjud in",
         addViewFormLabel: "Ange din partners e-postadress som hen registrerade sig med på Kärlekstanken®",
         addViewFormSubmit: "Lägg till",
-        inviteViewText1: "Bjud in din partner till Kärlekstanken® nedan. Hen blir tillagd som din partner i Kärlekstanken® när hen har registrerat sig med länken som skickas med inbjudan.",
+        inviteViewText1: "Bjud in din partner till Kärlekstanken® nedan. Hen blir tillagd som din partner i Kärlekstanken® när hen har registrerat sig med länken som skickas med inbjudningsmailet.",
         inviteViewFormLabel: "Ange din partners e-postadress",
         inviteViewFormSubmit: "Bjud in",
     },

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import { StringsConsumer } from '../contexts/StringsContext';
+import MyStrings from '../MyStrings.js';
 
 const WelcomeModal = ({ show, handleHide }) => (
     <StringsConsumer>
         {strings => (
             <Modal size="lg" show={show} onHide={handleHide}>
-                <Modal.Header closeButton >
-                    <Modal.Title>{strings && strings.welcomeModalTitle}</Modal.Title>
-                </Modal.Header>
+                <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                     {strings && strings.welcomeModalHTML ?
                         <div dangerouslySetInnerHTML={{ __html: strings.welcomeModalHTML }} />
@@ -17,7 +16,7 @@ const WelcomeModal = ({ show, handleHide }) => (
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="mx-auto" variant="info" onClick={handleHide}>{strings && strings.welcomeModalButtonText}</Button>
+                    <Button className="mx-auto" variant="info" onClick={handleHide}>{MyStrings.welcomeModalBtn}</Button>
                 </Modal.Footer>
             </Modal>
         )}

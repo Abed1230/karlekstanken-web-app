@@ -4,6 +4,7 @@ import { UserConsumer } from '../UserContext';
 import { createStripeCheckoutSession } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.js';
 import { Link } from 'react-router-dom';
+import { StringsConsumer } from '../contexts/StringsContext';
 
 const UnlockIcon = () => (
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" heigh="80" width="80" viewBox="0 0 512.65 512.65">
@@ -95,18 +96,11 @@ class PurchaseModal extends React.Component {
                                 <div className="text-center mb-4">
                                     <UnlockIcon />
                                 </div>
-                                {/* // TODO: read HTML from StringsConsumer */}
-                                    <p>
-                                        Köp licens och lås upp Kärlekstanken. Köpet gäller för dig och din partner. Ni får tillgång till Kärlekstanken i 12 månader med era enskilda konton.
-                                </p>
-                                    <div className="bg-light p-3 border rounded">
-                                        <p>Ni låser upp:</p>
-                                        <ul>
-                                            <li>Alla {this.props.numChapters} teman innehållande filmer och övningar</li>
-                                            <li>Kärleksspråktestet</li>
-                                            <li>Funktionalitet för att fylla kärlekstanken (hjärtat) med varje övning som ni gjort</li>
-                                        </ul>
-                                    </div>
+                                <StringsConsumer>
+                                    {strings => (
+                                        <div dangerouslySetInnerHTML={{ __html: strings.purchaseModalHTML }} />
+                                    )}
+                                </StringsConsumer>
                             </Modal.Body>
                             <Modal.Footer>
                                 <div className="mx-auto text-center">

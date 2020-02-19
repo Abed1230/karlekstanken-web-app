@@ -6,9 +6,7 @@ const AboutModal = ({ show, handleHide }) => (
     <StringsConsumer>
         {strings => (
             <Modal size="lg" show={show} onHide={handleHide}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Om Kärlekstanken</Modal.Title>
-                </Modal.Header>
+                <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                     {strings && strings.aboutHTML &&
                         <div dangerouslySetInnerHTML={{ __html: strings.aboutHTML }} />
