@@ -5,7 +5,7 @@ const MyStrings = {
     copyright: "Copyright © Sparringpartner Sweden AB 2019-2020",
     logoAlt: "Kärlekstanken® Logo",
     privacyPolicy: "Personuppgiftspolicy",
-    licenseAndTerms: "Användarvilkor",
+    licenseAndTerms: "Användarvillkor",
     you: "Du",
     and: "och",
     yourLoveLang: "Ditt kärleksspråk",
@@ -36,7 +36,7 @@ const MyStrings = {
     welcomeModalBtn: "Sätt igång",
     InstallationGuideModal: {
         notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.",
-        youCanInstallWith:  "Du kan installera Kärlekstanken® på din hemskärm med webbläsaren",
+        youCanInstallWith: "Du kan installera Kärlekstanken® på din hemskärm med webbläsaren",
         doLikeThis: "Gör så här:",
         press: "Tryck på",
         iOSInstructions: {
@@ -50,7 +50,7 @@ const MyStrings = {
             step3: "Lägg till"
         },
         otherInstructions: {
-            step1: "som finns i webbläsarens högra sida av addressfältet, bredvid bokmärk symbolen.",
+            step1: "som finns i webbläsarens högra sida av adressfältet, bredvid bokmärksymbolen.",
             step2: "Installera"
         }
     },
@@ -58,7 +58,7 @@ const MyStrings = {
         header: "Ditt köp lyckades!",
         lead: "Ni har nu licens och tillgång till hela Kärlekstanken®.",
         text: "Varsågod och fortsätt där ni slutade och gör nästa kärleksövning för att lyfta er relation till 2.0",
-        notice: "Notera: Ni kan komma att behöva ladda om sidan eller logga in på nytt för att alla avsnitt ska bli upplåsta för första gången.",
+        notice: "Notera: Ni kan komma att behöva ladda om sidan eller logga in på nytt för att alla avsnitt ska bli upplåsta första gången.",
         btn: "Till alla avsnitt"
     },
     NotFound: {
@@ -97,7 +97,7 @@ const MyStrings = {
         passwordFieldLabel: "Lösenord (minst 6 tecken)",
         bySigningUp: "Genom att registrera mig godkänner jag",
         thePrivacyPolicy: "Personuppgiftspolicyn",
-        theLicenseAndTerms: "Användarvilkoren",
+        theLicenseAndTerms: "Användarvillkoren",
     },
     PurchaseModal: {
         title: "Lås upp Kärlekstanken®",
@@ -130,7 +130,7 @@ const MyStrings = {
         undeterminedViewNoBtn: "Nej, bjud in",
         addViewFormLabel: "Ange din partners e-postadress som hen registrerade sig med på Kärlekstanken®",
         addViewFormSubmit: "Lägg till",
-        inviteViewText1: "Bjud in din partner till Kärlekstanken® nedan. Hen blir tillagd som din partner i Kärlekstanken® när hen har registrerat sig med länken som skickas med inbjudningsmailet.",
+        inviteViewText1: "Bjud in din partner till Kärlekstanken® nedan. Hen blir tillagd som din partner i Kärlekstanken® när hen har registrerat sig med länken som skickas med inbjudningsmeilet.",
         inviteViewFormLabel: "Ange din partners e-postadress",
         inviteViewFormSubmit: "Bjud in",
     },
@@ -152,7 +152,7 @@ const MyStrings = {
         removeBtn: "Ta bort"
     },
     DeleteAccountModal: {
-        success1: "Ditt konto är nu avslutad",
+        success1: "Ditt konto är nu avslutat",
         success2: "Era konton är nu avslutade",
         title1: "Är du säker på att du vill avsluta ditt konto?",
         title2: "Är du säker på att du vill avsluta din och",
@@ -173,14 +173,14 @@ const MyStrings = {
         passwordTooShort: "Lösenordet kan inte vara mindre än 6 tecken",
         wrongPassword: "Du har angivit fel lösenord.",
         wrongCurrentPassword: "Du har angivit fel nuvarande lösenord. Försök igen",
-        passwordMismatch: "Lösenorden stämmer inte överäns",
+        passwordMismatch: "Lösenorden stämmer inte överens",
         emailAlreadyInUse: "Det finns redan en användare med den angivna e-postadressen.",
         unknown: "Ett okänt fel inträffade. Var god försök igen.",
         unknownTryLater: "Ett okänt fel inträffade. Var god försök igen senare.",
         userNotFound: "Det finns ingen användare med den angivna e-postadressen.",
         receiverAlreadyHasPartner: "Användaren har redan en partner.",
-        cannotAddSelf: "Du kan inte lägga till dig själv, vännen.",
-        couldNotDeleteAccount: "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttagen. Var god försök igen senare för att få bort ditt konto fullständigt.",
+        cannotAddSelf: "Du kan inte lägga till dig själv.",
+        couldNotDeleteAccount: "Ett okänt fel inträffade och ditt konto har inte blivit fullständigt borttaget. Var god försök igen senare för att få bort ditt konto fullständigt.",
     }
 };
 
