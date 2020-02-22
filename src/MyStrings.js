@@ -34,6 +34,8 @@ const MyStrings = {
     loading: "Laddar in...",
     print: "Skriv ut",
     welcomeModalBtn: "Sätt igång",
+    readLessBtn: "- LÄS MINDRE",
+    readMoreBtn: "+ LÄS MER",
     InstallationGuideModal: {
         notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.",
         youCanInstallWith: "Du kan installera Kärlekstanken® på din hemskärm med webbläsaren",

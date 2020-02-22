@@ -1,12 +1,14 @@
 import React from 'react';
 import MyNavBar from './MyNavBar';
-import { Container, Row, Col, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, Collapse, Button } from 'react-bootstrap';
 import ListCard from './ListCard';
 import { Redirect } from 'react-router-dom';
 import { db } from '../FirebaseData';
 import { CoupleDataConsumer } from '../CoupleDataContext';
 import { UserConsumer } from '../UserContext';
 import MyStrings from '../MyStrings.js';
+import TransparentButton from './TransparentButton';
+import trimText from '../../node_modules/read-more-react/dist/utils/trimText.js';
 
 const YoutubePlayer = ({ url, title }) => {
     return (
@@ -24,6 +26,7 @@ class Chapter extends React.Component {
         this.state = {
             chapterMin: chapterMin,
             shouldRender: chapterMin ? true : false,
+            open: false,
             /* chapter: {
                 title: "Inspirerande introduktion",
                 subTitle: "Del 1",
@@ -120,6 +123,10 @@ class Chapter extends React.Component {
 
         const chapter = this.state.chapter;
 
+        let bodyTextArray;
+        if (chapter)
+            bodyTextArray = trimText(chapter.bodyText, 180, 250, 330);
+
         return chapter ? (
             <>
                 <MyNavBar goBack={true} />
@@ -145,13 +152,29 @@ class Chapter extends React.Component {
                     <Row className="mt-5 justify-content-md-center">
                         <Col lg="9">
                             <h5>{chapter.bodyTitle}</h5>
-                            <p>{chapter.bodyText && chapter.bodyText.split('\n').map((text, index) => (
-                                <React.Fragment key={`${text}-${index}`}>
-                                    {text}
-                                    <br />
-                                </React.Fragment>
-                            ))
-                            }</p>
+                            <p>
+                                {bodyTextArray && bodyTextArray[0].split('\n').map((text, index) => (
+                                    <React.Fragment key={`${text}-${index}`}>
+                                        {index > 0 && <br />}
+                                        {text}
+                                    </React.Fragment>
+                                ))}
+                                {" "}
+                                {this.state.open &&
+                                    bodyTextArray && bodyTextArray[1].split('\n').map((text, index, arr) => (
+                                        <React.Fragment key={`${text}-${index}`}>
+                                            {text}
+                                            {!(arr.length - 1 === index) && <br />}
+                                        </React.Fragment>
+                                    ))
+                                }
+                                {" "}
+                                {bodyTextArray && bodyTextArray[1] &&
+                                    <TransparentButton className="text-info" variant="light" onClick={() => this.setState({ open: !this.state.open })}>
+                                        {this.state.open ? MyStrings.readLessBtn : MyStrings.readMoreBtn}
+                                    </TransparentButton>
+                                }
+                            </p>
                         </Col>
                     </Row>
                     <Row className="mt-3">
