@@ -186,7 +186,7 @@ class Chapter extends React.Component {
                     <Row className="mt-2 mb-2">
                         {chapter.tasks && chapter.tasks.map((item, index) => {
                             return (
-                                <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
+                                <Col key={item.id} className="mb-3" xs="12" md="6" lg="4">
                                     <UserConsumer>
                                         {user => (
                                             <CoupleDataConsumer>

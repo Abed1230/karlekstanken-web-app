@@ -10,8 +10,8 @@ const CheckIcon = (props) => (
 
 function ListCard({ subhead, title, disabled, enableCheck, complete, tasksCount, handleClick, handleCheck }) {
     return (
-        <button className="h-100 w-100" tabIndex="0" style={{ textAlign: "left", padding: "0px", background: "none", border: "none", cursor: "pointer" }} onClick={handleClick}>
-            <Card id="list-card" style={disabled ? { background: "#F5F5F5" } : {}} className="mb-2 h-100">
+        <button className="h-100 w-100" tabIndex="0" style={{ textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer" }} onClick={handleClick}>
+            <Card id="list-card" style={disabled ? { background: "#f0f0f0" } : {}} className="h-100">
                 <Card.Body className={tasksCount ? "pb-2" : ""}>
                     <Row className={tasksCount ? "pb-4" : ""}>
                         <Col xs="10">

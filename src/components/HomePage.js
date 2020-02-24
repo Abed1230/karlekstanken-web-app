@@ -178,7 +178,7 @@ class Home extends React.Component {
                                                                     const premiumUser = user && user.premium;
                                                                     const enableCheck = item.premium ? coupleData && premiumUser : Boolean(coupleData);
                                                                     return (
-                                                                        <Col key={item.id} className="mb-2" xs="12" md="6" lg="4">
+                                                                        <Col key={item.id} className="mb-3" xs="12" md="6" lg="4">
                                                                             <ListCard
                                                                                 subhead={item.subHead}
                                                                                 title={item.title}
@@ -193,10 +193,8 @@ class Home extends React.Component {
                                                                 })
                                                                 :
                                                                 [...Array(10)].map((item, index) => (
-                                                                    <Col key={index} className="mb-2" xs="12" md="6" lg="4">
-                                                                        <div style={{ height: "110px", backgroundColor: "#fafafa" }}>
-
-                                                                        </div>
+                                                                    <Col key={index} className="mb-3" xs="12" md="6" lg="4">
+                                                                        <div className="rounded" style={{ height: "110px", backgroundColor: "#f0f0f0" }} />
                                                                     </Col>
                                                                 ))
                                                             }
