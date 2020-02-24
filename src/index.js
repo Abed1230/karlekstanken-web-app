@@ -28,6 +28,10 @@ import { isInStandaloneMode } from './UtilFunctions';
 const KEY_AUTH_USER = "authUser";
 const KEY_HIDE_WELCOME_MODAL = "hideWelcomeModal";
 
+const DEFAULT_FIREBASE_HOST = "karlekstanken-3c89c.web.app";
+const DEFAULT_FIREBASE_HOST_2 = "karlekstanken-3c89c.firebaseapp.com";
+const APP_URL = "https://app.karlekstanken.se";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -39,8 +43,19 @@ class App extends React.Component {
         }
     }
 
-    // TODO: clean up this mess
     componentDidMount() {
+        // If user tries to open one of the default non deleteable firebase hosting domains we redirect to our custom domain
+        if (window.location.host === DEFAULT_FIREBASE_HOST || window.location.host === DEFAULT_FIREBASE_HOST_2) {
+            window.location.replace(APP_URL);
+        }
+
+        this.subOnAuthStateChanged();
+        this.getStrings();
+        this.getChapters();
+    }
+
+    subOnAuthStateChanged() {
+        // TODO: clean up this mess
         this.unsubAuthUser = auth.onAuthStateChanged((authUser) => {
             // makes sure we only have one subscription
             this.unsubUserData && this.unsubUserData();
@@ -92,9 +107,6 @@ class App extends React.Component {
                 this.setState({ authUser: null, coupleData: null, user: null });
             }
         });
-
-        this.getStrings();
-        this.getChapters();
     }
 
     async getPremiumStatus(authUser, refresh) {
