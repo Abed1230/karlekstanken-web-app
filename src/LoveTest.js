@@ -71,7 +71,7 @@ export class LoveTest extends Component {
             }, 2000);
         } else {
             this.setState({
-                errorMessage: MyStrings.Errors.testNotComplete,
+                errorMessage: MyStrings.LoveLanguageTest.testNotComplete,
                 notCompleteIndexes: result.notCompleteIndexes
             })
         }
