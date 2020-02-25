@@ -73,7 +73,7 @@ const MyStrings = {
     },
     PurchaseBanner: {
         text: "Köp licens och få tillgång till hela Kärlekstanken®",
-        btn: "Till köp"
+        btn: "Läs mer"
     },
     InstallBanner: {
         text: "Lägg till Kärlekstanken® på din hemskärm för snabb åtkomst",
