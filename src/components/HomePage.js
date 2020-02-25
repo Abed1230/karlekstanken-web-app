@@ -160,7 +160,7 @@ class Home extends React.Component {
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                    <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "120px" } : { paddingBottom: "15px" }}>
+                                                    <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "130px" } : { paddingBottom: "15px" }}>
                                                         {user && !user.partner &&
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="8" lg="6">
