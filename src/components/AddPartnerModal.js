@@ -45,7 +45,9 @@ function Add({ handleSubmit, handleChange, values, errors, touched, error, loadi
                 <Alert variant="danger">{error}</Alert>
             }
             {loading ?
-                <Spinner animation="border" variant="info" />
+                <div className="text-center">
+                    <Spinner animation="border" variant="info" />
+                </div>
                 :
                 <Button block variant="info" type="submit">{MyStrings.AddPartnerModal.addViewFormSubmit}</Button>
             }
@@ -74,7 +76,9 @@ function Invite({ handleSubmit, handleChange, values, errors, touched, error, lo
                 <Alert variant="danger">{error}</Alert>
             }
             {loading ?
-                <Spinner animation="border" variant="info" />
+                <div className="text-center">
+                    <Spinner animation="border" variant="info" />
+                </div>
                 :
                 <Button block variant="info" type="submit">{MyStrings.AddPartnerModal.inviteViewFormSubmit}</Button>
             }
@@ -181,7 +185,6 @@ class AddPartnerModal extends React.Component {
                                         }
 
                                     </Alert>
-                                    <Button variant="info" onClick={this.hideAndReset.bind(this, resetForm)}>{MyStrings.AddPartnerModal.closeBtn}</Button>
                                 </>
                                 :
                                 <>
