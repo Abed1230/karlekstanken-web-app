@@ -37,8 +37,8 @@ const MyStrings = {
     readLessBtn: "- LÄS MINDRE",
     readMoreBtn: "+ LÄS MER",
     InstallationGuideModal: {
-        notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen för första gången.",
-        youCanInstallWith: "Du kan installera Kärlekstanken® på din hemskärm med webbläsaren",
+        notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen första gången.",
+        youCanInstallWith: "Du kan lägga till Kärlekstanken® på din hemskärm med webbläsaren",
         doLikeThis: "Gör så här:",
         press: "Tryck på",
         iOSInstructions: {
@@ -76,7 +76,6 @@ const MyStrings = {
         btn: "Läs mer"
     },
     InstallBanner: {
-        /* text: "Lägg till Kärlekstanken® på din hemskärm för snabb åtkomst", */
         text: "Lägg till Kärlekstanken på hemskärmen",
         btn: "Lägg till"
     },
