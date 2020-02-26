@@ -1,0 +1,27 @@
+#install-banner {
+    z-index: 1;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #ffffff;
+    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    #install-banner {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        left: auto;
+        border-radius: 30px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
+    }
+}
+
+@media (max-height: 500px) {
+    #install-banner {
+        display: none;
+    }
+}

@@ -76,7 +76,8 @@ const MyStrings = {
         btn: "Läs mer"
     },
     InstallBanner: {
-        text: "Lägg till Kärlekstanken® på din hemskärm för snabb åtkomst",
+        /* text: "Lägg till Kärlekstanken® på din hemskärm för snabb åtkomst", */
+        text: "Lägg till Kärlekstanken på hemskärmen",
         btn: "Lägg till"
     },
     Settings: {

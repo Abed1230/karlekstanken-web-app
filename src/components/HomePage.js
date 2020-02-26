@@ -120,7 +120,8 @@ class Home extends React.Component {
         this.props.history.push({ pathname: "/chapter", state: { chapter: chapter } })
     }
 
-    hideInstallationBanner() {
+    hideInstallationBanner(e) {
+        e.stopPropagation();
         localStorage.setItem("hideInstallationBanner", true);
         this.setState({ showInstallationBanner: false });
     }
@@ -160,7 +161,7 @@ class Home extends React.Component {
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                    <Container id="container" className="mt-4" style={showUnlockMsg || showInstallationBanner ? { paddingBottom: "130px" } : { paddingBottom: "15px" }}>
+                                                    <Container id="container" className="mt-4" style={showUnlockMsg ? { paddingBottom: "130px" } : showInstallationBanner ? {paddingBottom: "80px"} : { paddingBottom: "15px" }}>
                                                         {user && !user.partner &&
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="8" lg="6">
@@ -223,7 +224,7 @@ class Home extends React.Component {
                 {showInstallationBanner &&
                     <InstallBanner
                         handleClick={() => this.setState({ showInstallationGuideModal: true })}
-                        handleClose={() => this.hideInstallationBanner()}
+                        handleClose={(e) => this.hideInstallationBanner(e)}
                     />
                 }
                 <InstallationGuideModal
