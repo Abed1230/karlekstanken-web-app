@@ -6,12 +6,12 @@ import Icon from '../../assets/icon192.png';
 import './InstallBanner.css';
 
 const InstallBanner = ({ handleClick, handleClose }) => (
-    <div id="install-banner" className="p-3" onClick={handleClick}>
+    <div id="install-banner" className="pt-2 pb-2 pl-3 pr-3" onClick={handleClick}>
         <div className="d-flex align-items-center">
             <img
                 src={Icon}
-                height={32}
-                width={32}
+                height={26}
+                width={26}
                 alt="Icon" />
             <h6 className="ml-3 mr-3 my-auto">{MyStrings.InstallBanner.text}</h6>
             <TransparentButton  className="ml-auto" onClick={handleClose}>
