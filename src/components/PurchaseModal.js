@@ -1,10 +1,10 @@
 import React from 'react';
-import { Alert, Modal, Button, Spinner } from 'react-bootstrap';
-import { UserConsumer } from '../UserContext';
-import { createStripeCheckoutSession } from '../MyCloudFunctions';
-import MyStrings from '../MyStrings.js';
+import { Alert, Button, Modal, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { StringsConsumer } from '../contexts/StringsContext';
+import { createStripeCheckoutSession } from '../MyCloudFunctions';
+import MyStrings from '../MyStrings.js';
+import { UserConsumer } from '../UserContext';
 
 const UnlockIcon = () => (
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" heigh="80" width="80" viewBox="0 0 512.65 512.65">
@@ -86,7 +86,6 @@ class PurchaseModal extends React.Component {
             <UserConsumer>
                 {user => {
                     const signedIn = user ? true : false;
-                    const hasPartner = user && user.partner;
                     return (
                         <Modal show={this.props.show} onHide={this.hideAndReset}>
                             <Modal.Header closeButton>

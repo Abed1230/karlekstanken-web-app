@@ -1,19 +1,19 @@
 import React from 'react';
-import { Alert, Button, Container, Row, Col } from 'react-bootstrap';
-import MyNavBar from './MyNavBar';
-import ListCard from './ListCard';
-import { CoupleDataConsumer } from '../CoupleDataContext';
-import { UserConsumer } from '../UserContext';
-import PurchaseModal from './PurchaseModal';
-import { ChaptersConsumer } from '../contexts/ChaptersContext';
+import { Alert, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { ChaptersConsumer } from '../contexts/ChaptersContext';
+import { CoupleDataConsumer } from '../CoupleDataContext';
 import { auth } from '../FirebaseData';
-import InstallBanner from './InstallationGuide/InstallBanner';
-import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
-import TransparentButton from "./TransparentButton";
-import { isInStandaloneMode } from '../UtilFunctions';
 import MyStrings from '../MyStrings.js';
+import { UserConsumer } from '../UserContext';
+import { isInStandaloneMode } from '../UtilFunctions';
+import InstallationGuideModal from './InstallationGuide/InstallationGuideModal';
+import InstallBanner from './InstallationGuide/InstallBanner';
+import ListCard from './ListCard';
+import MyNavBar from './MyNavBar';
 import PurchaseBanner from './PurchaseBanner/PurchaseBanner';
+import PurchaseModal from './PurchaseModal';
+import TransparentButton from "./TransparentButton";
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;

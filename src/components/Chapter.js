@@ -1,14 +1,14 @@
 import React from 'react';
-import MyNavBar from './MyNavBar';
-import { Container, Row, Col, Dropdown, Collapse, Button } from 'react-bootstrap';
-import ListCard from './ListCard';
+import { Col, Container, Dropdown, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { db } from '../FirebaseData';
-import { CoupleDataConsumer } from '../CoupleDataContext';
-import { UserConsumer } from '../UserContext';
-import MyStrings from '../MyStrings.js';
-import TransparentButton from './TransparentButton';
 import trimText from '../../node_modules/read-more-react/dist/utils/trimText.js';
+import { CoupleDataConsumer } from '../CoupleDataContext';
+import { db } from '../FirebaseData';
+import MyStrings from '../MyStrings.js';
+import { UserConsumer } from '../UserContext';
+import ListCard from './ListCard';
+import MyNavBar from './MyNavBar';
+import TransparentButton from './TransparentButton';
 
 const YoutubePlayer = ({ url, title }) => {
     return (

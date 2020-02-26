@@ -1,11 +1,10 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import Logo from '../../assets/logo.png';
-import './AuthBaseLayout.css';
-import { BackIcon } from '../../assets/svgs';
-import TransparentButton from '../TransparentButton';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/logo.png';
+import { BackIcon } from '../../assets/svgs';
 import MyStrings from '../../MyStrings.js';
+import './AuthBaseLayout.css';
 
 function AuthBaseLayout({ goBackRoute, children }) {
     return (
