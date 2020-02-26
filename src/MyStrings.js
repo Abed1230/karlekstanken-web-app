@@ -1,7 +1,7 @@
 const MyStrings = {
     appName: "Kärlekstanken",
-    privacyPolicyUrl: "https://xn--krlekstanken-gcb.se/ALLM%C3%84NNA-VILLKOR.php#I1b6b021f98a349f2ba381501c909c2a1_sys_txt",
-    licenseAndTermsUrl: "https://xn--krlekstanken-gcb.se/ALLM%C3%84NNA-VILLKOR.php#Ia0a105dd6b7e44108295bdad4898e370",
+    privacyPolicyUrl: "https://karlekstanken.se/ALLM%C3%84NNA-VILLKOR.php#I1b6b021f98a349f2ba381501c909c2a1_sys_txt",
+    licenseAndTermsUrl: "https://karlekstanken.se/ALLM%C3%84NNA-VILLKOR.php#Ia0a105dd6b7e44108295bdad4898e370",
     copyright: "Copyright © Sparringpartner Sweden AB 2019-2020",
     logoAlt: "Kärlekstanken® Logo",
     privacyPolicy: "Personuppgiftspolicy",
