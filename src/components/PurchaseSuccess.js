@@ -8,7 +8,7 @@ import { analytics } from '../FirebaseData';
 class PurchaseSuccess extends React.Component {
     componentDidMount() {
         analytics.logEvent('purchase', {
-            items: [{ name: "Kärlekstanken Licens" }]
+            items: ['Kärlekstanken Licens']
         });
     }
 

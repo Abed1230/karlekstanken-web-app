@@ -80,9 +80,7 @@ class PurchaseModal extends React.Component {
                 this.setState({ checkoutError: result.error.message });
             }
             analytics.logEvent('begin_checkout', {
-                items: [{
-                    name: "Kärlekstanken Licens"
-                }]
+                items: ['Kärlekstanken Licens']
             });
         });
     }

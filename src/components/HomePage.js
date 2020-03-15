@@ -122,7 +122,7 @@ class Home extends React.Component {
     }
 
     showPurchaseModal() {
-        analytics.logEvent('view_item', { items: [{ name: "Kärlekstanken Licens" }] });
+        analytics.logEvent('view_item', { items: ['Kärlekstanken Licens'] });
         this.setState({ showPurchaseModal: true });
     }
 
