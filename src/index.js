@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { db, auth, FieldValue } from './FirebaseData.js';
+import { db, auth, FieldValue, analytics } from './FirebaseData.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from './CustomRoutes';
 import { UserProvider } from './UserContext';
@@ -24,6 +24,7 @@ import Login from './components/Authentication/Login';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import WelcomeModal from './components/WelcomeModal';
 import { isInStandaloneMode } from './UtilFunctions';
+import AnalyticsPageViewLogger from './AnalyticsPageViewLogger.js';
 
 const KEY_AUTH_USER = "authUser";
 const KEY_HIDE_WELCOME_MODAL = "hideWelcomeModal";
@@ -48,6 +49,12 @@ class App extends React.Component {
         if (window.location.host === DEFAULT_FIREBASE_HOST || window.location.host === DEFAULT_FIREBASE_HOST_2) {
             window.location.replace(APP_URL);
         }
+
+        analytics.logEvent('page_view', {
+            'page_title': document.title,
+            'page_location': window.location.href,
+            'page_path': window.location.pathname
+        });
 
         this.subOnAuthStateChanged();
         this.getStrings();
@@ -182,6 +189,7 @@ class App extends React.Component {
                                             <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
                                             <Route component={NotFound} />
                                         </Switch>
+                                        <AnalyticsPageViewLogger />
                                     </BrowserRouter>
                                     <WelcomeModal show={showWelcomeModal} handleHide={() => (this.hideWelcomeModal())} />
                                 </StringsProvider>
