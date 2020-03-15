@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth, db } from '../../FirebaseData.js';
+import { auth, db, analytics } from '../../FirebaseData.js';
 import { Alert, Spinner, Button, Row, Col, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import *as Yup from 'yup';
@@ -47,6 +47,8 @@ export class Register extends Component {
 
         const email = values.email.toLowerCase();
         await auth.createUserWithEmailAndPassword(email, values.password).then((user) => {
+            const partnerUID = this.props.match.params.partnerUID;
+            analytics.logEvent('sign_up', { method: 'email', by_invite: partnerUID ? true : false });
             // Create user document in db
             return db.collection("users").doc(user.user.uid).set({
                 email: email,
