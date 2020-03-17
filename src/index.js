@@ -25,6 +25,7 @@ import ForgotPassword from './components/Authentication/ForgotPassword';
 import WelcomeModal from './components/WelcomeModal';
 import { isInStandaloneMode } from './UtilFunctions';
 import AnalyticsPageViewLogger from './AnalyticsPageViewLogger.js';
+import MyStrings from './MyStrings';
 
 const KEY_AUTH_USER = "authUser";
 const KEY_HIDE_WELCOME_MODAL = "hideWelcomeModal";
@@ -177,16 +178,16 @@ class App extends React.Component {
                                 <StringsProvider value={this.state.strings}>
                                     <BrowserRouter>
                                         <Switch>
-                                            <PublicRoute restricted={true} component={Login} path="/signin" exact />
-                                            <PublicRoute restricted={true} component={Register} path="/signup" exact />
-                                            <PublicRoute restricted={false} component={Register} path="/signup/:partnerUID" exact />
-                                            <PublicRoute restricted={true} component={ForgotPassword} path="/reset-password" exact />
-                                            <PublicRoute restricted={false} component={HomePage} path="/" exact />
-                                            <PrivateRoute component={Settings} path="/settings" exact />
-                                            <PrivateRoute component={LoveTest} path="/languagetest" exact />
+                                            <PublicRoute restricted={true} component={Login} title={MyStrings.signInTitle} path="/signin" exact />
+                                            <PublicRoute restricted={true} component={Register} title={MyStrings.signUpTitle} path="/signup" exact />
+                                            <PublicRoute restricted={false} component={Register} title={MyStrings.signUpTitle} path="/signup/:partnerUID" exact />
+                                            <PublicRoute restricted={true} component={ForgotPassword} title={MyStrings.forgotPasswordTitle} path="/reset-password" exact />
+                                            <PublicRoute restricted={false} component={HomePage} title={MyStrings.homeTitle} path="/" exact />
+                                            <PrivateRoute component={Settings} path="/settings" title={MyStrings.settingsTitle} exact />
+                                            <PrivateRoute component={LoveTest} title={MyStrings.languageTestTitle} path="/languagetest" exact />
                                             <PublicRoute component={Chapter} path="/chapter" exact />
                                             <PublicRoute component={TaskPage} path="/task" exact />
-                                            <PrivateRoute component={PurchaseSuccess} path="/purchase_success" exact />
+                                            <PrivateRoute component={PurchaseSuccess} title={MyStrings.appName} path="/purchase_success" exact />
                                             <Route component={NotFound} />
                                         </Switch>
                                         <AnalyticsPageViewLogger />
