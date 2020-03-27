@@ -1,4 +1,4 @@
-import { functions } from './FirebaseData';
+import { functions, analytics } from './FirebaseData';
 import MyStrings from './MyStrings.js';
 
 //const ERROR_INTERNAL = 'ERROR_INTERNAL';
@@ -15,6 +15,7 @@ export async function sendInvite(receiverEmail, senderFullName) {
     try {
         const sendInvite = functions.httpsCallable('sendInvite');
         await sendInvite({ receiverEmail: receiverEmail, senderFullName: senderFullName });
+        analytics.logEvent('invite_partner');
     } catch (e) {
         console.error(e.message);
         return MyStrings.Errors.unknown;
@@ -25,6 +26,7 @@ export async function addPartner(email, userId) {
     try {
         const addPartner = functions.httpsCallable('addPartner');
         await addPartner({ email: email && email.toLowerCase(), userId: userId });
+        analytics.logEvent('add_partner');
     } catch (e) {
         console.error(e.message);
         switch (e.message) {

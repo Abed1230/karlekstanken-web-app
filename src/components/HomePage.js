@@ -3,7 +3,7 @@ import { Alert, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ChaptersConsumer } from '../contexts/ChaptersContext';
 import { CoupleDataConsumer } from '../CoupleDataContext';
-import { auth } from '../FirebaseData';
+import { auth, analytics } from '../FirebaseData';
 import MyStrings from '../MyStrings.js';
 import { UserConsumer } from '../UserContext';
 import { isInStandaloneMode } from '../UtilFunctions';
@@ -45,6 +45,7 @@ class Home extends React.Component {
         };
 
         this.handleCheck = this.handleCheck.bind(this);
+        this.showPurchaseModal = this.showPurchaseModal.bind(this);
         this.hideInstallationBanner = this.hideInstallationBanner.bind(this);
     }
 
@@ -113,11 +114,16 @@ class Home extends React.Component {
     handleClick(chapter, user) {
         const premiumUser = user && user.premium;
         if (chapter.premium && !premiumUser) {
-            this.setState({ showPurchaseModal: true });
+            this.showPurchaseModal();
             return;
         }
 
         this.props.history.push({ pathname: "/chapter", state: { chapter: chapter } })
+    }
+
+    showPurchaseModal() {
+        analytics.logEvent('view_item', { items: ['Kärlekstanken Licens'] });
+        this.setState({ showPurchaseModal: true });
     }
 
     hideInstallationBanner(e) {
@@ -161,7 +167,7 @@ class Home extends React.Component {
                                                     <div className="sticky-top text-center mt-3" style={{ top: signedOut ? "100px" : "78px", zIndex: "1" }}>
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
-                                                    <Container id="container" className="mt-4" style={showUnlockMsg ? { paddingBottom: "130px" } : showInstallationBanner ? {paddingBottom: "80px"} : { paddingBottom: "15px" }}>
+                                                    <Container id="container" className="mt-4" style={showUnlockMsg ? { paddingBottom: "130px" } : showInstallationBanner ? { paddingBottom: "80px" } : { paddingBottom: "15px" }}>
                                                         {user && !user.partner &&
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="8" lg="6">
@@ -202,7 +208,7 @@ class Home extends React.Component {
                                                         </Row>
                                                     </Container>
                                                     {showUnlockMsg &&
-                                                        <PurchaseBanner handleClick={() => this.setState({ showPurchaseModal: true })} />
+                                                        <PurchaseBanner handleClick={() => this.showPurchaseModal()} />
                                                     }
                                                     <PurchaseModal
                                                         show={this.state.showPurchaseModal}

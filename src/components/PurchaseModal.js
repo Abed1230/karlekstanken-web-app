@@ -5,6 +5,7 @@ import { StringsConsumer } from '../contexts/StringsContext';
 import { createStripeCheckoutSession } from '../MyCloudFunctions';
 import MyStrings from '../MyStrings.js';
 import { UserConsumer } from '../UserContext';
+import { analytics } from '../FirebaseData.js';
 
 const UnlockIcon = () => (
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" heigh="80" width="80" viewBox="0 0 512.65 512.65">
@@ -78,6 +79,9 @@ class PurchaseModal extends React.Component {
                 console.log("stripe error msg: " + result.error.message);
                 this.setState({ checkoutError: result.error.message });
             }
+            analytics.logEvent('begin_checkout', {
+                items: ['Kärlekstanken Licens']
+            });
         });
     }
 

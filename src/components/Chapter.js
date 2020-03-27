@@ -37,6 +37,7 @@ class Chapter extends React.Component {
         };
 
         //this.handleCheck = this.handleCheck.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleCheck(user, coupleData, chapter, taskId, complete) {
@@ -104,10 +105,16 @@ class Chapter extends React.Component {
         return false;
     }
 
+    handleClick(item, chapter) {
+        document.title = MyStrings.appName + " - " + chapter.subHead + " - " + item.subHead;
+        this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })
+    }
+
     componentDidMount() {
         this.mounted = true;
 
         if (this.state.shouldRender) {
+            document.title = MyStrings.appName + " - " + this.state.chapterMin.subHead;
             this.getData();
         }
     }
@@ -196,7 +203,7 @@ class Chapter extends React.Component {
                                                         title={item.title}
                                                         enableCheck={coupleData ? true : false}
                                                         complete={this.isTaskComplete(coupleData, chapter.id, item.id)}
-                                                        handleClick={() => this.props.history.push({ pathname: "/task", state: { task: item, chapterId: chapter.id } })}
+                                                        handleClick={() => this.handleClick(item, chapter)}
                                                         handleCheck={this.handleCheck.bind(this, user, coupleData, chapter, item.id, this.isTaskComplete(coupleData, chapter.id, item.id))} />
                                                 )}
                                             </CoupleDataConsumer>

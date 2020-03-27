@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../../FirebaseData';
+import { auth, analytics } from '../../FirebaseData';
 import { Button, Row, Col, Form, Spinner, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import MyStrings from '../../MyStrings.js';
 import TransparentButton from '../TransparentButton';
 import { USER_NOT_FOUND, WRONG_PASSWORD } from '../../AuthErrorCodes';
 import AuthBaseLayout from './AuthBaseLayout';
+
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -32,6 +33,7 @@ export class Login extends Component {
     login({ email, password }) {
         this.setState({ loading: true });
         auth.signInWithEmailAndPassword(email, password).then((user) => {
+            analytics.logEvent('login', { method: 'email' });
             // will automatically redirect to home
         }).catch((e) => {
             console.log(e);
