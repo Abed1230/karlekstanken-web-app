@@ -39,7 +39,6 @@ const MyStrings = {
     exercises: "ÖVNINGAR",
     loading: "Laddar in...",
     print: "Skriv ut",
-    welcomeModalBtn: "Sätt igång",
     readLessBtn: "- LÄS MINDRE",
     readMoreBtn: "+ LÄS MER",
     InstallationGuideModal: {

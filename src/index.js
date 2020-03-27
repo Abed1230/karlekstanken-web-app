@@ -22,13 +22,11 @@ import { StringsProvider } from './contexts/StringsContext';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import ForgotPassword from './components/Authentication/ForgotPassword';
-import WelcomeModal from './components/WelcomeModal';
 import { isInStandaloneMode } from './UtilFunctions';
 import AnalyticsPageViewLogger from './AnalyticsPageViewLogger.js';
 import MyStrings from './MyStrings';
 
 const KEY_AUTH_USER = "authUser";
-const KEY_HIDE_WELCOME_MODAL = "hideWelcomeModal";
 
 const DEFAULT_FIREBASE_HOST = "karlekstanken-3c89c.web.app";
 const DEFAULT_FIREBASE_HOST_2 = "karlekstanken-3c89c.firebaseapp.com";
@@ -40,8 +38,7 @@ class App extends React.Component {
         this.state = {
             user: null,
             coupleData: null,
-            authUser: JSON.parse(localStorage.getItem(KEY_AUTH_USER)),
-            showWelcomeModal: !localStorage.getItem(KEY_HIDE_WELCOME_MODAL),
+            authUser: JSON.parse(localStorage.getItem(KEY_AUTH_USER))
         }
     }
 
@@ -154,13 +151,6 @@ class App extends React.Component {
         });
     }
 
-    hideWelcomeModal() {
-        localStorage.setItem(KEY_HIDE_WELCOME_MODAL, true);
-        // in ios content behind modal scrolls as well, so we reset scroll position
-        window.scroll(0, 0);
-        this.setState({ showWelcomeModal: false });
-    }
-
     componentWillUnmount() {
         this.unsubAuthUser && this.unsubAuthUser();
         this.unsubUserData && this.unsubUserData();
@@ -168,7 +158,6 @@ class App extends React.Component {
     }
 
     render() {
-        const showWelcomeModal = this.state.showWelcomeModal && !isInStandaloneMode();
         return (
             <div className="App">
                 <AuthUserProvider value={this.state.authUser}>
@@ -192,7 +181,6 @@ class App extends React.Component {
                                         </Switch>
                                         <AnalyticsPageViewLogger />
                                     </BrowserRouter>
-                                    <WelcomeModal show={showWelcomeModal} handleHide={() => (this.hideWelcomeModal())} />
                                 </StringsProvider>
                             </ChaptersProvider>
                         </CoupleDataProvider>
