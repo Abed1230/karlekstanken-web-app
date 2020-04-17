@@ -41,6 +41,7 @@ const MyStrings = {
     print: "Skriv ut",
     readLessBtn: "- LÄS MINDRE",
     readMoreBtn: "+ LÄS MER",
+    homeGuideText: "Börja här med detta gratis tema",
     InstallationGuideModal: {
         notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen första gången.",
         youCanInstallWith: "Du kan lägga till Kärlekstanken® på din hemskärm med webbläsaren",

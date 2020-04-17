@@ -14,6 +14,7 @@ import MyNavBar from './MyNavBar';
 import PurchaseBanner from './PurchaseBanner/PurchaseBanner';
 import PurchaseModal from './PurchaseModal';
 import TransparentButton from "./TransparentButton";
+import HomeGuide from './HomeGuide.js';
 
 const HeartProgressBar = ({ value }) => {
     value = (value < 0) ? 0 : (value > 1) ? 1 : value;
@@ -41,12 +42,15 @@ class Home extends React.Component {
         this.state = {
             showPurchaseModal: false,
             showInstallationGuideModal: false,
-            showInstallationBanner: !localStorage.getItem("hideInstallationBanner")
+            showInstallationBanner: !localStorage.getItem("hideInstallationBanner"),
+            showGuide: !localStorage.getItem("hideGuide")
         };
 
         this.handleCheck = this.handleCheck.bind(this);
         this.showPurchaseModal = this.showPurchaseModal.bind(this);
         this.hideInstallationBanner = this.hideInstallationBanner.bind(this);
+        this.onFirstChapterRefChange = this.onFirstChapterRefChange.bind(this);
+        this.hideGuide = this.hideGuide.bind(this);
     }
 
     handleCheck(user, coupleData, chapter) {
@@ -132,6 +136,37 @@ class Home extends React.Component {
         this.setState({ showInstallationBanner: false });
     }
 
+    onFirstChapterRefChange(node) {
+        if (node) {
+            const rect = node.getBoundingClientRect();
+            const firstChapterCoordinates = {
+                top: rect.top + window.scrollY,
+                left: rect.left + window.scrollX,
+                width: rect.width,
+                height: rect.height
+            }
+            this.setState({ firstChapterCoordinates: firstChapterCoordinates })
+        }
+    }
+
+    hideGuide() {
+        localStorage.setItem("hideGuide", true);
+        this.setState({ showGuide: false });
+    }
+
+    handleHideGuide(e, firstChapter) {
+        if (e.target.attributes['data-tag'] &&
+            e.target.attributes['data-tag'].value === "chapter") {
+            // 1. hide spotlight
+            this.hideGuide();
+            // 2. open first chapter
+            this.handleClick(firstChapter);
+            console.log("chapter clicked");
+        } else {
+            this.hideGuide();
+        }
+    }
+
     componentDidMount() {
         this.mounted = true;
         //localStorage.clear();
@@ -155,6 +190,7 @@ class Home extends React.Component {
                                     <CoupleDataConsumer>
                                         {coupleData => {
                                             const showUnlockMsg = user ? !user.premium : true;
+                                            const firstChapterCoordinates = this.state.firstChapterCoordinates;
                                             return (
                                                 <div>
                                                     {signedOut &&
@@ -187,6 +223,7 @@ class Home extends React.Component {
                                                                     return (
                                                                         <Col key={item.id} className="mb-3" xs="12" md="6" lg="4">
                                                                             <ListCard
+                                                                                ref={index === 0 ? this.onFirstChapterRefChange : null}
                                                                                 subhead={item.subHead}
                                                                                 title={item.title}
                                                                                 disabled={item.premium && !premiumUser}
@@ -218,6 +255,14 @@ class Home extends React.Component {
                                                                 this.myNavBar.openAddPartnerModal(false);
                                                         }}
                                                         numChapters={chapters && chapters.length} />
+                                                    {this.state.showGuide && firstChapterCoordinates &&
+                                                        <HomeGuide
+                                                            top={firstChapterCoordinates.top}
+                                                            left={firstChapterCoordinates.left}
+                                                            width={firstChapterCoordinates.width}
+                                                            height={firstChapterCoordinates.height}
+                                                            handleClick={(e) => this.handleHideGuide(e, chapters[0])} />
+                                                    }
                                                 </div>
                                             )
                                         }}
