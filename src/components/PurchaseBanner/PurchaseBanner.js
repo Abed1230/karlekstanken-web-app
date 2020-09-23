@@ -1,15 +1,20 @@
 import React from 'react';
-import './PurchaseBanner.css';
 import MyStrings from '../../MyStrings.js';
+import {Row, Col, Alert} from 'react-bootstrap';
 
 const PurchaseBanner = ({ handleClick }) => (
-    <div id="purchase-banner" className="fixed-bottom p-2 bg-info text-white align-items-center" style={{ cursor: "pointer" }} onClick={handleClick}>
-        <div className="text-center mx-auto">
-            <span className="mx-auto ml-4">{MyStrings.PurchaseBanner.text}</span>
-            <br />
-            <span><strong>{MyStrings.PurchaseBanner.btn}</strong></span>
-        </div>
-    </div >
+    <Row className="mb-4 justify-content-center">
+        <Col xs="12" md="8" lg="8">
+            <Alert
+                variant="info"
+                className="p-lg-4 text-center"
+                onClick={handleClick}
+                style={{ cursor: "pointer" }}>
+                <h6>{MyStrings.PurchaseBanner.text}</h6>
+                <h6 className="text-primary">{MyStrings.PurchaseBanner.btn}</h6>
+            </Alert>
+        </Col>
+    </Row>
 );
 
 export default PurchaseBanner;

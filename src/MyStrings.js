@@ -41,7 +41,7 @@ const MyStrings = {
     print: "Skriv ut",
     readLessBtn: "- LÄS MINDRE",
     readMoreBtn: "+ LÄS MER",
-    homeGuideText: "Börja här med detta gratis tema",
+    homeGuideText: "Börja här med detta gratistema",
     InstallationGuideModal: {
         notice: "Notera: Du kan komma att behöva logga in på nytt när du startar appen från hemskärmen första gången.",
         youCanInstallWith: "Du kan lägga till Kärlekstanken® på din hemskärm med webbläsaren",
@@ -79,7 +79,7 @@ const MyStrings = {
     },
     PurchaseBanner: {
         text: "Köp licens och få tillgång till hela Kärlekstanken®",
-        btn: "Läs mer"
+        btn: "Till köp"
     },
     InstallBanner: {
         text: "Lägg till Kärlekstanken på hemskärmen",

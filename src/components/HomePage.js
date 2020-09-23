@@ -12,7 +12,7 @@ import InstallBanner from './InstallationGuide/InstallBanner';
 import ListCard from './ListCard';
 import MyNavBar from './MyNavBar';
 import PurchaseBanner from './PurchaseBanner/PurchaseBanner';
-import {KEY_SHOULD_SHOW_PURCHASE_MODAL} from './PurchaseModal';
+import { KEY_SHOULD_SHOW_PURCHASE_MODAL } from './PurchaseModal';
 import PurchaseModal from './PurchaseModal';
 import TransparentButton from "./TransparentButton";
 import HomeGuide from './HomeGuide.js';
@@ -212,7 +212,7 @@ class Home extends React.Component {
                                                         <HeartProgressBar value={chapters && coupleData ? this.calculateProgressValue(chapters, coupleData) : 0} />
                                                     </div>
                                                     <Container id="container" className="mt-4" style={showUnlockMsg ? { paddingBottom: "130px" } : showInstallationBanner ? { paddingBottom: "80px" } : { paddingBottom: "15px" }}>
-                                                        {user && !user.partner &&
+                                                        {user && user.premium && !user.partner &&
                                                             <Row className="mb-4 justify-content-center">
                                                                 <Col xs="12" md="8" lg="6">
                                                                     <Alert variant="info" >
@@ -222,6 +222,9 @@ class Home extends React.Component {
                                                                     </Alert>
                                                                 </Col>
                                                             </Row>
+                                                        }
+                                                        {showUnlockMsg &&
+                                                            <PurchaseBanner handleClick={this.showPurchaseModal} />
                                                         }
                                                         <Row>
                                                             {chapters ?
@@ -252,9 +255,6 @@ class Home extends React.Component {
                                                             }
                                                         </Row>
                                                     </Container>
-                                                    {showUnlockMsg &&
-                                                        <PurchaseBanner handleClick={() => this.showPurchaseModal()} />
-                                                    }
                                                     <PurchaseModal
                                                         show={this.state.showPurchaseModal}
                                                         handleHide={(shouldOpenAddPartnerModal) => {
