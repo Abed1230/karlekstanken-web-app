@@ -12,6 +12,7 @@ import InstallBanner from './InstallationGuide/InstallBanner';
 import ListCard from './ListCard';
 import MyNavBar from './MyNavBar';
 import PurchaseBanner from './PurchaseBanner/PurchaseBanner';
+import {KEY_SHOULD_SHOW_PURCHASE_MODAL} from './PurchaseModal';
 import PurchaseModal from './PurchaseModal';
 import TransparentButton from "./TransparentButton";
 import HomeGuide from './HomeGuide.js';
@@ -169,6 +170,13 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
+        const shouldShowPurchaseModal = localStorage.getItem(KEY_SHOULD_SHOW_PURCHASE_MODAL);
+        if (shouldShowPurchaseModal) {
+            this.setState({
+                showPurchaseModal: true
+            });
+            localStorage.removeItem(KEY_SHOULD_SHOW_PURCHASE_MODAL);
+        }
         //localStorage.clear();
     }
 
