@@ -25,7 +25,7 @@ const HeartProgressBar = ({ value }) => {
             <defs>
                 <linearGradient id="progress" x1="0" y1="1" x2="0" y2="0">
                     <stop id="stop1" offset={value} stopColor="#e53935" />
-                    <stop id="stop2" offset={value} stopColor="#e53935" stopOpacity="0.6" />
+                    <stop id="stop2" offset={value} stopColor="#e53935" stopOpacity="0.7" />
                 </linearGradient>
             </defs>
             <g>
