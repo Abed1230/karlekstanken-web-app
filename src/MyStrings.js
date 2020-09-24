@@ -78,7 +78,7 @@ const MyStrings = {
         addBtn: "Lägg till nu"
     },
     PurchaseBanner: {
-        text: "Köp licens och få tillgång till hela Kärlekstanken®",
+        text: "Köp Licens så får ni tillgång till hela KÄRLEKSTANKEN®",
         btn: "Till köp"
     },
     InstallBanner: {
